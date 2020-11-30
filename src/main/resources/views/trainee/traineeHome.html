@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/fragments :: layout(~{::head}, ~{::nav}, ~{::main})}">
+<head th:replace="~{fragments/head :: headFragment(title='Trainee Tracker')}">
+    <meta charset="UTF-8">
+    <link rel ="stylesheet" href="/css/myStyle.css"/>
+    <link rel ="stylesheet" href="webjars/bootstrap/4.5.2/css/bootstrap.css"/>
+    <link rel="stylesheet" href="vendor/fontawesome-free/css/all.min.css" >
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+</head>
+<body>
+
+<nav th:replace="~{fragments/sidebar}">Side Navigation</nav>
+<nav th:replace="~{fragments/generalNavigation}">Side Navigation</nav>
+<main>
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="container">
+            <div class="text-center align-items-center justify-content-between mb-4">
+                <h1 class="h3 mb-0 " style="color: #E23561">Trainee Dashboard</h1>
+            </div>
+        </div>
+        <!-- Content Row -->
+        <div class="row">
+
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Full Name:</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${trainee.getFirstName() + ' ' + trainee.getLastName()}"></div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-user fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Assigned Class:</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${courseGroup.getGroupName()}"></div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Course Assigned:</div>
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${course.getCourseName()}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-warning shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Current Week of Course:</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${courseGroup.getCurrentWeek()}"></div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p th:if="${report == null}" th:text="${'No grades yet for ' + trainee.getFirstName() + ' ' + trainee.getLastName()}"></p>
+        <div class="card shadow mb-4" th:if="${report != null}">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary" th:text="${'Trainer Grade for Previous Week - ' + ' ' + trainee.getFirstName() + ' ' + trainee.getLastName()}"></h6>
+            </div>
+            <div class="card-body">
+                <div style="text-align: center;">
+                    <div class="card-deck">
+                        <div class="card" >
+                            <div class="card-header">
+                                <small class="text-muted">Consultant Grade</small>
+                            </div>
+                            <div class="card-body">
+                                <big class="text-muted" th:text="${report.getConsultantGradeTrainer()}"></big>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <small class="text-muted">Technical Grade</small>
+                            </div>
+                            <div class="card-body">
+                                <big class="text-muted" th:text="${report.getTechnicalGradeTrainer()}"></big>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <small class="text-muted">Overall Grade</small>
+                            </div>
+                            <div class="card-body">
+                                <big class="text-muted" th:text="${report.getOverallGradeTrainer()}"></big>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div class="container-sm">
+                    <div class="text-center align-items-center justify-content-between mb-4">
+                        <div class="row">
+                            <div class="col">
+                                <form th:action="@{/trainee/report}" method="get">
+                                    <button class="btn" type="submit" style="color: #E23561">View Reports</button>
+                                </form>
+                            </div>
+                            <div class="col">
+                                <form th:action="@{/traineeRecentReport}"  method="post">
+                                    <button class="btn" type="submit" name="reportId" th:if="${now.isBefore(report.getDeadline())}" th:value="${report.getReportId()}" style="color: #E23561">Edit Report</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-sm text-center">
+            <img th:src="@{/images/consultant.png}" width="50%">
+            <br/>
+        </div>
+    </div>
+
+
+
+
+</main>
+
+<script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+<script src="webjars/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<script src="webjars/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+<script src="js/sb-admin-2.min.js"></script>
+
+
+</body>
+</html>

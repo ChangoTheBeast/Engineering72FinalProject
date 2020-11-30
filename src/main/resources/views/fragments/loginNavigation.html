@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel ="stylesheet" th:href="@{/css/myStyle.css}"/>
+    <link rel ="stylesheet" href="webjars/bootstrap/4.5.2/css/bootstrap.css"/>
+    <title>Title</title>
+</head>
+<body>
+<nav th:fragment="publicMenu(activeScreen)" class="">
+    <!--Bootstrap stuff-->
+</nav>
+<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+
+    <div class="mx-auto my-2 order-100 order-md-1 position-relative">
+        <a class="mx-auto" th:href="@{/login}">
+            <img th:src="@{/images/spartaLogo.png}">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+
+</nav>
+<br/>
+<br/>
+<br/>
+<br/>
+</body>
+</html>

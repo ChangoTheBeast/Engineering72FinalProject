@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+
+    <h1>This is the home page!</h1>
+    <div class="container-md text-center">
+        <form class="form-signin" th:action="@{/perform_login}" method="POST">
+            <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+            <div class="form-group" style="text-align: left">
+                <label for="inputEmail">Email address</label>
+                <input name="username" type="text" th:value="${username}" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+            </div>
+            <div class="form-group" style="text-align: left">
+                <label for="inputPassword">Password</label>
+                <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+            </div>
+            <h6 th:if="${showError == 'true'}" style="color: crimson">Invalid username or password</h6>
+            <br/>
+            <button class="btn btn-lg btn-primary btn-block greenBtn" type="submit">Sign in</button>
+        </form>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,96 @@
+.footer{
+    left: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: 180px !important;
+    background-color: white !important;
+}
+.sideNav{
+    background-color: #fff;
+}
+.sidebar .nav-item .nav-link{
+    color: black !important;
+}
+.sidebar-dark .nav-item .nav-link i {
+    color: #5EC68E !important;
+}
+
+.sidebar-dark .nav-item .nav-link[data-toggle="collapse"]::after {
+    color: #E23561 !important;
+}
+
+.sidebar-dark #sidebarToggle {
+    background-color: #4e73df !important;
+}
+
+.sidebar-dark #sidebarToggle::after {
+    color: #ffffff !important;
+}
+
+.sidebar-dark #sidebarToggle:hover {
+    background-color: #3858D0  !important;
+}
+
+.sidebar-dark.toggled #sidebarToggle::after {
+    color: #ffffff !important;
+}
+.bg-grey{
+    background-color: #eeeeee !important;
+}
+.sidebar-divider{
+    border-top: 1px solid #e5e4e4 !important;
+}
+.spartaLogo{
+    width: 70%;
+}
+.invisible-input {
+    visibility: hidden !important;
+}
+
+.border-bottom-color {
+    border-bottom: 0.25rem solid #E23561 !important;
+}
+
+ul li {
+    color: crimson;
+}
+
+.completeState0{
+    background-color: crimson;
+}
+
+.completeState1{
+    background-color: darkseagreen;
+}
+
+.feedbackFormTextArea{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+
+    resize: none; /*remove the resize handle on the bottom right*/
+}
+
+.btn-warning:not(:disabled):not(.disabled).active, .btn-warning:not(:disabled):not(.disabled):active, .show>.btn-warning.dropdown-toggle{
+    background-color: #bf910b !important;
+    border-color: #bf910b !important;
+}
+
+.btn-danger:not(:disabled):not(.disabled).active, .btn-danger:not(:disabled):not(.disabled):active, .show>.btn-danger.dropdown-toggle{
+    background-color: #AF293B !important;
+    border-color: #AF293B !important;
+}
+
+.holderTextRed{
+    color: crimson;
+}
+
+.holderTextGreen{
+    color: darkseagreen;
+}
+.placeholderText{
+    color: transparent;
+}

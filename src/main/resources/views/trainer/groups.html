@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/fragments :: layout(~{::head}, ~{::nav}, ~{::main})}">
+<head th:replace="~{fragments/head :: headFragment(title='Trainee Tracker')}">
+    <meta charset="UTF-8">
+    <link rel ="stylesheet" href="/css/myStyle.css"/>
+    <link rel ="stylesheet" href="webjars/bootstrap/4.5.2/css/bootstrap.css"/>
+    <link rel="stylesheet" href="vendor/fontawesome-free/css/all.min.css" >
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+</head>
+<body>
+<nav th:replace="~{fragments/sidebar}">Side Navigation</nav>
+<nav th:replace="~{fragments/generalNavigation}">Side Navigation</nav>
+<main>
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+        <div class="container">
+            <div class="container">
+                <div class="text-center align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 " style="color: #E23561">Class Mangement</h1>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+
+                <div class="col-xl-10 col-lg-12 col-md-9">
+
+                    <div class="card o-hidden border-0 shadow-lg my-5">
+                        <div class="card-body p-0">
+                            <!-- Nested Row within Card Body -->
+                            <div class="row">
+                                <div class="p-5">
+                                    <form th:action="@{/trainer/modifyGroup}" th:object="${assignGroupForm}" method="POST">
+                                        <h1 class="h3 mb-3 font-weight-normal">Assign Trainee to a Class</h1>
+                                        <div class="form-group" style="text-align: left">
+                                            <table>
+                                                <tr>
+                                                    <td>Select Trainee:</td>
+                                                    <td>
+                                                        <select th:field="*{traineeId}" required>
+                                                            <option value=""> -- </option>
+                                                            <option th:each="trainee : ${allTrainees}"
+                                                                    th:value="${trainee.traineeId}"
+                                                                    th:text="${trainee.firstName} + ' ' + ${trainee.lastName}"></option>
+                                                        </select>
+                                                    </td>
+                                                    <td class="placeholderText">place</td>
+                                                    <td>Select Class:</td>
+                                                    <td>
+                                                        <select th:field="*{groupId}" required>
+                                                            <option value=""> -- </option>
+                                                            <option th:each="group : ${allGroups}"
+                                                                    th:value="${group.groupId}"
+                                                                    th:text="${group.groupName}"></option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <br/>
+                                        <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+                                    </form>
+                                    <br/>
+                                    <h1 class="h3 mb-3 font-weight-normal">Create Class</h1>
+                                    <form th:action="@{/trainer/createGroup}" th:object="${newClass}" method="post">
+                                        <table>
+                                            <tr>
+                                                <td>Class Name</td>
+                                                <td>Course</td>
+                                                <td>Start Date</td>
+                                                <td>End Date</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input type="text" th:field="*{groupName}" required>
+                                                </td>
+                                                <td>
+                                                    <select th:field="*{courseId}" required>
+                                                        <option value=""> -- </option>
+                                                        <option th:each="course : ${allCourses}"
+                                                                th:value="${course.courseId}"
+                                                                th:text="${course.courseName}"></option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="datetime-local" th:field="*{startDate}" required>
+                                                </td>
+                                                <td>
+                                                    <input type="datetime-local" th:field="*{endDate}" required>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <br/>
+                                        <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</main>
+
+<script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+<script src="webjars/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<script src="webjars/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+<script src="js/sb-admin-2.min.js"></script>
+
+</body>
+</html>

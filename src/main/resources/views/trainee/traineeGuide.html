@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/fragments :: layout(~{::head}, ~{::nav}, ~{::main})}">
+<head th:replace="~{fragments/head :: headFragment(title='Trainee Tracker')}">
+    <head>
+        <meta charset="UTF-8">
+        <link rel ="stylesheet" href="/css/myStyle.css"/>
+        <link rel ="stylesheet" href="webjars/bootstrap/4.5.2/css/bootstrap.css"/>
+        <link rel="stylesheet" href="vendor/fontawesome-free/css/all.min.css" >
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+        <title>Title</title>
+    </head>
+    <body>
+        <nav th:replace="~{fragments/sidebar}">Side Navigation</nav>
+        <nav th:replace="~{fragments/generalNavigation}">Side Navigation</nav>
+        <main>
+            <div class="container">
+                <div class="text-center align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 " style="color: #E23561">Trainee Guide</h1>
+                </div>
+            </div>
+            <div class="jumbotron">
+                <div class="card-deck">
+                    <div class="card">
+                        <div class="card-header">
+                            <big class="text-muted">Trainee 1 - 1 Tracker</big>
+                        </div>
+                        <div class="card-body">
+                            <p>This is your Trainee 1-1 tracker. You will using this on a weekly basis to help support your training here at Sparta Global. Please make sure you are ready and prepared for your weekly 1-1 with your trainer. Here will set out what you will need to do to get ready for that session.</p>
+                            <p>Feedback is an integral part of your consultancy journey. We all have things that we need to work on and improve. This will be with you for the rest of your career. We are going to start you on that hourney of feedback during your training.</p>
+                            <p>It has been found that if you track your performance over time, you are more likely to achieve your goals. In this tracker, we will be asking you to record your personal feedback on a weekly basis. This will comprise of the things you need to <strong>Stop</strong>, <strong>Start</strong> and <strong>Continue</strong> doing to drive towards graduating the training programme here at Sparta Global. This should cover both Technical and Consultancy areas.</p>
+                            <p>Your feedback will be combined with your trainer feedback. You will receive three grades for the week; your <strong>consultant grade</strong>, your <strong>technical grade</strong> and an <strong>overall grade</strong>. These are generated from your weekly assessment, coding or projects and the assessment your trainer is making on your consultancy skills throughout the week. We are looking for a grade of <strong>C</strong> or better to ensure that you meet the required level to become a Spartan Consultant.</p>
+                            <p>If your grade does go below a <strong>C</strong>, then you will be put on a Performance and Support plan where we will work with you to improve and set out a plan to do this. please be aware that your position at the Academy will be reviewed if this happens twice during your training at any point.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <big class="text-muted">Tasks for 1 - 1 Meeting</big>
+                        </div>
+                        <div class="card-body">
+                            <p><center><strong>1)</strong> Complete your <strong>Stop</strong>, <strong>Start</strong> and <strong>Continue</strong> feedback for your week in training before your 1 - 1 session. Please reflect on where you need to improve. Be honest and reflect on your opportunities to grow and improve.</center></p>
+                            <p><center><strong>2)</strong> Mark your predicted Grade for both your Consultant and Technical grades; this is a visual to again track your progress.</center></p>
+                            <p><center><strong>3)</strong> Have both of these sections ready for your trainer in the 1 - 1 session. These tasks have been designed to promote the right conversation about your performance and how to improve.</center></p>
+                            <div class="card-deck">
+                                <div class="card">
+                                    <img src="/images/guide/ConsultantFocus.PNG" class="card-img-top" alt="...">
+                                </div>
+                                <div class="card">
+                                    <img src="/images/guide/TechnicalProgress.PNG" class="card-img-top" alt="...">
+                                </div>
+                                <div class="card">
+                                    <img src="/images/guide/ConsultantJourney.PNG" class="card-img-top" alt="...">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

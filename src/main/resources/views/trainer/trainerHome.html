@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/fragments :: layout(~{::head}, ~{::nav}, ~{::main})}">
+<head th:replace="~{fragments/head :: headFragment(title='Trainee Tracker')}">
+    <meta charset="UTF-8">
+    <link rel ="stylesheet" href="/css/myStyle.css"/>
+    <link rel ="stylesheet" href="webjars/bootstrap/4.5.2/css/bootstrap.css"/>
+    <link rel="stylesheet" href="vendor/fontawesome-free/css/all.min.css" >
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+</head>
+<body>
+
+<nav th:replace="~{fragments/sidebar}">Side Navigation</nav>
+<nav th:replace="~{fragments/generalNavigation}">Side Navigation</nav>
+<main>
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="container">
+            <div class="text-center align-items-center justify-content-between mb-4">
+                <h1 class="h3 mb-0 " style="color: #E23561">Trainer Dashboard</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Full Name:</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${trainer.getFirstName() + ' ' + trainer.getLastName()}"></div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-user fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Assigned Class:</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${courseGroup.getGroupName()}"></div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Course Assigned:</div>
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${course.getCourseName()}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-warning shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Current Week of Course:</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${courseGroup.getCurrentWeek()}"></div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-md">
+                <form th:action="@{/trainer/reportTraineeProcessing}" method="post">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="traineeSelector">Select Trainee:</label>
+                                <select class="form-control" id="traineeSelector" th:name="traineeId">
+                                    <option th:each="trainee: ${traineeList}" th:value="${trainee.traineeId}" th:text="${trainee.firstName} + ' ' + ${trainee.lastName}">Trainee</option>
+                                </select>
+                            </div>
+                            <button type="submit" th:name="btnStatus" th:value="submit" class="btn btn-primary">View Trainee Reports</button>
+                        </div>
+
+                        <div class="col">
+                            <div class="col">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Missed Deadlines:</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">Trainees who have not submitted their feedback forms for the current week</h6>
+                                    <p class="card-text">
+                                        <ul>
+                                            <li class="missedDeadline" th:each="missedDeadlineTrainee: ${missedDeadlineList}" th:text="${missedDeadlineTrainee.firstName} + ' ' + ${missedDeadlineTrainee.lastName}"></li>
+                                        </ul>
+                                    </p>
+                                </div>
+                            </div>
+                            </div>
+                        <br/>
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-body traineeDashboardCard">
+                                    <h5 class="card-title">Feedback Pending:</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">Trainer feedback to be completed</h6>
+                                    <p class="card-text">
+                                    <ul>
+                                        <li th:each="missingFeedbackTrainee: ${toCompleteList}" th:text="${missingFeedbackTrainee.firstName} + ' ' + ${missingFeedbackTrainee.lastName}"></li>
+                                    </ul>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                            <br/>
+                        </div>
+                    </div>
+                    <div class="row align-content-center text-center">
+                        <h5 class="text-center align-content-center" style="color: #2d2e33">Feedback Report Submission Tracker</h5>
+                    </div>
+                    <div class="row">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th th:rowspan="2">Trainee</th>
+                                <th class="text-center" th:colspan="${courseDuration}">Week</th>
+                            </tr>
+                            <tr>
+                                <th th:each="i: ${courseDurationList}" th:text="${i}"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="traineeCounter: ${traineeCounter}">
+                                <th scope="row" th:text="${traineeList.get(traineeCounter).getFirstName()} + ' ' + ${traineeList.get(traineeCounter).getLastName()}">Trainee Name</th>
+                                <td th:each="weekReport: ${traineeCompletedList.get(traineeCounter)}" th:class="'completeState' + ${weekReport.getTraineeSubmittedFlag()}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th colspan="2">Key</th>
+                            </tr>
+                            </thead>
+                            <tr>
+                                <td class="completeState0 holderTextRed">Holder</td>
+                                <td> Past Deadline</td>
+                            </tr>
+                            <tr>
+                                <td class="completeState1 holderTextGreen">Holder</td>
+                                <td> Submitted</td>
+                            </tr>
+                        </table>
+                    </div>
+                </form>
+        </div>
+    </div>
+
+
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+
+</main>
+
+
+
+</body>
+</html>

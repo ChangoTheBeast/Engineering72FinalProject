@@ -66,7 +66,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
                 .authorizeRequests()
 //                .antMatchers("/trainer*").hasRole("TRAINER")
 //                .antMatchers("/trainee*").hasRole("TRAINEE")
@@ -74,18 +73,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/css/**", "/js/**", "/scss/**", "/vendor/**", "/webjars/**", "/index", "/", "/images/**", "/login*").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin()
+                .formLogin().successHandler(new RoleUrlAuthenticationSuccessHandler())
                 .loginPage("/login").permitAll()
                 .loginProcessingUrl("/perform_login")
-                .successHandler(new RoleUrlAuthenticationSuccessHandler())
-//                .defaultSuccessUrl("http://localhost:8080/home")
-//              .failureUrl("/login.html?error=true")
-                .failureHandler(new FailureHandler("/loginFailure"))
                 .and()
                 .logout()
-                .logoutUrl("/perform_logout")
-                .deleteCookies("JSESSIONID")
-                .logoutSuccessUrl("/login");
+                .and()
+                .exceptionHandling().accessDeniedPage("/error");
     }
 
     @Bean

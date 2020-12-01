@@ -1,5 +1,6 @@
 package com.sparta.eng68.traineetracker.controllers;
 
+import com.sparta.eng68.traineetracker.entities.CourseGroup;
 import com.sparta.eng68.traineetracker.entities.Trainee;
 import com.sparta.eng68.traineetracker.services.TraineeService;
 import com.sparta.eng68.traineetracker.services.UserService;
@@ -9,6 +10,7 @@ import com.sparta.eng68.traineetracker.utilities.Pages;
 import com.sparta.eng68.traineetracker.utilities.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -35,26 +37,22 @@ public class UserController {
 
     @GetMapping("/trainee/tempPassword")
     public ModelAndView getPasswordInitialiser(ModelMap modelMap) {
-
         return new ModelAndView(Pages.accessPage(Role.FIRST_TIME_USER, Pages.FIRST_PASSWORD_PAGE), modelMap);
     }
 
     @PostMapping("/addFirstPassword")
     public ModelAndView changePasswordForNewUser(@RequestParam String password, ModelMap modelMap, Principal principal) {
         String username = principal.getName();
-
-
-
         userService.addFirstPassword(username, password);
-
-        return new ModelAndView("redirect:"+Pages.accessPage(Role.ANY, Pages.LOGOUT_CURRENT_USER), modelMap);
+        return new ModelAndView(Pages.accessPage(Role.ANY, Pages.LOGOUT_CURRENT_USER), modelMap);
     }
 
     @PostMapping("/trainer/addNewUser")
     public ModelAndView addNewUser(@ModelAttribute NewUserForm newUserForm, ModelMap modelMap) {
 
-        if (userService.getUserOptional(newUserForm.getEmail()).isPresent()) {
-            return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_NEW_USER_ALREADY_EXISTS_PAGE));
+        if (traineeService.getTraineeByUsername(newUserForm.getEmail()).isPresent()) {
+            modelMap.addAttribute("email", newUserForm.getEmail());
+            return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_NEW_USER_ALREADY_EXISTS_PAGE), modelMap);
         }
 
         userService.addNewUser(newUserForm.getEmail());
@@ -64,17 +62,20 @@ public class UserController {
         trainee.setUsername(newUserForm.getEmail());
         trainee.setGroupId(newUserForm.getGroupId());
         traineeService.addNewTrainee(trainee);
-        return new ModelAndView("redirect:"+Pages.accessPage(Role.TRAINER, Pages.TRAINER_HOME_URL), modelMap);
+        modelMap.addAttribute("trainee", trainee);
+        return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_NEW_USER_SUCCESS), modelMap);
     }
 
     @PostMapping("/trainer/deleteTrainee")
-    public ModelAndView deleteTrainee(@RequestParam String traineeId) {
+    public ModelAndView deleteTrainee(@RequestParam String traineeId, ModelMap modelMap) {
         int traineeIdInt = Integer.parseInt(traineeId);
-        userService.deleteUserByUsername(traineeService.getTraineeByID(traineeIdInt).get().getUsername());
+        Trainee trainee = traineeService.getTraineeByID(traineeIdInt).get();
+        userService.deleteUserByUsername(trainee.getUsername());
         weekReportService.deleteReportsByTraineeID(traineeIdInt);
         traineeService.deleteTraineeByID(traineeIdInt);
 
-        return new ModelAndView("redirect:"+Pages.accessPage(Role.TRAINER, Pages.TRAINER_NEW_USER_URL));
+        modelMap.addAttribute("trainee", trainee);
+        return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_DELETE_SUCCESS), modelMap);
     }
 
     @PostMapping("/passwordChange")

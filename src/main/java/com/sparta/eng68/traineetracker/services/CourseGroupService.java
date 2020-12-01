@@ -6,6 +6,7 @@ import com.sparta.eng68.traineetracker.repositories.CourseGroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,7 +47,23 @@ public class CourseGroupService {
         return week_num;
     }
 
-    public void saveNewGroup(CourseGroup newGroup) {
-        courseGroupRepository.save(newGroup);
+    public boolean saveNewGroup(CourseGroup newGroup) {
+        if (groupExists(newGroup) == false) {
+            courseGroupRepository.save(newGroup);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+
+    public boolean groupExists(CourseGroup newGroup){
+        //check database
+        //if group already exists return true
+        if (courseGroupRepository.findCourseGroupByGroupName(newGroup.getGroupName()) == null){
+            return false;
+        }
+        return true;
     }
 }

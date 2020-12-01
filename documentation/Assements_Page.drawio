@@ -1,0 +1,58 @@
+<mxfile host="app.diagrams.net" modified="2020-11-30T15:37:46.546Z" agent="5.0 (Windows)" etag="HsSxrRaeOun5SnbL2YLz" version="13.10.4" type="github">
+  <diagram id="KsBdWXhKBJReS51f2Let" name="Page-1">
+    <mxGraphModel dx="1422" dy="763" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="IKXNi_PCCzkAnGkg45rN-1" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="59" y="50" width="710" height="570" as="geometry" />
+        </mxCell>
+        <mxCell id="IKXNi_PCCzkAnGkg45rN-2" value="&lt;font style=&quot;font-size: 35px&quot;&gt;Assessments&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="260" y="40" width="430" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="IKXNi_PCCzkAnGkg45rN-3" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;rotation=90;" vertex="1" parent="1">
+          <mxGeometry x="-120" y="260" width="526.5" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="IKXNi_PCCzkAnGkg45rN-4" value="&lt;font style=&quot;font-size: 17px&quot;&gt;Nav&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="100" y="85" width="80" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="IKXNi_PCCzkAnGkg45rN-5" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;rotation=90;" vertex="1" parent="1">
+          <mxGeometry x="220" y="300" width="340" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="IKXNi_PCCzkAnGkg45rN-6" value="Filter By Assessment" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="280" y="190" width="230" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="IKXNi_PCCzkAnGkg45rN-7" value="Trainee Name" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="294" y="250" width="196" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="IKXNi_PCCzkAnGkg45rN-8" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="510" y="240" width="220" height="340" as="geometry" />
+        </mxCell>
+        <mxCell id="IKXNi_PCCzkAnGkg45rN-9" value="Assessment Score" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="522" y="250" width="196" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="IKXNi_PCCzkAnGkg45rN-10" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="59" y="640" width="710" height="570" as="geometry" />
+        </mxCell>
+        <mxCell id="IKXNi_PCCzkAnGkg45rN-11" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;rotation=90;" vertex="1" parent="1">
+          <mxGeometry x="-120" y="850" width="526.5" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="IKXNi_PCCzkAnGkg45rN-12" value="&lt;font style=&quot;font-size: 17px&quot;&gt;Nav&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="100" y="675" width="80" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="IKXNi_PCCzkAnGkg45rN-16" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="300" y="829" width="380" height="340" as="geometry" />
+        </mxCell>
+        <mxCell id="IKXNi_PCCzkAnGkg45rN-17" value="Assessment List" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="392" y="840" width="196" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="IKXNi_PCCzkAnGkg45rN-18" value="&lt;font style=&quot;font-size: 35px&quot;&gt;Trainee&lt;/font&gt; &lt;font style=&quot;font-size: 35px&quot;&gt;Assessments&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="240" y="640" width="430" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="IKXNi_PCCzkAnGkg45rN-20" value="Assessment" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="326" y="890" width="196" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

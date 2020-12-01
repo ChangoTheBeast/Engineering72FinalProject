@@ -10,5 +10,4 @@ import java.util.Optional;
 public interface TraineeRepository extends CrudRepository<Trainee, Integer> {
     List<Trainee> findAllByGroupId(int groupId);
     Optional<Trainee> findTraineeByUsername(String username);
-
 }

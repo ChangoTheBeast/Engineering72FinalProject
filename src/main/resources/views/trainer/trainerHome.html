@@ -93,7 +93,7 @@
             </div>
         </div>
         <div class="container-md">
-                <form th:action="@{/trainer/reportTraineeProcessing}" method="post">
+                <form th:action="@{/trainer/viewTrainee}" method="post">
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
@@ -102,8 +102,10 @@
                                     <option th:each="trainee: ${traineeList}" th:value="${trainee.traineeId}" th:text="${trainee.firstName} + ' ' + ${trainee.lastName}">Trainee</option>
                                 </select>
                             </div>
-                            <button type="submit" th:name="btnStatus" th:value="submit" class="btn btn-primary">View Trainee Reports</button>
+                            <button type="submit" th:name="btnStatus" th:value="reports" class="btn btn-primary">View Trainee Reports</button>
+                            <button type="submit" th:name="btnStatus" th:value="attendance" class="btn btn-primary">View Trainee Attendance</button>
                         </div>
+                </form>
 
                         <div class="col">
                             <div class="col">

@@ -52,6 +52,7 @@ public class Pages {
     public static final String TRAINER_ADD_WEEK_URL = "/trainer/addNewWeek";
     public static final String TRAINER_WEEK_SUCCESS_PAGE ="/trainer/weekSuccess";
     public static final String TRAINER_WEEK_SUCCESS_URL ="/trainer/weekSuccess";
+    public static final String TRAINER_ATTENDANCE="/trainer/traineeAttendance";
 
     //Any =======================================================================================
     public static final String CONSULTANCY = "/trainee/consultancy";

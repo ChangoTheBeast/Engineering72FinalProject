@@ -35,19 +35,14 @@ public class UserController {
 
     @GetMapping("/trainee/tempPassword")
     public ModelAndView getPasswordInitialiser(ModelMap modelMap) {
-
         return new ModelAndView(Pages.accessPage(Role.FIRST_TIME_USER, Pages.FIRST_PASSWORD_PAGE), modelMap);
     }
 
     @PostMapping("/addFirstPassword")
     public ModelAndView changePasswordForNewUser(@RequestParam String password, ModelMap modelMap, Principal principal) {
         String username = principal.getName();
-
-
-
         userService.addFirstPassword(username, password);
-
-        return new ModelAndView("redirect:"+Pages.accessPage(Role.ANY, Pages.LOGOUT_CURRENT_USER), modelMap);
+        return new ModelAndView(Pages.accessPage(Role.ANY, Pages.LOGOUT_CURRENT_USER), modelMap);
     }
 
     @PostMapping("/trainer/addNewUser")

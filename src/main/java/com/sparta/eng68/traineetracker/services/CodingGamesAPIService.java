@@ -2,7 +2,9 @@ package com.sparta.eng68.traineetracker.services;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sparta.eng68.traineetracker.entities.Assessment;
 import com.sparta.eng68.traineetracker.entities.Trainee;
+import com.sparta.eng68.traineetracker.interfaces.CodingGamesAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,12 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class CodingGamesAPI {
+public class CodingGamesAPIService implements CodingGamesAPI {
 
     TraineeService traineeService;
 
     @Autowired
-    public CodingGamesAPI(TraineeService traineeService) {
+    public CodingGamesAPIService(TraineeService traineeService) {
         this.traineeService = traineeService;
     }
 
@@ -66,6 +68,16 @@ public class CodingGamesAPI {
     }
 
     public JsonNode getAssessmentByCandidateEmail(String email) {
+        return null;
+    }
+
+    @Override
+    public List<JsonNode> getAllReportsByEmail() {
+        return null;
+    }
+
+    @Override
+    public List<Assessment> getAllAssessmentsByEmail() {
         return null;
     }
 }

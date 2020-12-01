@@ -1,0 +1,118 @@
+{
+    "tests": [
+        {
+            "status": "completed",
+            "url": "https://www.codingame.com/work/dashboard/campaign/249818/candidates?selected=3567740",
+            "report": {
+                "duration": 3423,
+                "points": 680,
+                "score": 30.90909090909091,
+                "technologies": {
+                    "SQL": {
+                        "points": 680,
+                        "score": 30.90909090909091,
+                        "skills": {
+                            "Design": {
+                                "points": 20,
+                                "score": 16.666666666666668,
+                                "total_points": 120
+                            },
+                            "Language knowledge": {
+                                "points": 460,
+                                "score": 29.11392405063291,
+                                "total_points": 1580
+                            },
+                            "Problem solving": {
+                                "points": 200,
+                                "score": 40,
+                                "total_points": 500
+                            }
+                        },
+                        "total_points": 2200,
+                        "comparative_score": 27.256363636363634
+                    }
+                },
+                "total_duration": 4660,
+                "total_points": 2200,
+                "comparative_score": 27.256363636363634
+            },
+            "id": 3567740,
+            "id_test": 3567740,
+            "candidate_name": "Bill Bird",
+            "candidate_email": "bbird@spartaglobal.com",
+            "tags": [
+                "Engineering 47"
+            ],
+            "send_time": 1574417442130,
+            "start_time": 1574417527285,
+            "end_time": 1574420954997,
+            "test_url": "https://www.codingame.com/evaluate?id=3567740690558c289c86ee4946528370e806306"
+        },
+        {
+            "status": "completed",
+            "url": "https://www.codingame.com/work/dashboard/campaign/249818/candidates?selected=3567741",
+            "report": {
+                "duration": 2047,
+                "points": 1800,
+                "score": 81.81818181818181,
+                "technologies": {
+                    "SQL": {
+                        "points": 1800,
+                        "score": 81.81818181818181,
+                        "skills": {
+                            "Design": {
+                                "points": 20,
+                                "score": 16.666666666666668,
+                                "total_points": 120
+                            },
+                            "Language knowledge": {
+                                "points": 1580,
+                                "score": 100,
+                                "total_points": 1580
+                            },
+                            "Problem solving": {
+                                "points": 200,
+                                "score": 40,
+                                "total_points": 500
+                            }
+                        },
+                        "total_points": 2200,
+                        "comparative_score": 96.20909090909092
+                    }
+                },
+                "total_duration": 4660,
+                "total_points": 2200,
+                "comparative_score": 96.20909090909092
+            },
+            "id": 3567741,
+            "id_test": 3567741,
+            "candidate_name": "Laura Farmer",
+            "candidate_email": "lFarmer@spartaglobal.com",
+            "tags": [
+                "Engineering 47"
+            ],
+            "send_time": 1574417442130,
+            "start_time": 1574417601776,
+            "end_time": 1574419653444,
+            "test_url": "https://www.codingame.com/evaluate?id=356774190f033989b36e72cbbe4c9b2eb316dd0"
+        },
+        {
+            "status": "canceled",
+            "id": 3567734,
+            "id_test": 3567734,
+            "candidate_name": "James Ship",
+            "candidate_email": "jship@spartaglobal.com",
+            "tags": [
+                "Engineering 47"
+            ],
+            "test_url": "https://www.codingame.com/evaluate?id=3567734b2608d6a221b18a9abb17143085caccf"
+        }
+    ],
+    "pagination": {
+        "start": 0,
+        "limit": 50,
+        "total": 6611,
+        "has_more_items": true,
+        "next_start": 50
+    }
+}

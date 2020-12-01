@@ -16,6 +16,17 @@ import java.util.List;
 @Service
 public class CodingGamesAPIService implements CodingGamesAPI {
 
+    private static JsonNode jsonNode = null;
+
+    static {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            jsonNode = objectMapper.readTree(new File("src/main/resources/static/CodingGame.json"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     TraineeService traineeService;
 
     @Autowired
@@ -24,20 +35,11 @@ public class CodingGamesAPIService implements CodingGamesAPI {
     }
 
     public static void main(String[] args) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode jsonNode = null;
-
         String providedName = "jship@spartaglobal.com";
-
-        try {
-            jsonNode = objectMapper.readTree(new File("src/main/resources/static/CodingGame.json"));
-            for (int i = 0; i < jsonNode.get("tests").size(); i++){
-                if(jsonNode.get("tests").get(i).get("candidate_email").asText().equals(providedName)) {
-                    System.out.println(jsonNode.get("tests").get(i));
-                }
+        for (int i = 0; i < jsonNode.get("tests").size(); i++){
+            if(jsonNode.get("tests").get(i).get("candidate_email").asText().equals(providedName)) {
+                System.out.println(jsonNode.get("tests").get(i));
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -51,33 +53,29 @@ public class CodingGamesAPIService implements CodingGamesAPI {
             traineeEmails.add(trainee.getUsername());
         }
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode jsonNode = null;
-        try {
-            jsonNode = objectMapper.readTree(new File("src/main/resources/static/CodingGame.json"));
-            for (int i = 0; i < jsonNode.get("tests").size(); i++){
-                if (traineeEmails.contains(jsonNode.get("tests").get(i).get("candidate_email").asText())) {
-                    traineeIDs.add(Integer.parseInt(jsonNode.get("tests").get(i).get("test_id").asText()));
-                }
+        for (int i = 0; i < jsonNode.get("tests").size(); i++){
+            if (traineeEmails.contains(jsonNode.get("tests").get(i).get("candidate_email").asText())) {
+                traineeIDs.add(Integer.parseInt(jsonNode.get("tests").get(i).get("test_id").asText()));
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
         return traineeIDs;
     }
 
-    public JsonNode getAssessmentByCandidateEmail(String email) {
-        return null;
+    @Override
+    public List<JsonNode> getAllReportsByEmail(String email) {
+        List<JsonNode> traineeAssessments = new ArrayList<>();
+
+        for (int i = 0; i < jsonNode.get("tests").size(); i++) {
+            if (email.equals(jsonNode.get("tests").get(i).get("candidate_email").asText())) {
+                traineeAssessments.add(jsonNode.get("tests").get(i));
+            }
+        }
+        return traineeAssessments;
     }
 
     @Override
-    public List<JsonNode> getAllReportsByEmail() {
-        return null;
-    }
-
-    @Override
-    public List<Assessment> getAllAssessmentsByEmail() {
+    public List<Assessment> getAllAssessmentsByEmail(String email) {
         return null;
     }
 }

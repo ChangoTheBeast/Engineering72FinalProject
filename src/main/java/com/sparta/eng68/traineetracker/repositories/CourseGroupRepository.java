@@ -11,4 +11,5 @@ public interface CourseGroupRepository extends CrudRepository<CourseGroup, Integ
 
     Optional<CourseGroup> findFirstByGroupIdOrderByCurrentWeekDesc(Integer groupId);
 
+    CourseGroup findCourseGroupByGroupName(String name);
 }

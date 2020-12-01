@@ -64,6 +64,7 @@
                                     </form>
                                     <br/>
                                     <h1 class="h3 mb-3 font-weight-normal">Create Class</h1>
+                                    <h2 style="color: red" th:text="${groupExists}"></h2>
                                     <form th:action="@{/trainer/createGroup}" th:object="${newClass}" method="post">
                                         <table>
                                             <tr>

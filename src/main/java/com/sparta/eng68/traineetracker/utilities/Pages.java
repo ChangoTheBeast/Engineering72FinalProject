@@ -39,6 +39,8 @@ public class Pages {
     public static final String TRAINER_NEW_USER_URL = "/trainer/addTrainee";
     public static final String TRAINER_NEW_USER_ALREADY_EXISTS_PAGE = "/trainer/newUserAlreadyExists";
     public static final String TRAINER_NEW_USER_ALREADY_EXISTS_URL = "/trainer/newUserAlreadyExists";
+    public static final String TRAINER_NEW_GROUP_ALREADY_EXISTS_PAGE = "/trainer/newGroupAlreadyExists";
+    public static final String TRAINER_NEW_GROUP_ALREADY_EXISTS_URL = "/trainer/newGroupAlreadyExists";
     public static final String TRAINER_FEEDBACK_FORM_PAGE = "/trainer/trainerFeedbackForm";
     public static final String TRAINER_REPORT_PAGE = "/trainer/trainerReport";
     public static final String TRAINER_REPORT_URL = "/trainer/report";

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <link rel ="stylesheet" th:href="@{/css/myStyle.css}"/>
@@ -14,11 +14,18 @@
     <ul class="navbar-nav sideNav sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/}">
+        <li>
+        <a th:if="${#httpServletRequest.isUserInRole('TRAINER') == true}"  class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/trainer/home}">
             <div class="sidebar-brand-icon">
                 <img th:class="spartaLogo" th:src="@{/images/spartaLogo.png}">
             </div>
         </a>
+        <a th:if="${#httpServletRequest.isUserInRole('TRAINEE') == true}"  class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/trainee/home}">
+            <div class="sidebar-brand-icon">
+                <img th:class="spartaLogo" th:src="@{/images/spartaLogo.png}">
+            </div>
+        </a>
+        </li>
 
         <!-- Divider -->
         <hr class="sidebar-divider my-0">

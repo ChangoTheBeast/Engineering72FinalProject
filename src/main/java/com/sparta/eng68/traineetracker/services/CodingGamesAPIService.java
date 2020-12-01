@@ -74,6 +74,7 @@ public class CodingGamesAPIService implements CodingGamesAPI {
         return traineeAssessments;
     }
 
+    //TODO If needed; When we get API access
     @Override
     public List<Assessment> getAllAssessmentsByEmail(String email) {
         return null;

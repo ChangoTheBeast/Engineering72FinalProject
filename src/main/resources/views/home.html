@@ -8,17 +8,22 @@
 
     <h1>This is the home page!</h1>
     <div class="container-md text-center">
-        <form class="form-signin" th:action="@{/perform_login}" method="POST">
+        <div th:if="${param.error}">
+            Invalid username and password.
+        </div>
+        <div th:if="${param.logout}">
+            You have been logged out.
+        </div>
+        <form class="form-signin" th:action="@{/perform_login}" method="post">
             <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
             <div class="form-group" style="text-align: left">
                 <label for="inputEmail">Email address</label>
-                <input name="username" type="text" th:value="${username}" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+                <input name="username" type="text" id="inputEmail" class="form-control" placeholder="Email address" autofocus="autofocus">
             </div>
             <div class="form-group" style="text-align: left">
                 <label for="inputPassword">Password</label>
-                <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+                <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password">
             </div>
-            <h6 th:if="${showError == 'true'}" style="color: crimson">Invalid username or password</h6>
             <br/>
             <button class="btn btn-lg btn-primary btn-block greenBtn" type="submit">Sign in</button>
         </form>

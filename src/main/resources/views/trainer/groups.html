@@ -20,7 +20,7 @@
         <div class="container">
             <div class="container">
                 <div class="text-center align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 " style="color: #E23561">Class Mangement</h1>
+                    <h1 class="h3 mb-0 " style="color: #E23561">Class Management</h1>
                 </div>
             </div>
             <div class="row justify-content-center">
@@ -32,14 +32,14 @@
                             <!-- Nested Row within Card Body -->
                             <div class="row">
                                 <div class="p-5">
-                                    <form th:action="@{/trainer/modifyGroup}" th:object="${assignGroupForm}" method="POST">
+                                    <form class="form-signin" th:action="@{/trainer/modifyGroup}" th:object="${assignGroupForm}" method="POST">
                                         <h1 class="h3 mb-3 font-weight-normal">Assign Trainee to a Class</h1>
                                         <div class="form-group" style="text-align: left">
                                             <table>
                                                 <tr>
                                                     <td>Select Trainee:</td>
                                                     <td>
-                                                        <select th:field="*{traineeId}" required>
+                                                        <select class="form-control" th:field="*{traineeId}" required>
                                                             <option value=""> -- </option>
                                                             <option th:each="trainee : ${allTrainees}"
                                                                     th:value="${trainee.traineeId}"
@@ -49,7 +49,7 @@
                                                     <td class="placeholderText">place</td>
                                                     <td>Select Class:</td>
                                                     <td>
-                                                        <select th:field="*{groupId}" required>
+                                                        <select class="form-control" th:field="*{groupId}" required>
                                                             <option value=""> -- </option>
                                                             <option th:each="group : ${allGroups}"
                                                                     th:value="${group.groupId}"
@@ -64,8 +64,7 @@
                                     </form>
                                     <br/>
                                     <h1 class="h3 mb-3 font-weight-normal">Create Class</h1>
-                                    <h2 style="color: red" th:text="${groupExists}"></h2>
-                                    <form th:action="@{/trainer/createGroup}" th:object="${newClass}" method="post">
+                                    <form class="form-signin" th:action="@{/trainer/createGroup}" th:object="${newClass}" method="POST">
                                         <table>
                                             <tr>
                                                 <td>Class Name</td>
@@ -75,10 +74,10 @@
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <input type="text" th:field="*{groupName}" required>
+                                                    <input class="form-control" type="text" th:field="*{groupName}" required>
                                                 </td>
                                                 <td>
-                                                    <select th:field="*{courseId}" required>
+                                                    <select class="form-control" th:field="*{courseId}" required>
                                                         <option value=""> -- </option>
                                                         <option th:each="course : ${allCourses}"
                                                                 th:value="${course.courseId}"
@@ -86,10 +85,10 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <input type="datetime-local" th:field="*{startDate}" required>
+                                                    <input class="form-control" type="datetime-local" th:field="*{startDate}" required>
                                                 </td>
                                                 <td>
-                                                    <input type="datetime-local" th:field="*{endDate}" required>
+                                                    <input class="form-control" type="datetime-local" th:field="*{endDate}" required>
                                                 </td>
                                             </tr>
                                         </table>

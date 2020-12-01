@@ -47,8 +47,7 @@ public class UserService {
     }
 
     public Optional<User> getUserOptional(String username){
-        Optional<User> user = userRepository.findByUsername(username);
-        return user;
+        return userRepository.findByUsername(username);
     }
 
     public void addNewUser(String username) {

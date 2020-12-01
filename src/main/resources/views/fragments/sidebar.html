@@ -14,9 +14,20 @@
     <ul class="navbar-nav sideNav sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/}">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center"
+           th:if="${#httpServletRequest.isUserInRole('TRAINER') == true}" th:href="@{/trainer/home}">
             <div class="sidebar-brand-icon">
-                <img th:class="spartaLogo" th:src="@{/images/spartaLogo.png}">
+                <span>
+                    <img th:class="spartaLogo" th:src="@{/images/spartaLogo.png}">
+                </span>
+            </div>
+        </a>
+        <a class="sidebar-brand d-flex align-items-center justify-content-center"
+           th:if="${#httpServletRequest.isUserInRole('TRAINEE') == true}" th:href="@{/trainee/home}">
+            <div class="sidebar-brand-icon">
+                <span>
+                    <img th:class="spartaLogo" th:src="@{/images/spartaLogo.png}">
+                </span>
             </div>
         </a>
 

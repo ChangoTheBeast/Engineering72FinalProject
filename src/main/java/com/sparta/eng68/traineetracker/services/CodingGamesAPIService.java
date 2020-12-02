@@ -8,6 +8,7 @@ import com.sparta.eng68.traineetracker.interfaces.CodingGamesAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,6 +16,8 @@ import java.util.List;
 
 @Service
 public class CodingGamesAPIService implements CodingGamesAPI {
+
+    public CodingGamesAPIService() {}
 
     private static JsonNode jsonNode = null;
 
@@ -35,12 +38,16 @@ public class CodingGamesAPIService implements CodingGamesAPI {
     }
 
     public static void main(String[] args) {
-        String providedName = "jship@spartaglobal.com";
-        for (int i = 0; i < jsonNode.get("tests").size(); i++){
-            if(jsonNode.get("tests").get(i).get("candidate_email").asText().equals(providedName)) {
-                System.out.println(jsonNode.get("tests").get(i));
-            }
-        }
+        String providedName = "bbird@spartaglobal.com";
+        CodingGamesAPI codingGamesAPI = new CodingGamesAPIService();
+
+        System.out.println(codingGamesAPI
+                .getAllReportsByEmail(providedName)
+                .get(0)
+                .get("report")
+                .get("technologies")
+                .fieldNames()
+                .next());
     }
 
     public List<Integer> getAllTestIDs() {
@@ -79,4 +86,8 @@ public class CodingGamesAPIService implements CodingGamesAPI {
     public List<Assessment> getAllAssessmentsByEmail(String email) {
         return null;
     }
+
+
+
+
 }

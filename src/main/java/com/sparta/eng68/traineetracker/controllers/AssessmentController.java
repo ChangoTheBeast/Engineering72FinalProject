@@ -1,5 +1,6 @@
 package com.sparta.eng68.traineetracker.controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.sparta.eng68.traineetracker.entities.Assessment;
 import com.sparta.eng68.traineetracker.entities.Trainee;
 import com.sparta.eng68.traineetracker.services.CodingGamesAPIService;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
@@ -46,16 +48,32 @@ public class AssessmentController {
 
 
 
-    @GetMapping("/trainer/assessments/{traineeId}")
+    @GetMapping("/trainee/assessments/{traineeId}")
     public String getTraineeAssessments(@PathVariable Integer traineeId, Model model) {
         Trainee trainee = traineeService.getTraineeByID(traineeId).get();
-        List<Assessment> assessments = codingGamesAPIService.getAllAssessmentsByEmail(traineeService.getTraineeByID(traineeId).get().getUsername());
+        String username = traineeService.getTraineeByID(traineeId).get().getUsername();
+        List<JsonNode> assessments = codingGamesAPIService.getAllReportsByEmail(username);
+        JsonNode assessmentExample = assessments.get(0);
+
+        model.addAttribute("assessmentExample", assessmentExample);
         model.addAttribute("traineeId", traineeId);
         model.addAttribute("trainee", trainee);
         model.addAttribute("assessments", assessments);
-        return Pages.accessPage(Role.TRAINER, Pages.TRAINER_ASSESSMENTS);
-
+        return Pages.accessPage(Role.TRAINER, Pages.TRAINEE_ASSESSMENTS);
     }
+
+//    @PostMapping("/populateDatabaseWithTestId")
+//    public String populateDatabaseWithTestId(Model model){
+//
+//       List<Integer> testIDs = codingGamesAPIService.getAllTestIDs();
+//
+//    }
+
+
+
+
+
+
 
 
 }

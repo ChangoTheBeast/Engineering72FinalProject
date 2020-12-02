@@ -30,6 +30,29 @@
                         },
                         "total_points": 2200,
                         "comparative_score": 27.256363636363634
+                    },
+                    "notSQL": {
+                        "points": 680,
+                        "score": 30.90909090909091,
+                        "skills": {
+                            "Design": {
+                                "points": 20,
+                                "score": 16.666666666666668,
+                                "total_points": 120
+                            },
+                            "Language knowledge": {
+                                "points": 460,
+                                "score": 29.11392405063291,
+                                "total_points": 1580
+                            },
+                            "Problem solving": {
+                                "points": 200,
+                                "score": 40,
+                                "total_points": 500
+                            }
+                        },
+                        "total_points": 2200,
+                        "comparative_score": 27.256363636363634
                     }
                 },
                 "total_duration": 4660,

@@ -12,6 +12,7 @@
 <body>
 <nav th:replace="~{fragments/publicNavigation}">Navigation</nav>
 <main>
+    <button th:action="@{/populateDatabaseWithTestId}"></button>
     <div class="container-fluid">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -27,7 +28,7 @@
                 <h2 class="mb-0">
                     <a
                        class="btn btn-link btn-block text-left"
-                       th:href="${'trainer/assessment/' + trainee.traineeId}" th:text="${trainee.FirstName +' '+trainee.LastName}">
+                       th:href="${'/trainee/assessments/' + trainee.traineeId}" th:text="${trainee.FirstName +' '+trainee.LastName}">
 <!--                       th:data-target="${trainee.firstName +' '+trainee.lastName}"-->
 <!--                       th:aria-controls="${trainee.firstName +' '+trainee.lastName}">-->
                     </a>

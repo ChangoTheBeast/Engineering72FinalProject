@@ -20,16 +20,16 @@
         </div>
     </div>
     <br/>
-    <p th:if="${reports.isEmpty()}" th:text="${'No reports yet for ' + trainee.getFirstName() + ' ' + trainee.getLastName()}"></p>
+<!--    <p th:if="${reports.isEmpty()}" th:text="${'No reports yet for ' + trainee.getFirstName() + ' ' + trainee.getLastName()}"></p>-->
     <div class="accordion" id="accordionExample">
-        <div th:each="trainee : ${trainee.getAllTrainees}">
-            <div th:id="${'heading' + trainee.firstName +' '+trainee.lastName}">
+        <div th:each="trainee : ${trainees}">
+            <div th:id="${'heading' + trainee.getFirstName() +' '+trainee.getLastName()}">
                 <h2 class="mb-0">
-                    <a aria-expanded="show"
+                    <a
                        class="btn btn-link btn-block text-left"
-                       th:href="${'trainer/assessment/' + trainee.traineeId}" th:text="${trainee.firstName +' '+trainee.lastName}"
-                       th:data-target="${trainee.firstName +' '+trainee.lastName}"
-                       th:aria-controls="${trainee.firstName +' '+trainee.lastName}">
+                       th:href="${'trainer/assessment/' + trainee.traineeId}" th:text="${trainee.FirstName +' '+trainee.LastName}">
+<!--                       th:data-target="${trainee.firstName +' '+trainee.lastName}"-->
+<!--                       th:aria-controls="${trainee.firstName +' '+trainee.lastName}">-->
                     </a>
                 </h2>
             </div>

@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/fragments :: layout(~{::head}, ~{::nav}, ~{::main})}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/fragments :: layout(~{::head}, ~{::nav}, ~{::main})}">
 <head th:replace="~{fragments/head :: headFragment(title='Trainee Tracker')}">
     <head>
         <meta charset="UTF-8">
-        <link rel ="stylesheet" href="/css/myStyle.css"/>
-        <link rel ="stylesheet" href="webjars/bootstrap/4.5.2/css/bootstrap.css"/>
-        <link rel="stylesheet" href="vendor/fontawesome-free/css/all.min.css" >
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+        <link rel="stylesheet" href="/css/myStyle.css"/>
+        <link rel="stylesheet" href="webjars/bootstrap/4.5.2/css/bootstrap.css"/>
+        <link rel="stylesheet" href="vendor/fontawesome-free/css/all.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+              rel="stylesheet">
         <title>Trainee Assessments</title>
     </head>
 <body>
@@ -20,11 +22,13 @@
         </div>
     </div>
     <br/>
-    <p th:if="${assessments.isEmpty()}" th:text="${'No assessments yet for ' + trainee.getFirstName() + ' ' + trainee.getLastName()}"></p>
+    <p th:if="${assessments.isEmpty()}"
+       th:text="${'No assessments yet for ' + trainee.getFirstName() + ' ' + trainee.getLastName()}"></p>
     <div class="accordion" id="accordionExample">
         <div class="card" th:each="assessment : ${assessments}">
             <p th:value="${assessment}">value</p>
-            <div class="card-header" th:id="${'heading' + assessment.get('report').get('technologies').fieldNames().next()}">
+            <div class="card-header"
+                 th:id="${'heading' + assessment.get('report').get('technologies').fieldNames().next()}">
                 <h2 class="mb-0">
                     <button aria-expanded="show"
                             class="btn btn-link btn-block text-left"
@@ -36,41 +40,44 @@
                     </button>
                 </h2>
             </div>
-            <div th:id="${'collapse' + assessment.get('report').get('technologies').fieldNames().next()}" class="collapse hide" th:aria-labelledby="${'heading' + assessment.get(0).get('report').get('technologies').fieldNames().next()}" data-parent="#accordionExample">
+            <div th:id="${'collapse' + assessment.get('report').get('technologies').fieldNames().next()}"
+                 class="collapse hide"
+                 th:aria-labelledby="${'heading' + assessment.get('report').get('technologies').fieldNames().next()}"
+                 data-parent="#accordionExample">
                 <div class="card-body">
                     <div class="jumbotron">
                         <h2 th:text="${ assessment.get('report').get('technologies').fieldNames().next()}"></h2>
                         <br/>
-<!--                                <div class="card">-->
-                                    <h4><strong>Trainee Score</strong></h4>
-                                    <table style="width:100%">
-                                        <tr>
-                                            <td><strong>Score</strong></td>
-                                            <td th:text="${assessment.get('report').get('score')}"></td>
-                                        </tr>
-                                        <tr>
-                                        <td><strong>Duration</strong></td>
-                                        <td th:text="${assessment.get('report').get('Duration')}"></td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Comparative Score</strong></td>
-                                            <td th:text="${assessment.get('report').get('technologies').get('comparative_score')}"></td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Design Score</strong></td>
-                                            <td th:text="${assessment.get('report').get('Duration')}"></td>
-                                        </tr>
+                        <!--                                <div class="card">-->
+                        <h4><strong>Trainee Score</strong></h4>
+                        <table style="width:100%">
+                            <tr>
+                                <td><strong>Score</strong></td>
+                                <td th:text="${assessment.get('report').get('score')}"></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Duration</strong></td>
+                                <td th:text="${assessment.get('report').get('Duration')}"></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Comparative Score</strong></td>
+                                <td th:text="${assessment.get('report').get('technologies').get('comparative_score')}"></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Design Score</strong></td>
+                                <td th:text="${assessment.get('report').get('Duration')}"></td>
+                            </tr>
 
-                                    </table>
-                                </div>
-<!--                            </div>-->
-                                <br/>
-                            </div>
-                        </div>
+                        </table>
                     </div>
+                    <!--                            </div>-->
+                    <br/>
                 </div>
             </div>
         </div>
+    </div>
+    </div>
+    </div>
     </div>
 </main>
 </body>

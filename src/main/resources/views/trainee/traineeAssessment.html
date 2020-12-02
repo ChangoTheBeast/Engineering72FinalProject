@@ -23,13 +23,14 @@
     <p th:if="${assessments.isEmpty()}" th:text="${'No assessments yet for ' + trainee.getFirstName() + ' ' + trainee.getLastName()}"></p>
     <div class="accordion" id="accordionExample">
         <div class="card" th:each="assessment : ${assessments}">
+            <p th:value="${assessment}">value</p>
             <div class="card-header" th:id="${'heading' + assessment.get('report').get('technologies').fieldNames().next()}">
                 <h2 class="mb-0">
                     <button aria-expanded="show"
                             class="btn btn-link btn-block text-left"
                             data-toggle="collapse"
                             th:data-target="${'#collapse' + assessment.get('report').get('technologies').fieldNames().next()}"
-                            th:aria-controls="${'collapse' + assessment.get('report').get('technologies').fieldNames().next()}"x
+                            th:aria-controls="${'collapse' + assessment.get('report').get('technologies').fieldNames().next()}"
                             th:text="${ assessment.get('report').get('technologies').fieldNames().next()}"
                             type="button">
                     </button>
@@ -40,8 +41,7 @@
                     <div class="jumbotron">
                         <h2 th:text="${ assessment.get('report').get('technologies').fieldNames().next()}"></h2>
                         <br/>
-                                <br/>
-                                <div class="card">
+<!--                                <div class="card">-->
                                     <h4><strong>Trainee Score</strong></h4>
                                     <table style="width:100%">
                                         <tr>
@@ -63,7 +63,7 @@
 
                                     </table>
                                 </div>
-                            </div>
+<!--                            </div>-->
                                 <br/>
                             </div>
                         </div>

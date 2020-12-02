@@ -1,10 +1,10 @@
-package com.sparta.eng68.traineetracker;
+package com.sparta.eng72.traineetracker;
 
-import com.sparta.eng68.traineetracker.controllers.AttendanceController;
-import com.sparta.eng68.traineetracker.entities.Trainee;
-import com.sparta.eng68.traineetracker.entities.Trainer;
-import com.sparta.eng68.traineetracker.services.TraineeService;
-import com.sparta.eng68.traineetracker.services.TrainerService;
+import com.sparta.eng72.traineetracker.controllers.AttendanceController;
+import com.sparta.eng72.traineetracker.entities.Trainee;
+import com.sparta.eng72.traineetracker.entities.Trainer;
+import com.sparta.eng72.traineetracker.services.TraineeService;
+import com.sparta.eng72.traineetracker.services.TrainerService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

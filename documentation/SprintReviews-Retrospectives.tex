@@ -1,5 +1,13 @@
 \documentclass[]{report}
 
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks,
+	citecolor=black,
+	filecolor=black,
+	linkcolor=blue,
+	urlcolor=black
+}
 
 % Title Page
 \title{Sprint Reviews/Retrospectives}
@@ -11,11 +19,11 @@
 	
 	\tableofcontents
 	
-	\section*{Sprint 0 - Planning}
+	\chapter*{Sprint 0 - Planning}
 	\addcontentsline{toc}{section}{Sprint 0 - Planning}
-	\section*{Sprint 1}
+	\chapter*{Sprint 1}
 		\addcontentsline{toc}{section}{Sprint 1}
-		\subsection*{Review}
+		\section*{Review}
 			\addcontentsline{toc}{subsection}{Review}
 			For this sprint, the following user stories where scheduled to be completed:
 			\begin{itemize}
@@ -35,20 +43,38 @@
 				\item Reading the JSON from the API/JSON file into the database.
 			\end{itemize}
 			These tasks have been added with priority for the next sprint.
-		\subsection*{Retrospective}
-		\addcontentsline{toc}{subsection}{Retrospective}
-	\subsubsection*{START}
-	\begin{itemize}
-		\item Grouping and helping people that are stuck
-		\item Testing!!!
-	\end{itemize}
-	\subsection*{STOP}
-	\begin{itemize}
-		\item 
-	\end{itemize}
-	\subsubsection*{CONTINUE}
-	\begin{itemize}
-		\item Pair Programming - It was highly useful getting 
-	\end{itemize}
-	
+		\section*{Retrospective}
+			\addcontentsline{toc}{subsection}{Retrospective}
+			\subsection*{START}
+				\begin{itemize}
+					\item Grouping and helping people that are stuck
+					\item Testing!!!
+				\end{itemize}
+				\subsection*{STOP}
+				\begin{itemize}
+					\item 
+				\end{itemize}
+				\subsection*{CONTINUE}
+				\begin{itemize}
+					\item Pair Programming - It was highly useful getting 
+				\end{itemize}
+	\chapter*{Sprint 2}
+		\addcontentsline{toc}{section}{Sprint 2}
+		\section*{Retrospective}
+			\addcontentsline{toc}{subsection}{Retrospective}
+			\subsection*{START}
+				\begin{itemize}
+					\item Working out Thymeleaf
+					\item Asking for help if we need it.
+				\end{itemize}
+			\subsection*{CONTINUE}
+				\begin{itemize}
+					\item Working as a team
+					\item Checking on everyone
+					\item Testing
+				\end{itemize}
+			\subsection*{STOP}
+				\begin{itemize}
+					\item Working on our own when we are struggling
+				\end{itemize}
 \end{document}          

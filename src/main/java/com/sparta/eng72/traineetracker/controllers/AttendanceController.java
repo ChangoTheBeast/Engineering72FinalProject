@@ -15,10 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.security.Principal;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Controller
 public class AttendanceController {
@@ -69,7 +66,7 @@ public class AttendanceController {
     @GetMapping("/trainer/traineeAttendance/{traineeId}")
     public String getTraineeAttendanceWithPath(@PathVariable Integer traineeId, Model model) {
         Trainee trainee = traineeService.getTraineeByID(traineeId).get();
-        HashMap<Integer, List<AttendanceReport>> attendanceByWeek = getAttendanceReports(trainee);
+        Map<Integer, List<AttendanceReport>> attendanceByWeek = getAttendanceReports(trainee);
 
         model.addAttribute("reports", attendanceByWeek);
         model.addAttribute("trainee", trainee);
@@ -79,7 +76,7 @@ public class AttendanceController {
     @GetMapping("/trainee/trainee-attendance")
     public String getTraineeAttendance(Principal principal, ModelMap modelMap){
         Trainee trainee = traineeService.getTraineeByUsername(principal.getName()).get();
-        HashMap<Integer, List<AttendanceReport>> attendanceByWeek = getAttendanceReports(trainee);
+        Map<Integer, List<AttendanceReport>> attendanceByWeek = getAttendanceReports(trainee);
 
         modelMap.addAttribute("reports", attendanceByWeek);
         modelMap.addAttribute("trainee", trainee);
@@ -87,10 +84,10 @@ public class AttendanceController {
     }
 
 
-    private HashMap<Integer, List<AttendanceReport>> getAttendanceReports(Trainee trainee) {
+    private Map<Integer, List<AttendanceReport>> getAttendanceReports(Trainee trainee) {
         Date startDate = Date.valueOf(courseGroupService.getGroupByID(trainee.getGroupId()).get().getStartDate().toLocalDate());
         List<TraineeAttendance> traineeAttendanceList = attendanceService.getTraineeAttendanceByTraineeId(trainee.getTraineeId());
-        HashMap<Integer, List<AttendanceReport>> attendanceByWeek = new HashMap<>();
+        Map<Integer, List<AttendanceReport>> attendanceByWeek = new TreeMap<>(Collections.reverseOrder());
 
         for(TraineeAttendance attendance : traineeAttendanceList){
             int week = DateCalculator.getWeek(attendance.getAttendanceDate(), startDate);

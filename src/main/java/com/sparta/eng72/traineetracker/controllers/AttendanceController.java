@@ -2,7 +2,6 @@ package com.sparta.eng72.traineetracker.controllers;
 
 import com.sparta.eng72.traineetracker.entities.Trainee;
 import com.sparta.eng72.traineetracker.entities.TraineeAttendance;
-import com.sparta.eng72.traineetracker.entities.TraineeAttendanceDTO;
 import com.sparta.eng72.traineetracker.services.CourseGroupService;
 import com.sparta.eng72.traineetracker.services.AttendanceService;
 import com.sparta.eng72.traineetracker.services.TraineeService;

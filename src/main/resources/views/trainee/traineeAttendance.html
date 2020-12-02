@@ -21,8 +21,6 @@
     </div>
     <br/>
     <div class="accordion" id="accordionExample">
-        <!--        <tr th:each="entry, stats : ${usersMap}" th:with="user=${entry.value}">-->
-        <!--        <div >-->
         <div class="card" th:each="entry, stats : ${reports}" th:with="list=${entry.value}">
             <div class="card-header" th:id="${'heading' + entry.key}">
                 <h2 class="mb-0">
@@ -55,20 +53,9 @@
 
                         </table>
                     </div>
-                    <br/>
-                    <form th:action="@{/trainer/attendanceEntry}">
-                                        <button class="btn btn-lg btn-primary btn-block greenBtn" type="submit">
-                                            Edit Attendance
-                                        </button>
-                    </form>
                 </div>
-                <br/>
             </div>
         </div>
-    </div>
-    </div>
-    </div>
-    </div>
     </div>
 </main>
 </body>

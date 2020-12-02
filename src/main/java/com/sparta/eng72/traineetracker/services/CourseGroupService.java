@@ -37,7 +37,7 @@ public class CourseGroupService {
     }
 
     public int getWeekByGroupId(int id) {
-        Optional<CourseGroup> courseGroup =courseGroupRepository.findById(id);
+        Optional<CourseGroup> courseGroup = courseGroupRepository.findById(id);
         if (courseGroup.isEmpty()) {
             return Integer.MIN_VALUE;
         }

@@ -42,7 +42,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <input class="form-control" type="date" th:field="*{attendanceDate}" required>
+                                                        <input class="form-control" type="date" th:min="${courseStartDate}" th:max="${today}" th:field="*{attendanceDate}" required>
                                                     </td>
                                                 </tr>
                                             </table>

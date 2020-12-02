@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/fragments :: layout(~{::head}, ~{::nav}, ~{::main})}">
+<head th:replace="~{fragments/head :: headFragment(title='Trainee Tracker')}">
+    <meta charset="UTF-8">
+    <link rel ="stylesheet" href="/css/myStyle.css"/>
+    <link rel ="stylesheet" href="webjars/bootstrap/4.5.2/css/bootstrap.css"/>
+    <link rel="stylesheet" href="vendor/fontawesome-free/css/all.min.css" >
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+</head>
+<body>
+<nav th:replace="~{fragments/sidebar}">Side Navigation</nav>
+<nav th:replace="~{fragments/generalNavigation}">Side Navigation</nav>
+<main>
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+        <div class="container">
+            <div class="container">
+                <div class="text-center align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 " style="color: #E23561">Enter Attendance</h1>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+
+                <div class="col-xl-10 col-lg-12 col-md-9">
+
+                    <div class="card o-hidden border-0 shadow-lg my-5">
+                        <div class="card-body p-0">
+                            <!-- Nested Row within Card Body -->
+                            <div class="row">
+                                <div class="p-5">
+                                    <h1 class="h3 mb-3 font-weight-normal" style="text-align-last: center">ATTENDANCE</h1>
+                                    <form class="form-signin" th:action="@{/trainer/attendanceEntry}" th:object="${traineeAttendance}" method="post">
+                                        <div class="form-group" style="text-align: left">
+                                            <table>
+                                                <tr>
+                                                    <th>Select Date:</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input class="form-control" type="date" th:field="*{attendanceDate}" required>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+
+                                        <div class="form-group" style="text-align: left">
+                                            <table>
+                                                <tr style="border: 1px solid #e5e4e4; align-content: center">
+                                                    <th><label>Trainee</label></th>
+                                                    <th><label>On Time</label></th>
+                                                    <th><label>Late</label></th>
+                                                    <th><label>Absent (Excused)</label></th>
+                                                    <th><label>Absent (Unexcused)</label></th>
+                                                </tr>
+                                                <tr style="text-align-last: center; border: 1px solid #e5e4e4;">
+                                                    <td>
+                                                        <select class="form-control" th:field="*{traineeId}" required>
+                                                            <option value=""> -- </option>
+                                                            <option th:each="trainee : ${trainees}"
+                                                                    th:value="${trainee.traineeId}"
+                                                                    th:text="${trainee.firstName} + ' ' + ${trainee.lastName}"></option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input th:type="radio" th:name="OT" th:value="1" th:field="*{attendanceId}" checked></td>
+                                                    <td><input th:type="radio" th:name="OT" th:value="2" th:field="*{attendanceId}"></td>
+                                                    <td><input th:type="radio" th:name="OT" th:value="3" th:field="*{attendanceId}"></td>
+                                                    <td><input th:type="radio" th:name="OT" th:value="4" th:field="*{attendanceId}"></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <br/>
+                                        <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</main>
+
+<script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+<script src="webjars/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<script src="webjars/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+<script src="js/sb-admin-2.min.js"></script>
+
+</body>
+</html>
+

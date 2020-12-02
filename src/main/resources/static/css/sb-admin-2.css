@@ -1519,11 +1519,12 @@ pre code {
   width: 100%;
   margin-bottom: 1rem;
   color: #858796;
+  border: 1px solid #e5e4e4;
 }
 
 .table th,
-.table td {
-  padding: 0.75rem;
+.table td, {
+  padding: 2rem;
   vertical-align: top;
   border-top: 1px solid #e3e6f0;
 }

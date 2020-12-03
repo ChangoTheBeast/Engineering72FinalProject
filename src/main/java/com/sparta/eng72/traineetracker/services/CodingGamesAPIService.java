@@ -11,11 +11,13 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
 public class CodingGamesAPIService implements CodingGamesAPI {
 
+    public CodingGamesAPIService() {}
     private static JsonNode jsonNode = null;
 
     static {
@@ -35,12 +37,21 @@ public class CodingGamesAPIService implements CodingGamesAPI {
     }
 
     public static void main(String[] args) {
-        String providedName = "jship@spartaglobal.com";
-        for (int i = 0; i < jsonNode.get("tests").size(); i++){
-            if(jsonNode.get("tests").get(i).get("candidate_email").asText().equals(providedName)) {
-                System.out.println(jsonNode.get("tests").get(i));
-            }
-        }
+        String providedName = "bbird@spartaglobal.com";
+        CodingGamesAPI codingGamesAPI = new CodingGamesAPIService();
+        CodingGamesAPIService codingGamesAPIService = new CodingGamesAPIService();
+        JsonNode testNode = codingGamesAPI.getAllReportsByEmail(providedName).get(0);
+        System.out.println(codingGamesAPIService.getAssessmentTags(testNode));
+//        System.out.println(codingGamesAPIService.getAssessmentDesignScore(testNode));
+//        System.out.println(codingGamesAPIService.getAssessmentLanguageKnowledgeScore(testNode));
+//        System.out.println(codingGamesAPIService.getAssessmentProblemSolvingScore(testNode));
+//        System.out.println(codingGamesAPI
+//                .getAllReportsByEmail(providedName)
+//                .get(0)
+//                .get("report")
+//                .get("technologies")
+//                .fieldNames()
+//                .next());
     }
 
     public List<Integer> getAllTestIDs() {
@@ -78,5 +89,43 @@ public class CodingGamesAPIService implements CodingGamesAPI {
     @Override
     public List<Assessment> getAllAssessmentsByEmail(String email) {
         return null;
+    }
+
+    public String getAssessmentName(JsonNode assessment) {
+        return assessment.get("report").get("technologies").fieldNames().next();
+    }
+
+    public int getAssessmentScore(JsonNode assessment) {
+        return assessment.get("report").get("score").asInt();
+    }
+
+    public int getAssessmentDuration(JsonNode assessment) {
+        return assessment.get("report").get("total_duration").asInt();
+    }
+
+    public int getAssessmentComparativeScore(JsonNode assessment) {
+        return assessment.get("report").get("comparative_score").asInt();
+    }
+
+    public int getAssessmentDesignScore(JsonNode assessment) {
+        return assessment.get("report").get("technologies").get(getAssessmentName(assessment)).get("skills").get("Design").get("score").asInt();
+    }
+
+    public int getAssessmentLanguageKnowledgeScore(JsonNode assessment) {
+        return assessment.get("report").get("technologies").get(getAssessmentName(assessment)).get("skills").get("Language knowledge").get("score").asInt();
+    }
+
+    public int getAssessmentProblemSolvingScore(JsonNode assessment) {
+        return assessment.get("report").get("technologies").get(getAssessmentName(assessment)).get("skills").get("Problem solving").get("score").asInt();
+    }
+
+    public List<String> getAssessmentTags(JsonNode assessment) {
+
+        Iterator<JsonNode> iterator = assessment.get("tags").iterator();
+        List<String> tagsList = new ArrayList<>();
+        while (iterator.hasNext()) {
+            tagsList.add(iterator.next().asText());
+        }
+        return tagsList;
     }
 }

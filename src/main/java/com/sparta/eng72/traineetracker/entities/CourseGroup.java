@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+
 @Table(name = "course_group", schema = "training_tracker")
 public class CourseGroup {
     private Integer groupId;

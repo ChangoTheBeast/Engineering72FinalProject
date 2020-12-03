@@ -31,6 +31,9 @@ public class Pages {
     public static final String TRAINEE_REPORT_PAGE = "/trainee/traineeReport";
     public static final String TRAINEE_REPORT_URL = "/trainee/report";
     public static final String TRAINEE_FEEDBACK_FORM_PAGE = "/trainee/traineeForm";
+    public static final String TRAINEE_ASSESSMENTS = "/trainee/traineeAssessment";
+    public static final String TRAINEE_PROFILE_PAGE = "/trainee/traineeProfile";
+
 
     //TRAINER =======================================================================================
     public static final String TRAINER_HOME_PAGE = "/trainer/trainerHome";
@@ -52,6 +55,7 @@ public class Pages {
     public static final String TRAINER_ADD_WEEK_URL = "/trainer/addNewWeek";
     public static final String TRAINER_WEEK_SUCCESS_PAGE ="/trainer/weekSuccess";
     public static final String TRAINER_WEEK_SUCCESS_URL ="/trainer/weekSuccess";
+    public static final String TRAINER_TRAINEE_ASSESSMENTS = "/trainer/traineeAssessment";
     public static final String TRAINER_ATTENDANCE= "/trainer/traineeAttendance";
     public static final String TRAINEE_ATTENDANCE = "/trainee/traineeAttendance";
     public static final String TRAINER_NEW_USER_SUCCESS ="/trainer/userSubmit";
@@ -59,6 +63,7 @@ public class Pages {
     public static final String TRAINER_ASSESSMENTS ="/trainer/trainerAssessment";
     public static final String TRAINER_ATTENDANCE_PAGE ="/trainer/attendance";
     public static final String TRAINER_ATTENDANCE_SUCCESS ="/trainer/attendanceSuccess";
+
 
 
     //Any =======================================================================================
@@ -69,8 +74,6 @@ public class Pages {
     public static final String ACCESS_ERROR = "/errors/accessError";
     public static final String PAGE_NOT_FOUND_ERROR = "/errors/pagenotfounderror";
     public static final String NO_ITEM_IN_DATABASE_ERROR = "/errors/itemNotFound";
-
-
     public static String accessPage(String requiredRole, String page) {
 
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();

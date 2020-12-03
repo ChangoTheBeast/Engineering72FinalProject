@@ -51,6 +51,7 @@ public class AssessmentController {
         Trainee trainee = traineeService.getTraineeByID(traineeId).get();
         String username = trainee.getUsername();
         List<JsonNode> assessments = codingGamesAPIService.getAllReportsByEmail(username);
+        model.addAttribute("codingGamesAPI", new CodingGamesAPIService());
         model.addAttribute("traineeId", traineeId);
         model.addAttribute("trainee", trainee);
         model.addAttribute("assessments", assessments);

@@ -31,6 +31,7 @@ public class Pages {
     public static final String TRAINEE_REPORT_PAGE = "/trainee/traineeReport";
     public static final String TRAINEE_REPORT_URL = "/trainee/report";
     public static final String TRAINEE_FEEDBACK_FORM_PAGE = "/trainee/traineeForm";
+    public static final String TRAINEE_PROFILE_PAGE = "/trainee/traineeProfile";
 
     //TRAINER =======================================================================================
     public static final String TRAINER_HOME_PAGE = "/trainer/trainerHome";

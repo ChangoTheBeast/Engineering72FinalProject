@@ -52,7 +52,8 @@ public class Pages {
     public static final String TRAINER_ADD_WEEK_URL = "/trainer/addNewWeek";
     public static final String TRAINER_WEEK_SUCCESS_PAGE ="/trainer/weekSuccess";
     public static final String TRAINER_WEEK_SUCCESS_URL ="/trainer/weekSuccess";
-    public static final String TRAINER_ATTENDANCE="/trainer/traineeAttendance";
+    public static final String TRAINER_ATTENDANCE= "/trainer/traineeAttendance";
+    public static final String TRAINEE_ATTENDANCE = "/trainee/traineeAttendance";
     public static final String TRAINER_NEW_USER_SUCCESS ="/trainer/userSubmit";
     public static final String TRAINER_DELETE_SUCCESS ="/trainer/deleteSubmit";
     public static final String TRAINER_ASSESSMENTS ="/trainer/trainerAssessment";
@@ -68,6 +69,7 @@ public class Pages {
     public static final String ACCESS_ERROR = "/errors/accessError";
     public static final String PAGE_NOT_FOUND_ERROR = "/errors/pagenotfounderror";
     public static final String NO_ITEM_IN_DATABASE_ERROR = "/errors/itemNotFound";
+
 
     public static String accessPage(String requiredRole, String page) {
 

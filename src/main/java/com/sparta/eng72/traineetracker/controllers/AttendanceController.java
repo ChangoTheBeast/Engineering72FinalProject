@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import java.security.Principal;
 import java.sql.Date;
@@ -56,6 +58,7 @@ public class AttendanceController {
         modelMap.addAttribute("date", traineeAttendance.getAttendanceDate());
         modelMap.addAttribute("trainee", trainee);
         return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_ATTENDANCE_SUCCESS), modelMap);
+
     }
 
     @RequestMapping(value="/trainer/viewTrainee", method= RequestMethod.POST, params="btnStatus=attendance")
@@ -103,6 +106,4 @@ public class AttendanceController {
         }
         return attendanceByWeek;
     }
-
-
 }

@@ -1,5 +1,6 @@
 package com.sparta.eng72.traineetracker.services;
 
+
 import com.sparta.eng72.traineetracker.entities.TraineeAttendance;
 import com.sparta.eng72.traineetracker.repositories.AttendanceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +36,4 @@ public class AttendanceService {
                 return "--";
         }
     }
-
 }

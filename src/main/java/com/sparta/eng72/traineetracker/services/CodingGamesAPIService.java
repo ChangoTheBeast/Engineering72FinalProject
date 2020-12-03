@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -40,9 +41,11 @@ public class CodingGamesAPIService implements CodingGamesAPI {
         String providedName = "bbird@spartaglobal.com";
         CodingGamesAPI codingGamesAPI = new CodingGamesAPIService();
         CodingGamesAPIService codingGamesAPIService = new CodingGamesAPIService();
-
-        System.out.println(codingGamesAPIService.getAssessmentDuration(codingGamesAPI.getAllReportsByEmail(providedName)
-                .get(0)));
+        JsonNode testNode = codingGamesAPI.getAllReportsByEmail(providedName).get(0);
+        System.out.println(codingGamesAPIService.getAssessmentTags(testNode));
+//        System.out.println(codingGamesAPIService.getAssessmentDesignScore(testNode));
+//        System.out.println(codingGamesAPIService.getAssessmentLanguageKnowledgeScore(testNode));
+//        System.out.println(codingGamesAPIService.getAssessmentProblemSolvingScore(testNode));
 //        System.out.println(codingGamesAPI
 //                .getAllReportsByEmail(providedName)
 //                .get(0)
@@ -105,5 +108,25 @@ public class CodingGamesAPIService implements CodingGamesAPI {
         return assessment.get("report").get("comparative_score").asInt();
     }
 
+    public int getAssessmentDesignScore(JsonNode assessment) {
+        return assessment.get("report").get("technologies").get(getAssessmentName(assessment)).get("skills").get("Design").get("score").asInt();
+    }
 
+    public int getAssessmentLanguageKnowledgeScore(JsonNode assessment) {
+        return assessment.get("report").get("technologies").get(getAssessmentName(assessment)).get("skills").get("Language knowledge").get("score").asInt();
+    }
+
+    public int getAssessmentProblemSolvingScore(JsonNode assessment) {
+        return assessment.get("report").get("technologies").get(getAssessmentName(assessment)).get("skills").get("Problem solving").get("score").asInt();
+    }
+
+    public List<String> getAssessmentTags(JsonNode assessment) {
+
+        Iterator<JsonNode> iterator = assessment.get("tags").iterator();
+        List<String> tagsList = new ArrayList<>();
+        while (iterator.hasNext()) {
+            tagsList.add(iterator.next().asText());
+        }
+        return tagsList;
+    }
 }

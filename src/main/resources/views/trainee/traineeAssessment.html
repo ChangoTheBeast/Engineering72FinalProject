@@ -45,26 +45,43 @@
                     <div class="jumbotron">
                         <h2 th:text="${codingGamesAPI.getAssessmentName(assessment)}"></h2>
                         <br/>
-                        <!--                                <div class="card">-->
-                        <h4><strong>Trainee Report</strong></h4>
-                        <table style="width:100%">
-                            <tr>
-                                <td><strong>Score</strong></td>
-                                <td th:text="${codingGamesAPI.getAssessmentScore(assessment)}"></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Duration</strong></td>
-                                <td th:text="${codingGamesAPI.getAssessmentDuration(assessment)}"></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Comparative Score</strong></td>
-                                <td th:text="${codingGamesAPI.getAssessmentComparativeScore(assessment)}"></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Design Score</strong></td>
-                                <td th:text="${assessment.get('report').get('Duration')}"></td>
-                            </tr>
-                        </table>
+                        <div class="card-deck">
+                            <div class="card">
+                                <h4><strong>Assessment Overview</strong></h4>
+                                <table style="width:100%">
+                                    <tr>
+                                        <td><strong>Score</strong></td>
+                                        <td th:text="${codingGamesAPI.getAssessmentScore(assessment)}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Duration</strong></td>
+                                        <td th:text="${codingGamesAPI.getAssessmentDuration(assessment)}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Comparative Score</strong></td>
+                                        <td th:text="${codingGamesAPI.getAssessmentComparativeScore(assessment)}"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <br/>
+                            <div class="card">
+                                <h4><strong>Assessment Breakdown</strong></h4>
+                                <table style="width:100%">
+                                    <tr>
+                                        <td><strong>Design Score</strong></td>
+                                        <td th:text="${codingGamesAPI.getAssessmentDesignScore(assessment)}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Language Knowledge Score</strong></td>
+                                        <td th:text="${codingGamesAPI.getAssessmentLanguageKnowledgeScore(assessment)}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Problem Solving Score</strong></td>
+                                        <td th:text="${codingGamesAPI.getAssessmentProblemSolvingScore(assessment)}"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                     <br/>
                 </div>

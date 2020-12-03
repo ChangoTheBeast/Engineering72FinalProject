@@ -55,7 +55,8 @@ public class AssessmentController {
     @GetMapping("/trainee/assessments/{traineeId}")
     public String getTraineeAssessments(@PathVariable Integer traineeId, Model model) {
         getTrainee(traineeId, model);
-        return Pages.accessPage(Role.TRAINEE, Pages.TRAINEE_ASSESSMENTS);
+//        return Pages.accessPage(Role.TRAINEE, Pages.TRAINEE_ASSESSMENTS);
+        return "/trainee/traineeAssessment";
     }
 
     private void getTrainee(@PathVariable Integer traineeId, Model model) {

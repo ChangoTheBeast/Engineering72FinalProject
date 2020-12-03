@@ -89,7 +89,8 @@ public class TrainerReportController {
         return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_FEEDBACK_FORM_PAGE), modelMap);
     }
 
-    @RequestMapping(value="/trainer/viewTrainee", method=RequestMethod.POST, params="btnStatus=reports")
+
+    @RequestMapping(value="/trainer/viewTrainee", method = RequestMethod.POST, params="btnStatus=reports")
     public String getTrainerWeeklyReports(Integer traineeId, Model model) {
         return Pages.accessPage(Role.TRAINER, "redirect:"+Pages.TRAINER_REPORT_URL+"/"+traineeId);
     }

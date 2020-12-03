@@ -30,11 +30,6 @@
                 </span>
             </div>
         </a>
-        <a th:if="${#httpServletRequest.isUserInRole('TRAINEE') == true}"  class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/trainee/home}">
-            <div class="sidebar-brand-icon">
-                <img th:class="spartaLogo" th:src="@{/images/spartaLogo.png}">
-            </div>
-        </a>
         </li>
 
         <!-- Divider -->
@@ -83,6 +78,8 @@
                     <a class="collapse-item" th:href="@{/trainee/report}">Reports</a>
                     <a class="collapse-item" th:href="@{/traineeRecentReport}">Feedback Form</a>
                     <a class="collapse-item" th:href="${'/trainee/assessments/' + trainee.traineeId}">Assessments</a>
+                    <a class="collapse-item" th:href="@{/trainee/trainee-attendance}">Attendance History</a>
+
                 </div>
             </div>
         </li>
@@ -103,6 +100,7 @@
                     <a class="collapse-item" th:href="@{/trainer/addTrainee}">Trainee Management</a>
                     <a class="collapse-item" th:href="@{/trainer/newWeek}">Set Weeks</a>
                     <a class="collapse-item" th:href="@{/trainer/assessments}">Assessments</a>
+                    <a class="collapse-item" th:href="@{/trainer/attendanceEntry}">Attendance</a>
                     <div class="collapse-divider"></div>
                 </div>
             </div>

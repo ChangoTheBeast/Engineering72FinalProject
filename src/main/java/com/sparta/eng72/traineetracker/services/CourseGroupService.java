@@ -4,7 +4,7 @@ import com.sparta.eng72.traineetracker.entities.CourseGroup;
 import com.sparta.eng72.traineetracker.repositories.CourseGroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,7 +36,7 @@ public class CourseGroupService {
     }
 
     public int getWeekByGroupId(int id) {
-        Optional<CourseGroup> courseGroup =courseGroupRepository.findById(id);
+        Optional<CourseGroup> courseGroup = courseGroupRepository.findById(id);
         if (courseGroup.isEmpty()) {
             return Integer.MIN_VALUE;
         }

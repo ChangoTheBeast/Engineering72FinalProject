@@ -1,6 +1,7 @@
 package com.sparta.eng72.traineetracker.controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.sparta.eng72.traineetracker.entities.Assessment;
 import com.sparta.eng72.traineetracker.entities.Trainee;
 import com.sparta.eng72.traineetracker.services.CodingGamesAPIService;
 import com.sparta.eng72.traineetracker.services.CourseGroupService;
@@ -35,7 +36,7 @@ public class AssessmentController {
         this.courseGroupService = courseGroupService;
 
     }
-
+  
     @GetMapping("/trainer/assessments")
     public ModelAndView getAllTrainees(ModelMap modelMap, Principal principal){
         List<Trainee> trainees = traineeService.getTraineesByGroupId(trainerService.getTrainerByUsername(principal.getName()).get().getGroupId());
@@ -51,14 +52,13 @@ public class AssessmentController {
         return Pages.accessPage(Role.TRAINER, Pages.TRAINER_TRAINEE_ASSESSMENTS);
     }
 
-
     @GetMapping("/trainee/assessments/{traineeId}")
     public String getTraineeAssessments(@PathVariable Integer traineeId, Model model) {
         getTrainee(traineeId, model);
 //        return Pages.accessPage(Role.TRAINEE, Pages.TRAINEE_ASSESSMENTS);
         return "/trainee/traineeAssessment";
     }
-
+  
     private void getTrainee(@PathVariable Integer traineeId, Model model) {
         Trainee trainee = traineeService.getTraineeByID(traineeId).get();
         String username = trainee.getUsername();

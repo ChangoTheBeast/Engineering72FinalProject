@@ -18,7 +18,6 @@ import java.util.List;
 public class CodingGamesAPIService implements CodingGamesAPI {
 
     public CodingGamesAPIService() {}
-
     private static JsonNode jsonNode = null;
 
     static {

@@ -35,6 +35,7 @@ public class AssessmentController {
         this.courseGroupService = courseGroupService;
 
     }
+
     @GetMapping("/trainer/assessments")
     public ModelAndView getAllTrainees(ModelMap modelMap, Principal principal){
         List<Trainee> trainees = traineeService.getTraineesByGroupId(trainerService.getTrainerByUsername(principal.getName()).get().getGroupId());
@@ -44,10 +45,20 @@ public class AssessmentController {
         return modelAndView;
     }
 
+    @GetMapping("/trainer/assessments/{traineeId}")
+    public String getTrainerTraineeAssessments(@PathVariable Integer traineeId, Model model) {
+        getTrainee(traineeId, model);
+        return Pages.accessPage(Role.TRAINER, Pages.TRAINER_TRAINEE_ASSESSMENTS);
+    }
 
 
     @GetMapping("/trainee/assessments/{traineeId}")
     public String getTraineeAssessments(@PathVariable Integer traineeId, Model model) {
+        getTrainee(traineeId, model);
+        return Pages.accessPage(Role.TRAINEE, Pages.TRAINEE_ASSESSMENTS);
+    }
+
+    private void getTrainee(@PathVariable Integer traineeId, Model model) {
         Trainee trainee = traineeService.getTraineeByID(traineeId).get();
         String username = trainee.getUsername();
         List<JsonNode> assessments = codingGamesAPIService.getAllReportsByEmail(username);
@@ -55,21 +66,7 @@ public class AssessmentController {
         model.addAttribute("traineeId", traineeId);
         model.addAttribute("trainee", trainee);
         model.addAttribute("assessments", assessments);
-        return Pages.accessPage(Role.TRAINER, Pages.TRAINEE_ASSESSMENTS);
     }
-
-//    @PostMapping("/populateDatabaseWithTestId")
-//    public String populateDatabaseWithTestId(Model model){
-//
-//       List<Integer> testIDs = codingGamesAPIService.getAllTestIDs();
-//
-//    }
-
-
-
-
-
-
 
 
 }

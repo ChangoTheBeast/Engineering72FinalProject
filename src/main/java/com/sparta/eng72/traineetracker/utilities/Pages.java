@@ -57,6 +57,7 @@ public class Pages {
     public static final String TRAINER_NEW_USER_SUCCESS ="/trainer/userSubmit";
     public static final String TRAINER_DELETE_SUCCESS ="/trainer/deleteSubmit";
     public static final String TRAINER_ASSESSMENTS ="/trainer/trainerAssessment";
+    public static final String TRAINER_TRAINEE_ASSESSMENTS = "/trainer/traineeAssessment";
 
 
     //Any =======================================================================================

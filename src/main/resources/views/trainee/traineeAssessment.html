@@ -25,56 +25,51 @@
     <div class="accordion" id="accordionExample">
         <div class="card" th:each="assessment : ${assessments}">
             <div class="card-header"
-                 th:id="${'heading' + assessment.get('report').get('technologies').fieldNames().next()}">
+                 th:id="${'heading' + codingGamesAPI.getAssessmentName(assessment)}">
                 <h2 class="mb-0">
                     <button aria-expanded="show"
                             class="btn btn-link btn-block text-left"
                             data-toggle="collapse"
-                            th:data-target="${'#collapse' + assessment.get('report').get('technologies').fieldNames().next()}"
-                            th:aria-controls="${'collapse' + assessment.get('report').get('technologies').fieldNames().next()}"
-                            th:text="${ assessment.get('report').get('technologies').fieldNames().next()}"
+                            th:data-target="${'#collapse' + codingGamesAPI.getAssessmentName(assessment)}"
+                            th:aria-controls="${'collapse' + codingGamesAPI.getAssessmentName(assessment)}"
+                            th:text="${codingGamesAPI.getAssessmentName(assessment)}"
                             type="button">
                     </button>
                 </h2>
             </div>
-            <div th:id="${'collapse' + assessment.get('report').get('technologies').fieldNames().next()}"
+            <div th:id="${'collapse' + codingGamesAPI.getAssessmentName(assessment)}"
                  class="collapse hide"
-                 th:aria-labelledby="${'heading' + assessment.get('report').get('technologies').fieldNames().next()}"
+                 th:aria-labelledby="${'heading' + codingGamesAPI.getAssessmentName(assessment)}"
                  data-parent="#accordionExample">
                 <div class="card-body">
                     <div class="jumbotron">
-                        <h2 th:text="${ assessment.get('report').get('technologies').fieldNames().next()}"></h2>
+                        <h2 th:text="${codingGamesAPI.getAssessmentName(assessment)}"></h2>
                         <br/>
                         <!--                                <div class="card">-->
-                        <h4><strong>Trainee Score</strong></h4>
+                        <h4><strong>Trainee Report</strong></h4>
                         <table style="width:100%">
                             <tr>
                                 <td><strong>Score</strong></td>
-                                <td th:text="${assessment.get('report').get('score')}"></td>
+                                <td th:text="${codingGamesAPI.getAssessmentScore(assessment)}"></td>
                             </tr>
                             <tr>
                                 <td><strong>Duration</strong></td>
-                                <td th:text="${assessment.get('report').get('Duration')}"></td>
+                                <td th:text="${codingGamesAPI.getAssessmentDuration(assessment)}"></td>
                             </tr>
                             <tr>
                                 <td><strong>Comparative Score</strong></td>
-                                <td th:text="${assessment.get('report').get('technologies').get('comparative_score')}"></td>
+                                <td th:text="${codingGamesAPI.getAssessmentComparativeScore(assessment)}"></td>
                             </tr>
                             <tr>
                                 <td><strong>Design Score</strong></td>
                                 <td th:text="${assessment.get('report').get('Duration')}"></td>
                             </tr>
-
                         </table>
                     </div>
-                    <!--                            </div>-->
                     <br/>
                 </div>
             </div>
         </div>
-    </div>
-    </div>
-    </div>
     </div>
 </main>
 </body>

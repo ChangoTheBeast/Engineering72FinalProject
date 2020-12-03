@@ -39,14 +39,17 @@ public class CodingGamesAPIService implements CodingGamesAPI {
     public static void main(String[] args) {
         String providedName = "bbird@spartaglobal.com";
         CodingGamesAPI codingGamesAPI = new CodingGamesAPIService();
+        CodingGamesAPIService codingGamesAPIService = new CodingGamesAPIService();
 
-        System.out.println(codingGamesAPI
-                .getAllReportsByEmail(providedName)
-                .get(0)
-                .get("report")
-                .get("technologies")
-                .fieldNames()
-                .next());
+        System.out.println(codingGamesAPIService.getAssessmentDuration(codingGamesAPI.getAllReportsByEmail(providedName)
+                .get(0)));
+//        System.out.println(codingGamesAPI
+//                .getAllReportsByEmail(providedName)
+//                .get(0)
+//                .get("report")
+//                .get("technologies")
+//                .fieldNames()
+//                .next());
     }
 
     public List<Integer> getAllTestIDs() {
@@ -86,7 +89,21 @@ public class CodingGamesAPIService implements CodingGamesAPI {
         return null;
     }
 
+    public String getAssessmentName(JsonNode assessment) {
+        return assessment.get("report").get("technologies").fieldNames().next();
+    }
 
+    public int getAssessmentScore(JsonNode assessment) {
+        return assessment.get("report").get("score").asInt();
+    }
+
+    public int getAssessmentDuration(JsonNode assessment) {
+        return assessment.get("report").get("total_duration").asInt();
+    }
+
+    public int getAssessmentComparativeScore(JsonNode assessment) {
+        return assessment.get("report").get("comparative_score").asInt();
+    }
 
 
 }

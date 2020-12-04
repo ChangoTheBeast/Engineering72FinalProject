@@ -11,8 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import java.security.Principal;
 import java.sql.Date;
@@ -86,7 +84,6 @@ public class AttendanceController {
         return Pages.accessPage(Role.TRAINEE, Pages.TRAINEE_ATTENDANCE);
     }
 
-
     private Map<Integer, List<AttendanceReport>> getAttendanceReports(Trainee trainee) {
         Date startDate = Date.valueOf(courseGroupService.getGroupByID(trainee.getGroupId()).get().getStartDate().toLocalDate());
         List<TraineeAttendance> traineeAttendanceList = attendanceService.getTraineeAttendanceByTraineeId(trainee.getTraineeId());
@@ -106,4 +103,45 @@ public class AttendanceController {
         }
         return attendanceByWeek;
     }
+
+    @GetMapping("/trainee/profile-percentage")
+    public String getTraineeAttendancePercentage(Principal principal, ModelMap modelMap) {
+        Trainee trainee = traineeService.getTraineeByUsername(principal.getName()).get();
+        List<TraineeAttendance> traineeAttendanceList = attendanceService.getTraineeAttendanceByTraineeId(trainee.getTraineeId());
+
+        double onTime = 0, late = 0, excused = 0, unexcused = 0;
+        for(TraineeAttendance attendance : traineeAttendanceList){
+            switch (attendance.getAttendanceId()) {
+                case 1:
+                    onTime++;
+                    continue;
+                case 2:
+                    late++;
+                    continue;
+                case 3:
+                    excused++;
+                    continue;
+                case 4:
+                    unexcused++;
+                    continue;
+                default:
+                    continue;
+            }
+        }
+
+        double count = onTime + late + excused + unexcused;
+
+        String onTimePercentage = "" + (int)(onTime/count * 100) + "%";
+        String latePercentage = "" + (int)(late/count * 100) + "%";
+        String excusedPercentage = "" + (int)(excused/count * 100) + "%";
+        String unexcusedPercentage = "" + (int)(unexcused/count * 100) + "%";
+
+        modelMap.addAttribute("onTimePercentage", onTimePercentage);
+        modelMap.addAttribute("latePercentage", latePercentage);
+        modelMap.addAttribute("excusedPercentage", excusedPercentage);
+        modelMap.addAttribute("unexcusedPercentage", unexcusedPercentage);
+
+        return "/fragments/profile-percentages";
+    }
+
 }

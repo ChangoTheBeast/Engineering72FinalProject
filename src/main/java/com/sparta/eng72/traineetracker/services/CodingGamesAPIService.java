@@ -104,7 +104,8 @@ public class CodingGamesAPIService implements CodingGamesAPI {
         return Double.parseDouble(df.format(score));
     }
 
-    public String getAssessmentGrade(int assessmentScore) {
+    public String getAssessmentGrade(double assessmentScore) {
+
         if(assessmentScore >= 95.8){
             return "A+";
         }else if(assessmentScore >= 91.6){

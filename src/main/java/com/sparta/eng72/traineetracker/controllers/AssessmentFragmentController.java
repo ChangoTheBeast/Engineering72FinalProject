@@ -9,6 +9,5 @@ public class AssessmentFragmentController {
 
     private CodingGamesAPIService codingGamesAPIService;
     private TraineeService traineeService;
-    private
 
 }

@@ -47,9 +47,12 @@ public class AssessmentController {
     }
 
     @GetMapping("/trainer/assessments/{traineeId}")
-    public ModelMap getTrainerTraineeAssessments(@PathVariable Integer traineeId, ModelMap modelMap) {
+    public ModelAndView getTrainerTraineeAssessments(@PathVariable Integer traineeId, ModelMap modelMap) {
         getTrainee(traineeId, modelMap);
-        return modelMap;
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/trainee/traineeAssessment");
+        modelAndView.addAllObjects(modelMap);
+        return modelAndView;
     }
   
     private void getTrainee(@PathVariable Integer traineeId, ModelMap modelMap) {

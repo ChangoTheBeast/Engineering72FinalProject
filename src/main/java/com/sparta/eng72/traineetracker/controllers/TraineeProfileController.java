@@ -21,12 +21,16 @@ public class TraineeProfileController {
     TraineeService traineeService;
     CourseGroupService courseGroupService;
     CourseService courseService;
+    AssessmentController assessmentController;
+    TraineeReportController traineeReportController;
 
     @Autowired
-    public TraineeProfileController(TraineeService traineeService, CourseGroupService courseGroupService, CourseService courseService) {
+    public TraineeProfileController(TraineeService traineeService, CourseGroupService courseGroupService, CourseService courseService, AssessmentController assessmentController, TraineeReportController traineeReportController) {
         this.traineeService = traineeService;
         this.courseGroupService = courseGroupService;
         this.courseService = courseService;
+        this.assessmentController = assessmentController;
+        this.traineeReportController = traineeReportController;
     }
 
     @GetMapping("/trainee/traineeProfile")
@@ -46,6 +50,15 @@ public class TraineeProfileController {
         if(courseService.getCourseByID(courseGroup != null ? courseGroup.getCourseId() : null).isPresent()){
             course = courseService.getCourseByID(courseGroup != null ? courseGroup.getCourseId() : null).get();
         }
+
+
+        /**
+         * CCFCP - Controller Controller Factory Controller Pattern
+         * Send modelMap to add attributes of the traineeReportController in its @GetMapping method
+         * */
+
+        modelMap = traineeReportController.getTraineeWeeklyReports(modelMap, principal);
+        modelMap = assessmentController.getTrainerTraineeAssessments(trainee.getTraineeId(), modelMap);
 
         modelMap.addAttribute("trainee", trainee);
         modelMap.addAttribute("courseGroup", courseGroup);

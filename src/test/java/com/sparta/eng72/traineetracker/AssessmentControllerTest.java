@@ -26,14 +26,20 @@ public class AssessmentControllerTest {
 
     @Test
     @WithMockUser(username = "mgadhvi@sparta.com", password = "pwd",roles = "TRAINER")
-    public void adminUser() throws Exception {
+    public void trainerAssessmentPageTest() throws Exception {
         mockMvc.perform(get("/trainer/assessments")).andDo(print()).andExpect(status().isOk()).andExpect(model().attributeExists());
     }
 
     @Test
     @WithMockUser(username = "mgadhvi@sparta.com", password = "pwd",roles = "TRAINER")
-    public void adminUser1() throws Exception {
+    public void trainerTraineeAssessmentPageTest() throws Exception {
         mockMvc.perform(get("/trainer/assessments/2")).andDo(print()).andExpect(status().isOk()).andExpect(model().attributeExists("traineeId","trainee","assessments"));
+    }
+
+    @Test
+    @WithMockUser(username = "bbird@spartaglobal.com", password = "pwd",roles = "TRAINEE")
+    public void traineeAssessmentPageTest() throws Exception {
+        mockMvc.perform(get("/trainee/assessments/2")).andDo(print()).andExpect(status().isOk()).andExpect(model().attributeExists("traineeId","trainee","assessments"));
     }
 
 

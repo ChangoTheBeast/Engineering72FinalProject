@@ -33,7 +33,11 @@ public class AttendanceService {
             case 4:
                 return "ABSENT (UNEXCUSED)";
             default:
-                return "--";
+                return "NO ENTRY";
         }
+    }
+
+    public void saveAllAttendances(List<TraineeAttendance> traineeAttendances){
+        attendanceRepository.saveAll(traineeAttendances);
     }
 }

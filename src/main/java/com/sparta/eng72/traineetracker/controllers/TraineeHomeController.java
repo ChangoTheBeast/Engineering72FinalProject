@@ -1,9 +1,6 @@
 package com.sparta.eng72.traineetracker.controllers;
 
-import com.sparta.eng72.traineetracker.entities.Course;
-import com.sparta.eng72.traineetracker.entities.CourseGroup;
-import com.sparta.eng72.traineetracker.entities.Trainee;
-import com.sparta.eng72.traineetracker.entities.WeekReport;
+import com.sparta.eng72.traineetracker.entities.*;
 import com.sparta.eng72.traineetracker.services.*;
 import com.sparta.eng72.traineetracker.utilities.Pages;
 import com.sparta.eng72.traineetracker.utilities.Role;
@@ -16,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -25,14 +23,24 @@ public class TraineeHomeController {
     private final TraineeService traineeService;
     private final CourseGroupService courseGroupService;
     private final CourseService courseService;
+    private final AttendanceService attendanceService;
 
     @Autowired
-    public TraineeHomeController(WeekReportService weekReportService, TraineeService traineeService, CourseGroupService courseGroupService, CourseService courseService) {
+    public TraineeHomeController(WeekReportService weekReportService, TraineeService traineeService, CourseGroupService courseGroupService, CourseService courseService, AttendanceService attendanceService) {
         this.weekReportService = weekReportService;
         this.traineeService = traineeService;
         this.courseGroupService = courseGroupService;
         this.courseService = courseService;
+        this.attendanceService = attendanceService;
     }
+
+//    @Autowired
+//    public TraineeHomeController(WeekReportService weekReportService, TraineeService traineeService, CourseGroupService courseGroupService, CourseService courseService) {
+//        this.weekReportService = weekReportService;
+//        this.traineeService = traineeService;
+//        this.courseGroupService = courseGroupService;
+//        this.courseService = courseService;
+//    }
 
     @GetMapping("/trainee/home")
     public String getTrainerForTraineeHomeGrades(Model model, Principal principal) {
@@ -50,6 +58,7 @@ public class TraineeHomeController {
         model.addAttribute("courseGroup",courseGroup);
         model.addAttribute("course", course);
         model.addAttribute("now", LocalDateTime.now());
+
         return Pages.accessPage(Role.TRAINEE, Pages.TRAINEE_HOME_PAGE);
     }
 

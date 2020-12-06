@@ -40,4 +40,8 @@ public class AttendanceService {
     public void saveAllAttendances(List<TraineeAttendance> traineeAttendances){
         attendanceRepository.saveAll(traineeAttendances);
     }
+
+    public void saveAttendance(TraineeAttendance traineeAttendance){
+        attendanceRepository.save(traineeAttendance);
+    }
 }

@@ -21,15 +21,13 @@ import java.util.*;
 public class AttendanceController {
 
     private TraineeService traineeService;
-    private WeekReportService weekReportService;
     private AttendanceService attendanceService;
     private TrainerService trainerService;
     private CourseGroupService courseGroupService;
 
     @Autowired
-    public AttendanceController(TraineeService traineeService, WeekReportService weekReportService, AttendanceService attendanceService, TrainerService trainerService, CourseGroupService courseGroupService) {
+    public AttendanceController(TraineeService traineeService, AttendanceService attendanceService, TrainerService trainerService, CourseGroupService courseGroupService) {
         this.traineeService = traineeService;
-        this.weekReportService = weekReportService;
         this.attendanceService = attendanceService;
         this.trainerService = trainerService;
         this.courseGroupService = courseGroupService;
@@ -39,26 +37,23 @@ public class AttendanceController {
     public ModelAndView getAllGroupTrainees(@ModelAttribute TraineeAttendance traineeAttendance, ModelMap modelMap, Principal principal){
         int groupId = trainerService.getTrainerByUsername(principal.getName()).get().getGroupId();
         List<Trainee> trainees = traineeService.getTraineesByGroupId(groupId);
-        LocalDate date = LocalDate.now();
+        LocalDate today = LocalDate.now();
         LocalDate startDate = courseGroupService.getGroupByID(groupId).get().getStartDate().toLocalDate();
-
-//        modelMap.addAttribute("trainee", trainees.get(0));
-
+        traineeAttendance.setAttendanceId(1);
 
         modelMap.addAttribute("courseStartDate", startDate);
-        modelMap.addAttribute("today", date);
+        modelMap.addAttribute("today", today);
+        modelMap.addAttribute("todayString", today.toString());
         modelMap.addAttribute("trainees", trainees);
         modelMap.addAttribute("traineeAttendance", traineeAttendance);
         return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_ATTENDANCE_PAGE), modelMap);
     }
 
     @PostMapping("/trainer/attendanceEntry")
-    public ModelAndView postAllGroupTrainees(@ModelAttribute TraineeAttendance traineeAttendance, ModelMap modelMap, Principal principal){
+    public ModelAndView postAllGroupTrainees(@ModelAttribute TraineeAttendance traineeAttendance, ModelMap modelMap){
 
-        int groupId = trainerService.getTrainerByUsername(principal.getName()).get().getGroupId();
+        int groupId = traineeService.getTraineeByID(traineeAttendance.getTraineeId()).get().getGroupId();
         Date startDate = Date.valueOf(courseGroupService.getGroupByID(groupId).get().getStartDate().toLocalDate());
-        List<Trainee> trainees = traineeService.getTraineesByGroupId(groupId);
-//        traineeAttendance.setTraineeId(trainees.get(0).getTraineeId());
         traineeAttendance.setWeek(DateCalculator.getWeek(traineeAttendance.getAttendanceDate(), startDate));
         traineeAttendance.setDay(DateCalculator.getDay(traineeAttendance.getAttendanceDate(), startDate));
         attendanceService.saveAttendance(traineeAttendance);
@@ -87,18 +82,17 @@ public class AttendanceController {
     }
 
     @GetMapping("/trainee/trainee-attendance")
-    public String getTraineeAttendance(Principal principal, ModelMap modelMap){
+    public ModelAndView getTraineeAttendance(Principal principal, ModelMap modelMap){
         Trainee trainee = traineeService.getTraineeByUsername(principal.getName()).get();
         Map<Integer, List<TraineeAttendance>> attendanceByWeek = getAttendanceReports(trainee);
 
         modelMap.addAttribute("currentWeek", courseGroupService.getWeekByGroupId(trainee.getGroupId()));
         modelMap.addAttribute("reports", attendanceByWeek);
         modelMap.addAttribute("trainee", trainee);
-        return Pages.accessPage(Role.TRAINEE, Pages.TRAINEE_ATTENDANCE);
+        return new ModelAndView(Pages.accessPage(Role.TRAINEE, Pages.TRAINEE_ATTENDANCE), modelMap);
     }
 
     private Map<Integer, List<TraineeAttendance>> getAttendanceReports(Trainee trainee) {
-        Date startDate = Date.valueOf(courseGroupService.getGroupByID(trainee.getGroupId()).get().getStartDate().toLocalDate());
         List<TraineeAttendance> traineeAttendanceList = attendanceService.getTraineeAttendanceByTraineeId(trainee.getTraineeId());
         Map<Integer, List<TraineeAttendance>> attendanceByWeek = new TreeMap<>(Collections.reverseOrder());
 

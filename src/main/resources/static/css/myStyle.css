@@ -129,7 +129,7 @@ ul li {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
     margin-left: -1px;
     list-style-type: none;
 }

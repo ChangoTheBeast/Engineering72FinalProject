@@ -59,29 +59,30 @@ public class AttendanceController {
 
     }
 
-    @RequestMapping(value="/trainer/viewTrainee", method= RequestMethod.POST, params="btnStatus=attendance")
-    public String getTraineeAttendance(Integer traineeId, Model model) {
+    @RequestMapping(value="/trainer/viewTrainee", method = RequestMethod.POST, params="btnStatus=attendance")
+    public String getTraineeAttendance(Integer traineeId) {
         return "redirect:traineeAttendance/"+traineeId;
     }
 
     @GetMapping("/trainer/traineeAttendance/{traineeId}")
-    public String getTraineeAttendanceWithPath(@PathVariable Integer traineeId, Model model) {
+    public ModelAndView getTraineeAttendanceWithPath(@PathVariable Integer traineeId, ModelMap modelMap) {
         Trainee trainee = traineeService.getTraineeByID(traineeId).get();
         Map<Integer, List<AttendanceReport>> attendanceByWeek = getAttendanceReports(trainee);
 
-        model.addAttribute("reports", attendanceByWeek);
-        model.addAttribute("trainee", trainee);
-        return Pages.accessPage(Role.TRAINER, Pages.TRAINER_ATTENDANCE);
+        modelMap.addAttribute("attendanceReports", attendanceByWeek);
+        modelMap.addAttribute("trainee", trainee);
+        return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_ATTENDANCE), modelMap);
     }
 
     @GetMapping("/trainee/trainee-attendance")
-    public String getTraineeAttendance(Principal principal, ModelMap modelMap){
+    public ModelAndView getTraineeAttendance(ModelMap modelMap, Principal principal){
         Trainee trainee = traineeService.getTraineeByUsername(principal.getName()).get();
         Map<Integer, List<AttendanceReport>> attendanceByWeek = getAttendanceReports(trainee);
 
-        modelMap.addAttribute("reports", attendanceByWeek);
+        modelMap.addAttribute("attendanceReports", attendanceByWeek);
         modelMap.addAttribute("trainee", trainee);
-        return Pages.accessPage(Role.TRAINEE, Pages.TRAINEE_ATTENDANCE);
+        return new ModelAndView("/trainee/traineeAttendance", modelMap);
+//        return new ModelAndView(Pages.accessPage(Role.TRAINEE, Pages.TRAINEE_ATTENDANCE), modelMap);
     }
 
     private Map<Integer, List<AttendanceReport>> getAttendanceReports(Trainee trainee) {

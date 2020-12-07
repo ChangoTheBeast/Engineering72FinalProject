@@ -1,0 +1,99 @@
+{
+  "id": "3c10d93e-028d-4f93-8d76-2428e1ea58f6",
+  "version": "2.0",
+  "name": "TraineeTracker-attendance",
+  "url": "http://localhost:8080",
+  "tests": [{
+    "id": "9008cb76-1bb0-49c5-ba71-731393e5f2ae",
+    "name": "ViewTraineeAttendance",
+    "commands": [{
+      "id": "8ffe1e52-da38-4147-b5c9-ae58e28f500b",
+      "comment": "",
+      "command": "open",
+      "target": "/login",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e0aca6cb-3090-4784-a7db-4f480afa2fb2",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "550x689",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a9730021-67e6-497e-833d-4e12d20e4836",
+      "comment": "",
+      "command": "click",
+      "target": "id=inputEmail",
+      "targets": [
+        ["id=inputEmail", "id"],
+        ["name=username", "name"],
+        ["css=#inputEmail", "css:finder"],
+        ["xpath=//input[@id='inputEmail']", "xpath:attributes"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a19761d2-027b-4f28-9403-dbcb891c21f5",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputPassword",
+      "targets": [
+        ["id=inputPassword", "id"],
+        ["name=password", "name"],
+        ["css=#inputPassword", "css:finder"],
+        ["xpath=//input[@id='inputPassword']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "startrek"
+    }, {
+      "id": "7f83efcc-f710-461e-b579-80a0c71f016e",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputEmail",
+      "targets": [
+        ["id=inputEmail", "id"],
+        ["name=username", "name"],
+        ["css=#inputEmail", "css:finder"],
+        ["xpath=//input[@id='inputEmail']", "xpath:attributes"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "MGadhvi@sparta.com"
+    }, {
+      "id": "3852ad05-bb3a-403f-8c99-3ad732cebf6f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1c216334-8c84-4af4-bdaf-90204637ea0a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(3)",
+      "targets": [
+        ["css=.btn:nth-child(3)", "css:finder"],
+        ["xpath=(//button[@name='btnStatus'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='content-wrapper']/main/div/div[3]/form/div/div/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'View Trainee Attendance')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "ca988f0e-8b45-42f2-b849-4c41f3b2eecd",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["9008cb76-1bb0-49c5-ba71-731393e5f2ae"]
+  }],
+  "urls": ["http://localhost:8080/"],
+  "plugins": []
+}

@@ -1,6 +1,7 @@
 package com.sparta.eng72.traineetracker.services;
 
 
+import com.sparta.eng72.traineetracker.entities.Trainee;
 import com.sparta.eng72.traineetracker.entities.TraineeAttendance;
 import com.sparta.eng72.traineetracker.repositories.AttendanceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,10 @@ public class AttendanceService {
         return attendanceRepository.getTraineeAttendanceByTraineeId(traineeId);
     }
 
+    public List<TraineeAttendance> getTraineeAttendanceByTraineeIdAndWeek(Integer traineeId, Integer week){
+        return attendanceRepository.getTraineeAttendanceByTraineeIdAndWeek(traineeId, week);
+    }
+
     public String getAttendanceStatus(Integer attendanceId) {
         switch (attendanceId) {
             case 1:
@@ -39,5 +44,9 @@ public class AttendanceService {
 
     public void saveAllAttendances(List<TraineeAttendance> traineeAttendances){
         attendanceRepository.saveAll(traineeAttendances);
+    }
+
+    public void saveAttendance(TraineeAttendance traineeAttendance){
+        attendanceRepository.save(traineeAttendance);
     }
 }

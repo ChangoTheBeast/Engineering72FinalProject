@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/fragments :: layout(~{::head}, ~{::nav}, ~{::main})}">
+<head th:replace="~{fragments/head :: headFragment(title='Trainee Tracker')}">
+    <head>
+        <meta charset="UTF-8">
+        <link rel ="stylesheet" href="/css/myStyle.css"/>
+        <link rel ="stylesheet" href="webjars/bootstrap/4.5.2/css/bootstrap.css"/>
+        <link rel="stylesheet" href="vendor/fontawesome-free/css/all.min.css" >
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+        <title>Trainee Attendance</title>
+    </head>
+<body>
+<nav th:replace="~{fragments/publicNavigation}">Navigation</nav>
+<main>
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800" text="Attendance"></h1>
+        </div>
+    </div>
+    <br/>
+    <div class="accordion" id="accordionExample">
+        <div class="card" th:each="entry, stats : ${reports}" th:with="map=${entry.value}">
+            <div class="card-header" th:id="${'heading' + entry.key}">
+                <h2 class="mb-0">
+                    <button aria-expanded="show"
+                            class="btn btn-link btn-block text-left"
+                            data-toggle="collapse"
+                            th:data-target="${'#collapse' + entry.key}"
+                            th:aria-controls="${'collapse' + entry.key}"
+                            th:text="${'Week ' + entry.key}"
+                            type="button">
+                    </button>
+                </h2>
+            </div>
+            <div th:id="${'collapse' + entry.key}" class="collapse hide" th:aria-labelledby="${'heading' + entry.key}" data-parent="#accordionExample">
+                <div class="card-body">
+                    <div class="jumbotron">
+                        <h2 th:text="${'Attendance - Week ' + entry.key}"></h2>
+                        <br/>
+                        <div class="row">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>Key</th>
+                                </tr>
+                                </thead>
+                                <tr>
+                                    <td class="completeState1 holderTextGreen">Holder</td>
+                                    <td> : On Time, </td>
+                                    <td class="completeState2 holderTextOrange">Holder</td>
+                                    <td> : Late, </td>
+                                    <td class="completeState3 holderTextBlue">Holder</td>
+                                    <td> : Excused, </td>
+                                    <td class="completeState4 holderTextRed">Holder</td>
+                                    <td> : Unexcused, </td>
+                                    <td class="completeState5 holderTextWhite">Holder</td>
+                                    <td> : No Entry  </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <br/>
+                        <table class="table table-bordered">
+
+                            <thead>
+                            <tr>
+                                <th th:rowspan="2">Trainee</th>
+                                <th th:each="day: ${days}" th:text="${day}"></th>
+                            </tr>
+
+
+                            </thead>
+                            <tbody>
+                            <tr th:each="entry, stats : ${map}" th:with="records=${entry.value}">
+                                <th scope="row" th:text="${entry.key.firstName} + ' ' + ${entry.key.lastName}">Trainee Name</th>
+                                <td th:each="weekReport: ${records}" th:class="'completeState' + ${weekReport.attendanceId}"></td>
+                            </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

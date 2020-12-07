@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
@@ -85,7 +86,8 @@ public class TrainerHomeController {
         modelMap.addAttribute("courseDurationList", courseDurationList);
         modelMap.addAttribute("traineeCompletedList", traineeCompletedList);
         modelMap.addAttribute("traineeCounter", traineeCounter);
-        return Pages.accessPage(Role.TRAINER, Pages.TRAINER_HOME_PAGE);
+//        return Pages.accessPage(Role.TRAINER, Pages.TRAINER_HOME_PAGE);
+        return "/trainer/trainerHome";
     }
 
     @GetMapping("/trainer/addTrainee")

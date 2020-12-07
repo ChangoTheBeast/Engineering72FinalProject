@@ -44,13 +44,30 @@
                         <table th:each="report : ${list}">
 
                             <tr>
-                                <td  th:switch="${report.day}">
-                                    <div th:case="1" th:text="${report.attendanceDate} + ' - Monday: ' + ${report.attendanceStatus}"></div>
-                                    <div th:case="2" th:text="${report.attendanceDate} + ' - Tuesday: ' + ${report.attendanceStatus}"></div>
-                                    <div th:case="3" th:text="${report.attendanceDate} + ' - Wednesday: ' + ${report.attendanceStatus}"></div>
-                                    <div th:case="4" th:text="${report.attendanceDate} + ' - Thursday: '  + ${report.attendanceStatus}"></div>
-                                    <div th:case="5" th:text="${report.attendanceDate} + ' - Friday: ' + ${report.attendanceStatus}"></div>
+
+                                <td th:text="${report.attendanceDate}"></td>
+                                <td th:switch="${report.day}">
+                                    <div th:case="1"><strong> :: MONDAY :: </strong></div>
+                                    <div th:case="2"><strong> :: TUESDAY :: </strong></div>
+                                    <div th:case="3"><strong> :: WEDNESDAY :: </strong></div>
+                                    <div th:case="4"><strong> :: THURSDAY :: </strong></div>
+                                    <div th:case="5"><strong> :: FRIDAY :: </strong></div>
                                 </td>
+                                <td th:switch="${report.attendanceId}">
+                                    <div th:case="1">ON TIME</div>
+                                    <div th:case="2">LATE</div>
+                                    <div th:case="3">ABSENT (EXCUSED)</div>
+                                    <div th:case="4">ABSENT (UNEXCUSED)</div>
+                                    <div th:case="5">NO ENTRY</div>
+                                </td>
+
+<!--                                <td  th:switch="${report.day}">-->
+<!--                                    <div th:case="1" th:text="${report.attendanceDate} + ' - Monday: ' + ${report.attendanceId}"></div>-->
+<!--                                    <div th:case="2" th:text="${report.attendanceDate} + ' - Tuesday: ' + ${report.attendanceId}"></div>-->
+<!--                                    <div th:case="3" th:text="${report.attendanceDate} + ' - Wednesday: ' + ${report.attendanceId}"></div>-->
+<!--                                    <div th:case="4" th:text="${report.attendanceDate} + ' - Thursday: '  + ${report.attendanceId}"></div>-->
+<!--                                    <div th:case="5" th:text="${report.attendanceDate} + ' - Friday: ' + ${report.attendanceId}"></div>-->
+<!--                                </td>-->
                             </tr>
 
                         </table>

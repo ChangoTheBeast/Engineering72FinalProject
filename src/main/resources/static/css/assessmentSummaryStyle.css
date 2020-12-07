@@ -1,0 +1,6 @@
+#assessmentGrade {
+    text-align: center;
+}
+button>span + span{
+    margin-right: 10%;
+}

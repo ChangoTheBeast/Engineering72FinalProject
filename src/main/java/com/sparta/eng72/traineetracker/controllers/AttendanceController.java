@@ -80,18 +80,31 @@ public class AttendanceController {
         return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_ATTENDANCE), modelMap);
     }
 
+//    @GetMapping("/trainee/trainee-attendance")
+//    public ModelAndView getTraineeAttendance(ModelMap modelMap, Principal principal){
+//        Map<Integer, List<AttendanceReport>> attendanceByWeek = getAttendanceReports(trainee);
+//        Trainee trainee = null;
+//        if (traineeService.getTraineeByUsername(principal.getName()).isPresent()) {
+//            trainee = traineeService.getTraineeByUsername(principal.getName()).get();
+//        }
+//        modelMap.addAttribute("attendanceReports", attendanceByWeek);
+////        return new ModelAndView(Pages.accessPage(Role.TRAINEE, Pages.TRAINEE_ATTENDANCE), modelMap);
+//        model.addAttribute("currentWeek", courseGroupService.getWeekByGroupId(trainee.getGroupId()));
+//        model.addAttribute("trainee", trainee);
+//        return new ModelAndView("/trainee/traineeAttendance", modelMap);
+//    }
+
     @GetMapping("/trainee/trainee-attendance")
-    public ModelAndView getTraineeAttendance(ModelMap modelMap, Principal principal){
-        Map<Integer, List<AttendanceReport>> attendanceByWeek = getAttendanceReports(trainee);
-        Trainee trainee = null;  
+    public ModelAndView getTraineeAttendance(ModelMap modelMap,Principal principal){
+        Trainee trainee = null;
         if (traineeService.getTraineeByUsername(principal.getName()).isPresent()) {
             trainee = traineeService.getTraineeByUsername(principal.getName()).get();
         }
+        Map<Integer, List<TraineeAttendance>> attendanceByWeek = getAttendanceReports(trainee);
+        modelMap.addAttribute("currentWeek", courseGroupService.getWeekByGroupId(trainee.getGroupId()));
         modelMap.addAttribute("attendanceReports", attendanceByWeek);
-//        return new ModelAndView(Pages.accessPage(Role.TRAINEE, Pages.TRAINEE_ATTENDANCE), modelMap);
-        model.addAttribute("currentWeek", courseGroupService.getWeekByGroupId(trainee.getGroupId()));
-        model.addAttribute("trainee", trainee);
-        return new ModelAndView("/trainee/traineeAttendance", modelMap);
+        modelMap.addAttribute("trainee", trainee);
+        return new ModelAndView(Pages.accessPage(Role.TRAINEE, Pages.TRAINEE_ATTENDANCE), modelMap);
     }
 
     private Map<Integer, List<TraineeAttendance>> getAttendanceReports(Trainee trainee) {

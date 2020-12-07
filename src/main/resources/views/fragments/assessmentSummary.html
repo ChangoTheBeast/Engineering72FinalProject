@@ -4,41 +4,38 @@
     <meta charset="UTF-8">
     <link rel ="stylesheet" th:href="@{/css/myStyle.css}"/>
     <link rel ="stylesheet" href="/webjars/bootstrap/4.5.2/css/bootstrap.css"/>
-
+    <link rel ="stylesheet" th:href="@{/css/assessmentSummaryStyle.css}"/>
 </head>
 <body>
 <div th:fragment="assessmentSummary">
     <p th:if="${assessments.isEmpty()}"
-       th:text="${'No assessments available for ' + trainee.getFirstName() + ' ' + trainee.getLastName()}"></p>
-    <div class="accordion" id="accordionExample">
-        <div class="card-header">
-            <h2 class="mb-0">
-                <table aria-expanded="show">
-                    <tr>
-                        <th>Assessment Name</th>
-                        <th>Assessment Score</th>
-                        <th>Assessment Grade</th>
-                        <th>Assessment Date</th>
-                    </tr>
-                    <tr th:each="assessment :${assessments}">
-                        <td th:text="${codingGamesAPI.getAssessmentName(assessment)}">Assessment name</td>
-                        <td th:text="${codingGamesAPI.getAssessmentScore(assessment)}">Assessment score</td>
-                        <td th:text="${codingGamesAPI.getAssessmentGrade(assessment)}">
-                            <th:block th:switch="${codingGamesAPI.getAssessmentGrade(assessment)}">
-                                <div th:case="'A'" style="color: darkgreen"/>
-                                <div th:case="'B'" style="color:lightgreen"/>
-                                <div th:case="'C'" style="color: darkyellow"/>
-                                <div th:case="'D'" style="color: orange"/>
-                                <div th:case="'F'" style="color: red"/>
-                            </th:block>Assessment grade
-                        </td>
-                        <td th:text="${codingGamesAPI.getAssessmentDate(assessment)}">Assessment date</td>
-                    </tr>
-                </table>
-            </h2>
-        </div>
+       th:text="${'No assessments available for ' + trainee.getFirstName() + ' ' + trainee.getLastName()}">
+    </p>
+    <div>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Score</th>
+                <th> Grade</th>
+                <th> Date</th>
+            </tr>
+            <tr th:each="assessment :${assessments}">
+                <td th:text="${codingGamesAPI.getAssessmentName(assessment)}">Assessment name</td>
+                <td th:text="${codingGamesAPI.getAssessmentScore(assessment)}">Assessment score</td>
+                <td id="assessmentGrade">
+                    <div th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}" th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'A'" style="color: darkgreen"></div>
+                    <div th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}" th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'B'" style="color:lightgreen"></div>
+                    <div th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}" th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'C'" style="color: yellow"></div>
+                    <div th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}" th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'D'" style="color: orange"></div>
+                    <div th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}" th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'F'" style="color: red"></div>
+                </td>
+                <td th:text="${codingGamesAPI.getAssessmentDate(assessment)}">Assessment date</td>
+            </tr>
+        </table>
     </div>
-</div>
+
+
+
 
 </body>
 </html>

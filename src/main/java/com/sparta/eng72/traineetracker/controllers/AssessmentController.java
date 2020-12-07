@@ -65,5 +65,21 @@ public class AssessmentController {
         modelMap.addAttribute("assessments", assessments);
     }
 
+    @GetMapping("/trainee/assessmentSummary")
+    public String getAssessmentSummary(Principal principal, ModelMap modelMap) {
+
+        Trainee trainee = traineeService.getTraineeByUsername(principal.getName()).get();
+        String username = trainee.getUsername();
+        List<JsonNode> assessments = codingGamesAPIService.getAllReportsByEmail(username);
+
+        modelMap.addAttribute("codingGamesAPI", new CodingGamesAPIService());
+        modelMap.addAttribute("trainee", trainee);
+        modelMap.addAttribute("assessments", assessments);
+
+        return "/fragments/assessmentSummary";
+    }
+
+
+
 
 }

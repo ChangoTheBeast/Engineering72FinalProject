@@ -136,6 +136,10 @@ public class CodingGamesAPIService implements CodingGamesAPI {
         }
     }
 
+    public char getFirstLetter(String grade) {
+        return grade.toCharArray()[0];
+    }
+
 
     public String getAssessmentDate(JsonNode assessment) {
         long epoch = assessment.get("start_time").asLong();
@@ -146,7 +150,7 @@ public class CodingGamesAPIService implements CodingGamesAPI {
 
 
     public int getAssessmentDuration(JsonNode assessment) {
-        return assessment.get("report").get("total_duration").asInt();
+        return assessment.get("report").get("total_duration").asInt()/60;
     }
 
     public int getAssessmentComparativeScore(JsonNode assessment) {

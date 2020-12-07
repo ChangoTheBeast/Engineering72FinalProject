@@ -52,15 +52,32 @@
 }
 
 ul li {
-    color: crimson;
+    color: #000000;
 }
 
-.completeState0{
+.completeState0, .completeState4{
     background-color: crimson;
+    border-color: #000000;
 }
 
 .completeState1{
     background-color: darkseagreen;
+    border-color: #000000;
+}
+
+.completeState2{
+    background-color: darkorange;
+    border-color: #000000;
+}
+
+.completeState3{
+    background-color: cornflowerblue;
+    border-color: #000000;
+}
+
+.completeState5{
+    background-color: white;
+    border-color: #000000;
 }
 
 .feedbackFormTextArea{
@@ -91,6 +108,67 @@ ul li {
 .holderTextGreen{
     color: darkseagreen;
 }
+
+.holderTextBlue{
+    color: cornflowerblue;
+}
+
+.holderTextWhite{
+    color: white;
+}
+
+.holderTextOrange{
+    color: darkorange;
+}
+
 .placeholderText{
     color: transparent;
+}
+
+.form-control-dropdown, .form-control-dropdown:focus {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #6e707e;
+    border: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    outline: none;
+}
+
+.table-bordered{
+    margin-left: auto;
+    margin-right: auto;
+    align-content: center;
+    text-align-all: center;
+}
+
+
+/*styling for assessment page*/
+.flex-list {
+    position: relative;
+    margin: 1em;
+    overflow: hidden;
+}
+.flex-list ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-left: -1px;
+    list-style-type: none;
+}
+.flex-list li {
+    flex-grow: 1;
+    flex-basis: auto;
+    margin: .25em 0;
+    padding: 0 1em;
+    text-align: center;
+    border-left: 1px solid #ccc;
+    /*background-color: ;*/
 }

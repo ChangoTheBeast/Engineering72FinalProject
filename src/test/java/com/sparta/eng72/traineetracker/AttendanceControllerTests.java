@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
 
+import static org.hamcrest.Matchers.hasProperty;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -42,8 +43,8 @@ public class AttendanceControllerTests {
 
     private final String trainerName = "MGadhvi@sparta.com";
     private final String trainerPw = "startrek";
-    private final String traineeName = "";
-    private final String traineePw = "";
+    private final String traineeName = "bbird@spartaglobal.com";
+    private final String traineePw = "test";
 
 
     @Test
@@ -59,29 +60,32 @@ public class AttendanceControllerTests {
     @WithMockUser(username =trainerName , password = trainerPw,roles = "TRAINER")
     public void displayAttendanceTest() throws Exception {
         this.mockMvc.perform(get("/trainer/traineeAttendance/5")).andDo(print()).andExpect(status().isOk()).andExpect(model().attributeExists(
-                "attendance","trainee","traineeId"));
+                "reports","trainee"));
     }
 
     @Test
     @WithMockUser(username =trainerName , password = trainerPw,roles = "TRAINER")
     public void getCorrectTraineeTest() throws Exception {
         this.mockMvc.perform(get("/trainer/traineeAttendance/5")).andDo(print()).andExpect(status().isOk()).andExpect(model().attribute(
-                "traineeId",5));
+                "trainee", Matchers.hasProperty("traineeId", Matchers.equalTo(5))));
     }
 
     @Test
     @WithMockUser(username =trainerName , password = trainerPw,roles = "TRAINER")
     public void attendanceEntryTest() throws Exception {
         this.mockMvc.perform(get("/trainer/attendanceEntry")).andDo(print()).andExpect(status().isOk()).andExpect(model().attributeExists(
-                "date","trainee"));
+                "courseStartDate","trainees", "today", "traineeAttendance"));
     }
 
     @Test
-    @WithMockUser(username =traineeName , password = traineePw,roles = "TRAINEE")
+    @WithMockUser(username = traineeName , password = traineePw,roles = "TRAINEE")
     public void traineeViewAttendanceTest() throws Exception {
-        this.mockMvc.perform(get("/trainee/traineeAttendance/5")).andDo(print()).andExpect(status().isOk()).andExpect(model().attribute(
-                "traineeId",5));
+        this.mockMvc.perform(get("/trainee/trainee-attendance")).andDo(print()).andExpect(status().isOk()).andExpect(model().attributeExists("reports", "trainee"));
     }
 
-
+    @Test
+    @WithMockUser(username = traineeName , password = traineePw,roles = "TRAINEE")
+    public void traineePercentagesTest() throws Exception {
+        this.mockMvc.perform(get("/trainee/profile-percentage")).andDo(print()).andExpect(status().isOk()).andExpect(model().attributeExists("onTimePercentage", "latePercentage", "excusedPercentage", "unexcusedPercentage"));
+    }
 }

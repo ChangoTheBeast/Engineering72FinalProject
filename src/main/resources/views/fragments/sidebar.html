@@ -48,6 +48,15 @@
         <!-- Divider -->
         <hr class="sidebar-divider">
 
+        <!-- Nav Item - Profile -->
+        <li class="nav-item active">
+            <a class="nav-link" th:if="${#httpServletRequest.isUserInRole('TRAINEE') == true}" th:href="@{/trainee/traineeProfile}">
+                <i class="fas fa-fw fa-id-card"></i>
+                <span>Profile</span></a>
+        </li>
+
+        <!-- Divider -->
+        <hr th:if="${#httpServletRequest.isUserInRole('TRAINEE') == true}" class="sidebar-divider">
 
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item">

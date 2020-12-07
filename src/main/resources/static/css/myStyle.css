@@ -52,7 +52,7 @@
 }
 
 ul li {
-    color: crimson;
+    color: #000000;
 }
 
 .completeState0, .completeState4{
@@ -146,4 +146,29 @@ ul li {
     margin-right: auto;
     align-content: center;
     text-align-all: center;
+}
+
+
+/*styling for assessment page*/
+.flex-list {
+    position: relative;
+    margin: 1em;
+    overflow: hidden;
+}
+.flex-list ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-left: -1px;
+    list-style-type: none;
+}
+.flex-list li {
+    flex-grow: 1;
+    flex-basis: auto;
+    margin: .25em 0;
+    padding: 0 1em;
+    text-align: center;
+    border-left: 1px solid #ccc;
+    /*background-color: ;*/
 }

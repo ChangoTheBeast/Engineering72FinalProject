@@ -150,7 +150,7 @@ public class CodingGamesAPIService implements CodingGamesAPI {
 
 
     public int getAssessmentDuration(JsonNode assessment) {
-        return assessment.get("report").get("total_duration").asInt();
+        return assessment.get("report").get("total_duration").asInt()/60;
     }
 
     public int getAssessmentComparativeScore(JsonNode assessment) {

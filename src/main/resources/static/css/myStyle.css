@@ -55,12 +55,29 @@ ul li {
     color: crimson;
 }
 
-.completeState0{
+.completeState0, .completeState4{
     background-color: crimson;
+    border-color: #000000;
 }
 
 .completeState1{
     background-color: darkseagreen;
+    border-color: #000000;
+}
+
+.completeState2{
+    background-color: darkorange;
+    border-color: #000000;
+}
+
+.completeState3{
+    background-color: cornflowerblue;
+    border-color: #000000;
+}
+
+.completeState5{
+    background-color: white;
+    border-color: #000000;
 }
 
 .feedbackFormTextArea{
@@ -91,6 +108,19 @@ ul li {
 .holderTextGreen{
     color: darkseagreen;
 }
+
+.holderTextBlue{
+    color: cornflowerblue;
+}
+
+.holderTextWhite{
+    color: white;
+}
+
+.holderTextOrange{
+    color: darkorange;
+}
+
 .placeholderText{
     color: transparent;
 }

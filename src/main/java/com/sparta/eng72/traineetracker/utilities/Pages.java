@@ -63,6 +63,7 @@ public class Pages {
     public static final String TRAINER_ASSESSMENTS ="/trainer/trainerAssessment";
     public static final String TRAINER_ATTENDANCE_PAGE ="/trainer/attendance";
     public static final String TRAINER_ATTENDANCE_SUCCESS ="/trainer/attendanceSuccess";
+    public static final String TRAINER_WEEKLY_ATTENDANCE ="/trainer/weeklyAttendance";
 
 
 

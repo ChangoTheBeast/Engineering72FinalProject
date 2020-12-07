@@ -40,6 +40,7 @@ public class AttendanceController {
         LocalDate today = LocalDate.now();
         LocalDate startDate = courseGroupService.getGroupByID(groupId).get().getStartDate().toLocalDate();
         traineeAttendance.setAttendanceId(1);
+        traineeAttendance.setAttendanceDate(Date.valueOf(today));
 
         modelMap.addAttribute("courseStartDate", startDate);
         modelMap.addAttribute("today", today);

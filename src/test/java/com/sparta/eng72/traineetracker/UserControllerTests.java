@@ -9,12 +9,17 @@ import com.sparta.eng72.traineetracker.utilities.NewUserForm;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.ui.ModelMap;
 
 import javax.persistence.NoResultException;
 import java.util.ArrayList;
 import java.util.List;
 
+
+@SpringBootTest
+@AutoConfigureMockMvc
 public class UserControllerTests {
 
     @Autowired

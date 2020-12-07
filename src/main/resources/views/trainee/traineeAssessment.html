@@ -33,8 +33,17 @@
                             data-toggle="collapse"
                             th:data-target="${'#collapse' + codingGamesAPI.getAssessmentName(assessment)}"
                             th:aria-controls="${'collapse' + codingGamesAPI.getAssessmentName(assessment)}"
-                            th:text="${codingGamesAPI.getAssessmentName(assessment)}"
                             type="button">
+                        <span th:text="${codingGamesAPI.getAssessmentName(assessment)}">Assessment name</span>
+                        <span th:text="${codingGamesAPI.getAssessmentScore(assessment)}">Assessment score</span>
+                        <span>
+                            <span th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}" th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'A'" style="color: darkgreen"></span>
+                            <span th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}" th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'B'" style="color: lightgreen"></span>
+                            <span th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}" th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'C'" style="color: yellow"></span>
+                            <span th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}" th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'D'" style="color: orange"></span>
+                            <span th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}" th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'F'" style="color: red"></span>
+                        </span>
+                        <span th:text="${codingGamesAPI.getAssessmentDate(assessment)}">Assessment Date</span>
                     </button>
                 </h2>
             </div>

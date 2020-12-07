@@ -24,7 +24,7 @@
                 <td th:text="${codingGamesAPI.getAssessmentScore(assessment)}">Assessment score</td>
                 <td id="assessmentGrade">
                     <div th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}" th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'A'" style="color: darkgreen"></div>
-                    <div th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}" th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'B'" style="color:lightgreen"></div>
+                    <div th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}" th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'B'" style="color: lightgreen"></div>
                     <div th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}" th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'C'" style="color: yellow"></div>
                     <div th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}" th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'D'" style="color: orange"></div>
                     <div th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}" th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'F'" style="color: red"></div>
@@ -33,9 +33,6 @@
             </tr>
         </table>
     </div>
-
-
-
-
+</div>
 </body>
 </html>

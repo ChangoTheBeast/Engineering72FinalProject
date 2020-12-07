@@ -76,7 +76,10 @@ public class AttendanceController {
 
     @GetMapping("/trainee/trainee-attendance")
     public String getTraineeAttendance(Principal principal, ModelMap modelMap){
-        Trainee trainee = traineeService.getTraineeByUsername(principal.getName()).get();
+        Trainee trainee = null;
+        if (traineeService.getTraineeByUsername(principal.getName()).isPresent()) {
+            trainee = traineeService.getTraineeByUsername(principal.getName()).get();
+        }
         Map<Integer, List<AttendanceReport>> attendanceByWeek = getAttendanceReports(trainee);
 
         modelMap.addAttribute("reports", attendanceByWeek);

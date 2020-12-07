@@ -42,7 +42,7 @@ public class LoginController {
         return new ModelAndView("redirect:/"+Pages.LOGIN_PAGE_URL, modelMap);
     }
 
-    @PostMapping
+    @PostMapping("/loginFailure")
     public ModelAndView postLoginFailure(ModelMap modelMap,
                                          RedirectAttributes redirectAttributes,
                                          HttpServletRequest request) {

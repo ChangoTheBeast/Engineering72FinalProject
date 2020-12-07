@@ -83,7 +83,10 @@ public class AttendanceController {
 
     @GetMapping("/trainee/trainee-attendance")
     public ModelAndView getTraineeAttendance(Principal principal, ModelMap modelMap){
-        Trainee trainee = traineeService.getTraineeByUsername(principal.getName()).get();
+        Trainee trainee = null;
+        if (traineeService.getTraineeByUsername(principal.getName()).isPresent()) {
+            trainee = traineeService.getTraineeByUsername(principal.getName()).get();
+        }
         Map<Integer, List<TraineeAttendance>> attendanceByWeek = getAttendanceReports(trainee);
 
         modelMap.addAttribute("currentWeek", courseGroupService.getWeekByGroupId(trainee.getGroupId()));
@@ -147,6 +150,39 @@ public class AttendanceController {
         modelMap.addAttribute("unexcusedPercentage", unexcusedPercentage);
 
         return "/fragments/profile-percentages";
+    }
+
+
+    @GetMapping("/trainer/weekly-attendance")
+    public ModelAndView getWeeklyAttendance(Principal principal, ModelMap modelMap){
+        Trainer trainer = trainerService.getTrainerByUsername(principal.getName()).get();
+        int currentWeek = courseGroupService.getWeekByGroupId(trainer.getGroupId());
+        Map<Integer, Map<Trainee, List<TraineeAttendance>>> attendanceByWeek = getWeeklyAttendanceReports(trainer, currentWeek);
+        List<String> days = new ArrayList<>();
+        days.add("Monday");
+        days.add("Tuesday");
+        days.add("Wednesday");
+        days.add("Thursday");
+        days.add("Friday");
+
+        modelMap.addAttribute("days", days);
+        modelMap.addAttribute("currentWeek", currentWeek);
+        modelMap.addAttribute("reports", attendanceByWeek);
+        return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_WEEKLY_ATTENDANCE), modelMap);
+    }
+
+    private Map<Integer, Map<Trainee, List<TraineeAttendance>>> getWeeklyAttendanceReports(Trainer trainer, int currentWeek) {
+
+        List<Trainee> trainees = traineeService.getTraineesByGroupId(trainer.getGroupId());
+        Map<Integer, Map<Trainee, List<TraineeAttendance>>> attendanceByWeek = new TreeMap<>(Collections.reverseOrder());
+        for(int week = 1; week <= currentWeek; week++){
+            Map<Trainee, List<TraineeAttendance>> traineeAttendanceMap = new HashMap<>();
+            for(Trainee trainee : trainees){
+                traineeAttendanceMap.put(trainee, (attendanceService.getTraineeAttendanceByTraineeIdAndWeek(trainee.getTraineeId(), week)));
+            }
+            attendanceByWeek.put(week, traineeAttendanceMap);
+        }
+        return attendanceByWeek;
     }
 
 }

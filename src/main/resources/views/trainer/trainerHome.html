@@ -93,7 +93,8 @@
             </div>
         </div>
         <div class="container-md">
-                <form th:action="@{/trainer/viewTrainee}" method="post">
+            <div>
+                <form th:action="@{/trainer/viewTrainee}" method="POST">
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
@@ -102,10 +103,12 @@
                                     <option th:each="trainee: ${traineeList}" th:value="${trainee.traineeId}" th:text="${trainee.firstName} + ' ' + ${trainee.lastName}">Trainee</option>
                                 </select>
                             </div>
-                            <button type="submit" th:name="btnStatus" th:value="reports" class="btn btn-primary">View Trainee Reports</button>
+                            <button type="submit" th:name="btnStatus" th:value="profile" class="btn btn-primary">View Trainee Profile</button>
                             <button type="submit" th:name="btnStatus" th:value="attendance" class="btn btn-primary">View Trainee Attendance</button>
                         </div>
+                    </div>
                 </form>
+            </div>
 
                         <div class="col">
                             <div class="col">
@@ -180,8 +183,8 @@
                         </table>
                     </div>
                 </form>
-        </div>
     </div>
+
 
 
     <a class="scroll-to-top rounded" href="#page-top">
@@ -190,8 +193,6 @@
 
 
 </main>
-
-
 
 </body>
 </html>

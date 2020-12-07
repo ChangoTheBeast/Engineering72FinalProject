@@ -99,16 +99,16 @@ public class TraineeReportController {
 
 
     @GetMapping("/trainee/report")
-    public String getTraineeWeeklyReports(Model model, Principal principal) {
+    public ModelMap getTraineeWeeklyReports(ModelMap modelMap, Principal principal) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy - K:mm a", Locale.ENGLISH);
         Integer traineeId = traineeService.getTraineeByUsername(principal.getName()).get().getTraineeId();
         Trainee trainee = traineeService.getTraineeByID(traineeId).get();
         List<WeekReport> reports = weekReportService.getReportsByTraineeID(traineeId);
         Collections.reverse(reports);
-        model.addAttribute("trainee", trainee);
-        model.addAttribute("reports", reports);
-        model.addAttribute("now", LocalDateTime.now());
-        model.addAttribute("dateFormat", formatter);
-        return Pages.accessPage(Role.TRAINEE, Pages.TRAINEE_REPORT_PAGE);
+        modelMap.addAttribute("trainee", trainee);
+        modelMap.addAttribute("reports", reports);
+        modelMap.addAttribute("now", LocalDateTime.now());
+        modelMap.addAttribute("dateFormat", formatter);
+        return modelMap;
     }
 }

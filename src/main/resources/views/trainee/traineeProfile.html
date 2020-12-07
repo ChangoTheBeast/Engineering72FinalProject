@@ -100,11 +100,72 @@
 
             </ul>
         </nav>
-<!--        RENDER FRAGMENT HERE-->
+
+
+        <p th:if="${report == null}" th:text="${'No grades yet for ' + trainee.getFirstName() + ' ' + trainee.getLastName()}"></p>
+        <div class="card shadow mb-4" th:if="${report != null}">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary" th:text="${'Trainer Grade for Previous Week - ' + ' ' + trainee.getFirstName() + ' ' + trainee.getLastName()}"></h6>
+            </div>
+            <div class="card-body">
+                <div style="text-align: center;">
+                    <div class="card-deck">
+                        <div class="card" >
+                            <div class="card-header">
+                                <small class="text-muted">Consultant Grade</small>
+                            </div>
+                            <div class="card-body">
+                                <big class="text-muted" th:text="${report.getConsultantGradeTrainer()}"></big>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <small class="text-muted">Technical Grade</small>
+                            </div>
+                            <div class="card-body">
+                                <big class="text-muted" th:text="${report.getTechnicalGradeTrainer()}"></big>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <small class="text-muted">Overall Grade</small>
+                            </div>
+                            <div class="card-body">
+                                <big class="text-muted" th:text="${report.getOverallGradeTrainer()}"></big>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div class="container-sm">
+                    <div class="text-center align-items-center justify-content-between mb-4">
+                        <div class="row">
+                            <div class="col">
+                                <form th:action="@{/trainee/report}" method="get">
+                                    <button class="btn" type="submit" style="color: #E23561">View Reports</button>
+                                </form>
+                            </div>
+                            <div class="col">
+                                <form th:action="@{/traineeRecentReport}"  method="post">
+                                    <button class="btn" type="submit" name="reportId" th:if="${now.isBefore(report.getDeadline())}" th:value="${report.getReportId()}" style="color: #E23561">Edit Report</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-sm text-center">
+            <img th:src="@{/images/consultant.png}" width="50%">
+            <br/>
+        </div>
+
+        <div th:replace="~{trainee/traineeReport :: reportFragment}"></div>
+
+        <div th:replace="~{trainee/traineeAssessment :: assessmentFragment}"></div>
     </div>
-
-
-
 
 </main>
 

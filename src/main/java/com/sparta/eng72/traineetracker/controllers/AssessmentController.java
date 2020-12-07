@@ -47,26 +47,22 @@ public class AssessmentController {
     }
 
     @GetMapping("/trainer/assessments/{traineeId}")
-    public String getTrainerTraineeAssessments(@PathVariable Integer traineeId, Model model) {
-        getTrainee(traineeId, model);
-        return Pages.accessPage(Role.TRAINER, Pages.TRAINER_TRAINEE_ASSESSMENTS);
-    }
-
-    @GetMapping("/trainee/assessments/{traineeId}")
-    public String getTraineeAssessments(@PathVariable Integer traineeId, Model model) {
-        getTrainee(traineeId, model);
-//        return Pages.accessPage(Role.TRAINEE, Pages.TRAINEE_ASSESSMENTS);
-        return "/trainee/traineeAssessment";
+    public ModelAndView getTrainerTraineeAssessments(@PathVariable Integer traineeId, ModelMap modelMap) {
+        getTrainee(traineeId, modelMap);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/trainee/traineeAssessment");
+        modelAndView.addAllObjects(modelMap);
+        return modelAndView;
     }
   
-    private void getTrainee(@PathVariable Integer traineeId, Model model) {
+    private void getTrainee(@PathVariable Integer traineeId, ModelMap modelMap) {
         Trainee trainee = traineeService.getTraineeByID(traineeId).get();
         String username = trainee.getUsername();
         List<JsonNode> assessments = codingGamesAPIService.getAllReportsByEmail(username);
-        model.addAttribute("codingGamesAPI", new CodingGamesAPIService());
-        model.addAttribute("traineeId", traineeId);
-        model.addAttribute("trainee", trainee);
-        model.addAttribute("assessments", assessments);
+        modelMap.addAttribute("codingGamesAPI", new CodingGamesAPIService());
+        modelMap.addAttribute("traineeId", traineeId);
+        modelMap.addAttribute("trainee", trainee);
+        modelMap.addAttribute("assessments", assessments);
     }
 
 

@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 public class Pages {
 
     //LOGIN =========================================================================================
-    public static final String HOME_PAGE = "/home";
     public static final String LOGIN_PAGE = "/login/login";
     public static final String LOGIN_PAGE_URL = "/login";
     public static final String LOGIN_FAILURE_URL = "/login";

@@ -167,3 +167,19 @@ ul li {
     border-left: 1px solid #ccc;
     /*background-color: ;*/
 }
+
+/* Attendance Page*/
+.active-on-select:hover {
+    background-color:#aaa;
+    color:white;
+}
+
+.active-on-select:active {
+    background-color:#000;
+    color:white;
+}
+
+.active-fragment {
+    background-color:#000;
+    color:white;
+}

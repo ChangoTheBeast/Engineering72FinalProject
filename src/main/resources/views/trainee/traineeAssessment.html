@@ -24,101 +24,216 @@
     <br/>
     <p th:if="${assessments.isEmpty()}"
        th:text="${'No assessments available for ' + trainee.getFirstName() + ' ' + trainee.getLastName()}"></p>
-    <div class="accordion" id="accordionExample">
-        <div class="card" >
-            <div class="card-header">
-                <h2 class="mb-0">
-                    <h4>
-                        <div class="flex-list">
-                            <ul>
-                                <li>Name</li>
-                                <li>Score (%)</li>
-                                <li>Grade</li>
-                                <li>Date</li>
-                            </ul>
-                        </div>
-                    </h4>
-                </h2>
-            </div>
 
-        <div class="card" th:each="assessment : ${assessments}">
-            <div class="card-header"
-                 th:id="${'heading' + codingGamesAPI.getAssessmentName(assessment)}">
-                <h2 class="mb-0">
-                    <button aria-expanded="show"
-                            class="btn btn-link btn-block text-left"
-                            data-toggle="collapse"
-                            th:data-target="${'#collapse' + codingGamesAPI.getAssessmentName(assessment)}"
-                            th:aria-controls="${'collapse' + codingGamesAPI.getAssessmentName(assessment)}"
-                            type="button">
-                        <div class="flex-list">
+<!--    <div class="accordion" id="accordionExample">-->
+<!--        <table class="table">-->
+<!--&lt;!&ndash;            <div class="card">&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="card-header">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                <h2 class="mb-0">&ndash;&gt;-->
+<!--                    <thead>-->
+<!--                    <tr>-->
+<!--                        <th></th>-->
+<!--                        <th>Score (%)</th>-->
+<!--                        <th>Grade</th>-->
+<!--                        <th>Date</th>-->
+<!--                        <th></th>-->
+<!--                    </tr>-->
+<!--                    </thead>-->
+<!--                    &lt;!&ndash;                </h2>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--            <tbody>-->
+<!--            <tr th:each="assessment : ${assessments}">-->
+<!--                <div class="card" >-->
+<!--                    <div class="card-header"-->
+<!--                         th:id="${'heading' + codingGamesAPI.getAssessmentName(assessment)}">-->
+<!--                        &lt;!&ndash;                <h2 class="mb-0">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <tr>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                        <div class="flex-list">&ndash;&gt;-->
+<!--                                &lt;!&ndash;                            <ul>&ndash;&gt;-->
+<!--                                <th th:text="${codingGamesAPI.getAssessmentName(assessment)}">Assessment name</th>-->
+<!--                                <td th:text="${codingGamesAPI.getAssessmentScore(assessment)}">Assessment score</td>-->
+<!--                                <td>-->
+<!--                                    <span th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}"-->
+<!--                                          th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'A'"-->
+<!--                                          style="color: darkgreen"></span>-->
+<!--                                    <span th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}"-->
+<!--                                          th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'B'"-->
+<!--                                          style="color: lightgreen"></span>-->
+<!--                                    <span th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}"-->
+<!--                                          th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'C'"-->
+<!--                                          style="color: yellow"></span>-->
+<!--                                    <span th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}"-->
+<!--                                          th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'D'"-->
+<!--                                          style="color: orange"></span>-->
+<!--                                    <span th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}"-->
+<!--                                          th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'F'"-->
+<!--                                          style="color: red"></span>-->
+<!--                                </td>-->
+<!--                                <td th:text="${codingGamesAPI.getAssessmentDate(assessment)}">Assessment Date</td>-->
+<!--                                &lt;!&ndash;                            </ul>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                        </>&ndash;&gt;-->
+<!--                                <td>-->
+<!--                                    <button aria-expanded="show"-->
+<!--                                            class="btn btn-link btn-block text-left"-->
+<!--                                            data-toggle="collapse"-->
+<!--                                            th:data-target="${'#collapse' + codingGamesAPI.getAssessmentName(assessment)}"-->
+<!--                                            th:aria-controls="${'collapse' + codingGamesAPI.getAssessmentName(assessment)}"-->
+<!--                                            type="button">-->
+<!--                                        See Further breakdown </button>-->
+<!--                                </td>-->
+
+<!--                        &lt;!&ndash;                </h2>&ndash;&gt;-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </tr>-->
+<!--            <tr th:each="assessment : ${assessments}">-->
+<!--                    <div class="card-body" >-->
+<!--                        <div th:id="${'collapse' + codingGamesAPI.getAssessmentName(assessment)}"-->
+<!--                             class="collapse multi-collapse" data-parent="#accordion">-->
+<!--&lt;!&ndash;                                <div class="card card-body">&ndash;&gt;-->
+<!--                                    <h2 th:text="${codingGamesAPI.getAssessmentName(assessment) +' - ' + codingGamesAPI.getAssessmentTags(assessment)}"></h2>-->
+<!--                                    <br/>-->
+<!--                                    <h4>Assessment Overview</h4>-->
+<!--                                    <ul>-->
+<!--                                        <li>Score</li>-->
+<!--                                        <li th:text="${codingGamesAPI.getAssessmentScore(assessment)} + '%'"></li>-->
+<!--                                    </ul>-->
+<!--                                    <ul>-->
+<!--                                        <li>Duration</li>-->
+<!--                                        <li th:text="${codingGamesAPI.getAssessmentDuration(assessment)} + ' mins'"></li>-->
+<!--                                    </ul>-->
+<!--                                    <ul>-->
+<!--                                        <li>Comparative Score</li>-->
+<!--                                        <li th:text="${codingGamesAPI.getAssessmentComparativeScore(assessment)} + '%'"></li>-->
+<!--                                    </ul>-->
+<!--&lt;!&ndash;                                </div>&ndash;&gt;-->
+<!--                        </div>-->
+
+<!--                        <div th:id="${'collapse' + codingGamesAPI.getAssessmentName(assessment)}"-->
+<!--                             class="collapse multi-collapse" data-parent="#accordion">-->
+<!--&lt;!&ndash;                                <div class="card card-body">&ndash;&gt;-->
+<!--                                    <h4>Assessment Breakdown</h4>-->
+<!--                                    <ul>-->
+<!--                                        <li style="float: left">Design Score</li>-->
+<!--                                        <li style="float: right" th:text="${codingGamesAPI.getAssessmentDesignScore(assessment)} + '%'"></li>-->
+<!--                                    </ul>-->
+<!--                                    <ul>-->
+<!--                                        <li>Language Knowledge Score</li>-->
+<!--                                        <li th:text="${codingGamesAPI.getAssessmentLanguageKnowledgeScore(assessment)} + '%'"></li>-->
+<!--                                    </ul>-->
+<!--                                    <ul>-->
+<!--                                        <li>Problem Solving Score</li>-->
+<!--                                        <li th:text="${codingGamesAPI.getAssessmentProblemSolvingScore(assessment)} + '%'"></li>-->
+<!--                                    </ul>-->
+<!--&lt;!&ndash;                                </div>&ndash;&gt;-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--            </tr>-->
+<!--            </tbody>-->
+<!--        </table>-->
+<!--    </div>-->
+<!--</main>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+
+<div class="accordion">
+    <table class="table" id="accordionExample" th:if="${!assessments.isEmpty()}">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Score</th>
+            <th scope="col">Grade</th>
+            <th scope="col">Assessment date</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+
+        <tbody th:each="assessment : ${assessments}">
+        <tr >
+            <th scope="row" th:text="${codingGamesAPI.getAssessmentName(assessment)}">Name</th>
+            <td th:text="${codingGamesAPI.getAssessmentScore(assessment)}">Score</td>
+            <td>
+                <span th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}"
+                      th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'A'"
+                      style="color: darkgreen">
+                </span>
+                <span th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}"
+                      th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'B'"
+                      style="color: lightgreen">
+                </span>
+                <span th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}"
+                      th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'C'"
+                      style="color: yellow">
+                </span>
+                <span th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}"
+                      th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'D'"
+                      style="color: orange">
+                </span>
+                <span th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}"
+                      th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'F'"
+                      style="color: red">
+                </span>
+            </td>
+            <td th:text="${codingGamesAPI.getAssessmentDate(assessment)}">Date</td>
+            <td>
+                <button aria-expanded="false"
+                        class="btn btn-link btn-block text-left"
+                        data-toggle="collapse"
+                        th:data-target="${'#collapse' + codingGamesAPI.getAssessmentName(assessment)}"
+                        th:aria-controls="${'collapse' + codingGamesAPI.getAssessmentName(assessment)}"
+                        type="button">See More Details
+                </button>
+            </td>
+        </tr>
+        <div class="row" >
+            <div class="col">
+                <div th:id="${'collapse' + codingGamesAPI.getAssessmentName(assessment)}"
+                     class="collapse multi-collapse">
+                        <div class="card card-body">
+                            <h2 th:text="${codingGamesAPI.getAssessmentName(assessment) +' - ' + codingGamesAPI.getAssessmentTags(assessment)}"></h2>
+                            <br/>
+                            <h4>Assessment Overview</h4>
                             <ul>
-                                <li th:text="${codingGamesAPI.getAssessmentName(assessment)}">Assessment name</li>
-                                <li th:text="${codingGamesAPI.getAssessmentScore(assessment)}">Assessment score</li>
-                                <li>
-                                    <span th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}" th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'A'" style="color: darkgreen"></span>
-                                    <span th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}" th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'B'" style="color: lightgreen"></span>
-                                    <span th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}" th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'C'" style="color: yellow"></span>
-                                    <span th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}" th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'D'" style="color: orange"></span>
-                                    <span th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}" th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'F'" style="color: red"></span>
-                                </li>
-                                <li th:text="${codingGamesAPI.getAssessmentDate(assessment)}">Assessment Date</li>
+                                <li>Score</li>
+                                <li th:text="${codingGamesAPI.getAssessmentScore(assessment)} + '%'"></li>
+                            </ul>
+                            <ul>
+                                <li>Duration</li>
+                                <li th:text="${codingGamesAPI.getAssessmentDuration(assessment)} + ' mins'"></li>
+                            </ul>
+                            <ul>
+                                <li>Comparative Score</li>
+                                <li th:text="${codingGamesAPI.getAssessmentComparativeScore(assessment)} + '%'"></li>
                             </ul>
                         </div>
-                    </button>
-                </h2>
+                </div>
             </div>
-            <div th:id="${'collapse' + codingGamesAPI.getAssessmentName(assessment)}"
-                 class="collapse hide"
-                 th:aria-labelledby="${'heading' + codingGamesAPI.getAssessmentName(assessment)}"
-                 data-parent="#accordionExample">
-                <div class="card-body">
-                    <div class="jumbotron">
-                        <h2 th:text="${codingGamesAPI.getAssessmentName(assessment) +' - ' + codingGamesAPI.getAssessmentTags(assessment)}"></h2>
-                        <br/>
-                        <div class="card-deck">
-                            <div class="card">
-                                <h4><strong>Assessment Overview</strong></h4>
-                                <table style="width:100%">
-                                    <tr>
-                                        <td><strong>Score</strong></td>
-                                        <td th:text="${codingGamesAPI.getAssessmentScore(assessment)} + '%'"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Duration</strong></td>
-                                        <td th:text="${codingGamesAPI.getAssessmentDuration(assessment)} + ' mins'"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Comparative Score</strong></td>
-                                        <td th:text="${codingGamesAPI.getAssessmentComparativeScore(assessment)} + '%'"></td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <br/>
-                            <div class="card">
-                                <h4><strong>Assessment Breakdown</strong></h4>
-                                <table style="width:100%">
-                                    <tr>
-                                        <td><strong>Design Score</strong></td>
-                                        <td th:text="${codingGamesAPI.getAssessmentDesignScore(assessment)} + '%'"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Language Knowledge Score</strong></td>
-                                        <td th:text="${codingGamesAPI.getAssessmentLanguageKnowledgeScore(assessment)} + '%'"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Problem Solving Score</strong></td>
-                                        <td th:text="${codingGamesAPI.getAssessmentProblemSolvingScore(assessment)} + '%'"></td>
-                                    </tr>
-                                </table>
-                            </div>
+            <div class="col">
+                <div th:id="${'collapse' + codingGamesAPI.getAssessmentName(assessment)}"
+                     class="collapse multi-collapse">
+                        <div class="card card-body">
+                            <h4>Assessment Breakdown</h4>
+                            <ul>
+                                <li style="float: left">Design Score</li>
+                                <li style="float: right" th:text="${codingGamesAPI.getAssessmentDesignScore(assessment)} + '%'"></li>
+                            </ul>
+                            <ul>
+                                <li>Language Knowledge Score</li>
+                                <li th:text="${codingGamesAPI.getAssessmentLanguageKnowledgeScore(assessment)} + '%'"></li>
+                            </ul>
+                            <ul>
+                                <li>Problem Solving Score</li>
+                                <li th:text="${codingGamesAPI.getAssessmentProblemSolvingScore(assessment)} + '%'"></li>
+                            </ul>
                         </div>
-                    </div>
-                    <br/>
                 </div>
             </div>
         </div>
-    </div>
+        </tbody>
+    </table>
+</div>
 </main>
 </div>
 </body>

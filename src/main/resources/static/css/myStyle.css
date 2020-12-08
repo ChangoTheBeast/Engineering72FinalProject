@@ -96,7 +96,19 @@ ul li {
     border-color: #AF293B !important;
 }
 
-.holderTextRed{
+.letterGradeB {
+    color: lightgreen;
+}
+
+.letterGradeA {
+    color: darkgreen;
+}
+
+.letterGradeC {
+    color: yellow;
+}
+
+.holderTextRed, .letterGradeF{
     color: crimson;
 }
 
@@ -112,7 +124,7 @@ ul li {
     color: white;
 }
 
-.holderTextOrange{
+.holderTextOrange, .letterGradeD{
     color: darkorange;
 }
 
@@ -168,21 +180,6 @@ ul li {
     /*background-color: ;*/
 }
 
-/* Attendance Page*/
-.active-on-select:hover {
-    background-color:#aaa;
-    color:white;
-}
-
-.active-on-select:active {
-    background-color:#000;
-    color:white;
-}
-
-.active-fragment {
-    background-color:#000;
-    color:white;
-}
 
 /* Assessment page table */
 tr.hide-table-padding td {
@@ -204,4 +201,20 @@ tr.hide-table-padding td {
 .accordion-toggle.collapsed .expand-button:after
 {
     content: '+';
+}
+
+/* Attendance Page*/
+.active-on-select:hover {
+    background-color:#aaa;
+    color:white;
+}
+
+.active-on-select:active {
+    background-color:#000;
+    color:white;
+}
+
+.active-fragment {
+    background-color:#000;
+    color:white;
 }

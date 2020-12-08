@@ -42,26 +42,9 @@
                 <th scope="row" th:text="${codingGamesAPI.getAssessmentName(assessment)}">Name</th>
                 <td th:text="${codingGamesAPI.getAssessmentScore(assessment)} + '%'">Score</td>
                 <td>
-                <span th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}"
-                      th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'A'"
-                      style="color: darkgreen">
-                </span>
-                    <span th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}"
-                          th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'B'"
-                          style="color: lightgreen">
-                </span>
-                    <span th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}"
-                          th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'C'"
-                          style="color: yellow">
-                </span>
-                    <span th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}"
-                          th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'D'"
-                          style="color: orange">
-                </span>
-                    <span th:text="${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}"
-                          th:if="${codingGamesAPI.getFirstLetter(codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment)))} == 'F'"
-                          style="color: red">
-                </span>
+                    <span th:with="letterGrade = ${codingGamesAPI.getAssessmentGrade(codingGamesAPI.getAssessmentScore(assessment))}"
+                        th:text="${letterGrade}" th:class="'letterGrade' + ${codingGamesAPI.getFirstLetter(letterGrade)}">
+                    </span>
                 </td>
                 <td th:text="${codingGamesAPI.getAssessmentDate(assessment)}">Date</td>
             </tr>

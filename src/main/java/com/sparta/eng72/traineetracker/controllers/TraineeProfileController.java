@@ -56,13 +56,13 @@ public class TraineeProfileController {
         ModelAndView attendanceModelAndView = attendanceController.getTraineeAttendance(modelMap, principal);
         ModelAndView attendancePercentages = attendanceController.getTraineeAttendancePercentage(principal, modelMap);
         ModelAndView previousWeekReportModelAndView = traineeHomeController.getTrainerForTraineeHomeGrades(modelMap, principal);
-
-        modelMap = traineeReportController.getTraineeWeeklyReports(modelMap, principal);
+        ModelAndView weeklyReportsModelAndView = traineeReportController.getTraineeWeeklyReports(modelMap, principal);
 
         modelMap.mergeAttributes(assessmentModelAndView.getModelMap());
         modelMap.mergeAttributes(attendanceModelAndView.getModelMap());
         modelMap.mergeAttributes(attendancePercentages.getModelMap());
         modelMap.mergeAttributes(previousWeekReportModelAndView.getModelMap());
+        modelMap.mergeAttributes(weeklyReportsModelAndView.getModelMap());
 
         modelMap.addAttribute("trainee", trainee);
         modelMap.addAttribute("courseGroup", courseGroup);
@@ -95,13 +95,13 @@ public class TraineeProfileController {
         ModelAndView attendanceModelAndView = attendanceController.getTraineeAttendanceWithPath(traineeId, modelMap);
         ModelAndView attendancePercentages = attendanceController.getTraineeAttendancePercentage(traineeId, modelMap);
         ModelAndView previousWeekReportModelAndView = traineeHomeController.getTrainerForTraineeHomeGrades(traineeId, modelMap);
-
-        modelMap = trainerReportController.getTrainerWeeklyReportsWithPath(traineeId, modelMap);
+        ModelAndView weeklyReportsModelAndView = trainerReportController.getTrainerWeeklyReportsWithPath(traineeId, modelMap);
 
         modelMap.mergeAttributes(assessmentModelAndView.getModelMap());
         modelMap.mergeAttributes(attendanceModelAndView.getModelMap());
         modelMap.mergeAttributes(attendancePercentages.getModelMap());
         modelMap.mergeAttributes(previousWeekReportModelAndView.getModelMap());
+        modelMap.mergeAttributes(weeklyReportsModelAndView.getModelMap());
 
         modelMap.addAttribute("trainee", trainee);
         modelMap.addAttribute("courseGroup", courseGroup);
@@ -109,34 +109,6 @@ public class TraineeProfileController {
 
         return "trainee/traineeProfile";
 //        return Pages.accessPage(Role.TRAINEE, Pages.TRAINEE_PROFILE_PAGE);
-    }
-
-
-    @RequestMapping(value="/loadFragment", method=RequestMethod.GET)
-    public String loadFragment (@RequestParam String action, ModelMap modelMap, Principal principal, Integer traineeId) {
-        if (action.equals("Assessments")) {
-            modelMap.addAttribute("attendanceFragment", false);
-            modelMap.addAttribute("reportsFragment", false);
-            modelMap.addAttribute("assessmentsFragment", true);
-
-//            return getTraineeProfile(modelMap, principal);
-            return getTraineeProfile(modelMap, traineeId);
-        }
-        else if (action.equals("Attendance")) {
-            modelMap.addAttribute("attendanceFragment", true);
-            modelMap.addAttribute("reportsFragment", false);
-            modelMap.addAttribute("assessmentsFragment", false);
-//            return getTraineeProfile(modelMap, principal);
-            return getTraineeProfile(modelMap, traineeId);
-        }
-        else if (action.equals("Reports")) {
-            modelMap.addAttribute("attendanceFragment", false);
-            modelMap.addAttribute("reportsFragment", true);
-            modelMap.addAttribute("assessmentsFragment", false);
-//            return getTraineeProfile(modelMap, principal);
-            return getTraineeProfile(modelMap, traineeId);
-        }
-        return "/home";
     }
 
     //Get Trainee as "TRAINEE"

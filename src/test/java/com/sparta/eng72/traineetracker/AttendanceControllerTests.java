@@ -1,5 +1,7 @@
 package com.sparta.eng72.traineetracker;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sparta.eng72.traineetracker.controllers.AttendanceController;
 import com.sparta.eng72.traineetracker.entities.Trainee;
 import com.sparta.eng72.traineetracker.entities.TraineeAttendance;
@@ -12,12 +14,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +31,7 @@ import java.util.regex.Matcher;
 
 import static org.hamcrest.Matchers.hasProperty;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -101,8 +107,7 @@ public class AttendanceControllerTests {
     }
 
     @Test
-
-    public void getWeeklyAttendanceReports() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public void getWeeklyAttendanceReportsTest() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Trainer trainer = trainerService.getTrainerByUsername("MGadhvi@sparta.com").get();
         int currentWeek = 10;
         Class<?>[] parameters = {Trainer.class, int.class};
@@ -110,5 +115,38 @@ public class AttendanceControllerTests {
         method.setAccessible(true);
         Map<Integer, Map<Trainee, List<TraineeAttendance>>> results = (Map<Integer, Map<Trainee, List<TraineeAttendance>>>) method.invoke(attendanceController, trainer, currentWeek);
         Assertions.assertEquals(10, results.size());
+    }
+
+    @Test
+    @WithMockUser(username = trainerName, password = trainerPw, roles = "TRAINER")
+    public void postAllGroupTraineesTest() throws Exception {
+
+        TraineeAttendance traineeAttendance = new TraineeAttendance();
+        traineeAttendance.setAttendanceDate(Date.valueOf(LocalDate.now()));
+        traineeAttendance.setAttendanceId(1);
+        traineeAttendance.setDay(1);
+        traineeAttendance.setWeek(1);
+        Trainee trainee = traineeService.getTraineeByUsername("bbird@spartaglobal.com").get();
+        traineeAttendance.setTraineeId(trainee.getTraineeId());
+        this.mockMvc.perform(post("/trainer/attendanceEntry")
+                .param("traineeId", traineeAttendance.getTraineeId().toString())
+                .param("attendanceId", traineeAttendance.getAttendanceId().toString())
+                .param("day", traineeAttendance.getDay().toString())
+                .param("week", traineeAttendance.getWeek().toString())
+                .param("attendanceDate", traineeAttendance.getAttendanceDate().toString()))
+                .andExpect(status().isOk());
+
+    }
+
+    @Test
+    @WithMockUser(username = trainerName, password = trainerPw, roles = "TRAINER")
+    public void getTraineeAttendancePercentageTest() throws Exception {
+        this.mockMvc.perform(get("/trainee/profile-percentage/41")).andExpect(status().isOk()).andExpect(model().attributeExists("onTimePercentage", "latePercentage", "excusedPercentage", "unexcusedPercentage"));
+    }
+
+    @Test
+    @WithMockUser(username = trainerName, password = trainerPw, roles = "TRAINER")
+    public void getTraineeAttendanceTest() throws Exception {
+        this.mockMvc.perform(post("/trainer/viewTrainee").param("btnStatus", "attendance")).andExpect(status().is3xxRedirection());
     }
 }

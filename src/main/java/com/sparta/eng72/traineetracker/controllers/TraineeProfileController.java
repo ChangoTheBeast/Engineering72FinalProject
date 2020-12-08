@@ -75,7 +75,7 @@ public class TraineeProfileController {
 
 
     @RequestMapping(value="/trainer/viewTrainee", method= RequestMethod.POST, params="btnStatus=profile")
-    public String getTraineeAttendance(Integer traineeId) {
+    public String getTraineeProfile(Integer traineeId) {
         return "redirect:/trainer/traineeProfile/"+traineeId;
     }
 

@@ -151,17 +151,17 @@ public class AttendanceController {
 
         double count = onTime + late + excused + unexcused;
 
-        String onTimePercentage = "" + (int)(onTime/count * 100) + "%";
-        String latePercentage = "" + (int)(late/count * 100) + "%";
-        String excusedPercentage = "" + (int)(excused/count * 100) + "%";
-        String unexcusedPercentage = "" + (int)(unexcused/count * 100) + "%";
+        String onTimePercentage = "" + Math.round((onTime/count * 100)) + "%";
+        String latePercentage = "" + Math.round(late/count * 100) + "%";
+        String excusedPercentage = "" + Math.round(excused/count * 100) + "%";
+        String unexcusedPercentage = "" + Math.round(unexcused/count * 100) + "%";
 
         modelMap.addAttribute("onTimePercentage", onTimePercentage);
         modelMap.addAttribute("latePercentage", latePercentage);
         modelMap.addAttribute("excusedPercentage", excusedPercentage);
         modelMap.addAttribute("unexcusedPercentage", unexcusedPercentage);
 
-        return new ModelAndView("/fragments/attendancePercentages", modelMap);
+        return new ModelAndView("fragments/attendancePercentages", modelMap);
     }
 
     @GetMapping("/trainee/profile-percentage/{traineeId}")
@@ -200,7 +200,7 @@ public class AttendanceController {
         modelMap.addAttribute("excusedPercentage", excusedPercentage);
         modelMap.addAttribute("unexcusedPercentage", unexcusedPercentage);
 
-        return new ModelAndView("/fragments/attendancePercentages", modelMap);
+        return new ModelAndView("fragments/attendancePercentages", modelMap);
     }
 
     @GetMapping("/trainer/weekly-attendance")

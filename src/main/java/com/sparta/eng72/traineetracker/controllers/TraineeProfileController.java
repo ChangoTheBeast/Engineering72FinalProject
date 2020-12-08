@@ -27,9 +27,10 @@ public class TraineeProfileController {
     AttendanceController attendanceController;
     TraineeReportController traineeReportController;
     TrainerReportController trainerReportController;
+    TraineeHomeController traineeHomeController;
 
     @Autowired
-    public TraineeProfileController(TraineeService traineeService, CourseGroupService courseGroupService, CourseService courseService, AssessmentController assessmentController, AttendanceController attendanceController, TraineeReportController traineeReportController, TrainerReportController trainerReportController) {
+    public TraineeProfileController(TraineeService traineeService, CourseGroupService courseGroupService, CourseService courseService, AssessmentController assessmentController, AttendanceController attendanceController, TraineeReportController traineeReportController, TrainerReportController trainerReportController, TraineeHomeController traineeHomeController) {
         this.traineeService = traineeService;
         this.courseGroupService = courseGroupService;
         this.courseService = courseService;
@@ -37,6 +38,7 @@ public class TraineeProfileController {
         this.attendanceController = attendanceController;
         this.traineeReportController = traineeReportController;
         this.trainerReportController = trainerReportController;
+        this.traineeHomeController = traineeHomeController;
     }
 
     @GetMapping("/trainee/traineeProfile")
@@ -53,12 +55,14 @@ public class TraineeProfileController {
         ModelAndView assessmentModelAndView = assessmentController.getTrainerTraineeAssessments(trainee.getTraineeId(), modelMap);
         ModelAndView attendanceModelAndView = attendanceController.getTraineeAttendance(modelMap, principal);
         ModelAndView attendancePercentages = attendanceController.getTraineeAttendancePercentage(principal, modelMap);
+        ModelAndView previousWeekReportModelAndView = traineeHomeController.getTrainerForTraineeHomeGrades(modelMap, principal);
 
         modelMap = traineeReportController.getTraineeWeeklyReports(modelMap, principal);
 
         modelMap.mergeAttributes(assessmentModelAndView.getModelMap());
         modelMap.mergeAttributes(attendanceModelAndView.getModelMap());
         modelMap.mergeAttributes(attendancePercentages.getModelMap());
+        modelMap.mergeAttributes(previousWeekReportModelAndView.getModelMap());
 
         modelMap.addAttribute("trainee", trainee);
         modelMap.addAttribute("courseGroup", courseGroup);
@@ -90,12 +94,14 @@ public class TraineeProfileController {
         ModelAndView assessmentModelAndView = assessmentController.getTrainerTraineeAssessments(traineeId, modelMap);
         ModelAndView attendanceModelAndView = attendanceController.getTraineeAttendanceWithPath(traineeId, modelMap);
         ModelAndView attendancePercentages = attendanceController.getTraineeAttendancePercentage(traineeId, modelMap);
+        ModelAndView previousWeekReportModelAndView = traineeHomeController.getTrainerForTraineeHomeGrades(traineeId, modelMap);
 
         modelMap = trainerReportController.getTrainerWeeklyReportsWithPath(traineeId, modelMap);
 
         modelMap.mergeAttributes(assessmentModelAndView.getModelMap());
         modelMap.mergeAttributes(attendanceModelAndView.getModelMap());
         modelMap.mergeAttributes(attendancePercentages.getModelMap());
+        modelMap.mergeAttributes(previousWeekReportModelAndView.getModelMap());
 
         modelMap.addAttribute("trainee", trainee);
         modelMap.addAttribute("courseGroup", courseGroup);
@@ -129,10 +135,6 @@ public class TraineeProfileController {
             modelMap.addAttribute("assessmentsFragment", false);
 //            return getTraineeProfile(modelMap, principal);
             return getTraineeProfile(modelMap, traineeId);
-        } else {
-            modelMap.addAttribute("attendanceFragment", false);
-            modelMap.addAttribute("reportsFragment", false);
-            modelMap.addAttribute("assessmentsFragment", false);
         }
         return "/home";
     }

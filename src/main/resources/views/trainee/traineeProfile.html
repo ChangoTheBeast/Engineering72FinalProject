@@ -89,11 +89,15 @@
             <!-- Topbar Navbar -->
             <ul class="navbar-nav d-flex justify-content-center">
                 <form th:action="@{/loadFragment}" method="GET">
-<!--                    <div th:if="${reportsFragment}  ?: false">-->
-<!--                        <input class="btn active-fragment" type="submit" name="action" th:value="Assessments"/>-->
+<!--                    <div th:if="${reportsFragment}  ?: true">-->
+<!--                        <div th:if="${reportsFragment == null} ? false : ${reportsFragment}">-->
+<!--                            <input class="btn active-fragment" type="submit" name="action" th:value="Assessments"/>-->
+<!--                        </div>-->
 <!--                    </div>-->
 <!--                    <div th:if="${reportsFragment} ?: true">-->
-<!--                        <input class="btn" type="submit" name="action" th:value="Assessments"/>-->
+<!--                        <div th:if="${reportsFragment == null} ? true : ${reportsFragment}">-->
+<!--                            <input class="btn" type="submit" name="action" th:value="Assessments"/>-->
+<!--                        </div>-->
 <!--                    </div>-->
                     <input class="btn active-fragment" type="submit" name="action" th:value="Assessments"/>
                     <input type="hidden" th:name="traineeId" th:value="${trainee.traineeId}"/>

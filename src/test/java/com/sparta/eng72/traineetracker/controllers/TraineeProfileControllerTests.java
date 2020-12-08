@@ -26,15 +26,64 @@ public class TraineeProfileControllerTests {
     private MockMvc mockMvc;
 
     @Test
-    @WithMockUser(username =trainerName , password = trainerPw,roles = "TRAINER")
-    public void getTraineeProfileTest() {
+    @WithMockUser(username =traineeName , password = traineePw,roles = "TRAINEE")
+    public void traineeGetTraineeProfileTest() throws Exception {
         this.mockMvc.perform(get("/trainee/traineeProfile"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists(
                         "trainee",
                         "courseGroup",
                         "course",
+                        "codingGamesAPI",
+                        "traineeId",
+                        "assessments",
+                        "attendanceReports",
+                        "onTimePercentage",
+                        "latePercentage",
+                        "excusedPercentage",
+                        "unexcusedPercentage",
+                        "currentWeek",
+                        "dateFormat",
+                        "now",
+                        "reports",
+                        "previousWeekReport"
+                )
+        );
+    }
 
-                ))
+    @Test
+    @WithMockUser(username = trainerName, password = trainerPw, roles = "TRAINER")
+    public void getTraineeProfileTest() throws Exception {
+        this.mockMvc.perform(post("/trainer/viewTrainee").param("btnStatus", "profile")).andExpect(status().is3xxRedirection());
+    }
+
+    @Test
+    @WithMockUser(username = trainerName, password = trainerPw, roles = "TRAINER")
+    public void trainerGetTraineeProfileTest() throws Exception {
+        this.mockMvc.perform(get("/trainer/traineeProfile/41")).andExpect(status().isOk())
+                .andExpect(model().attributeExists(
+                        "trainee",
+                        "courseGroup",
+                        "course",
+                        "codingGamesAPI",
+                        "traineeId",
+                        "assessments",
+                        "attendanceReports",
+                        "onTimePercentage",
+                        "latePercentage",
+                        "excusedPercentage",
+                        "unexcusedPercentage",
+                        "currentWeek",
+                        "dateFormat",
+                        "now",
+                        "reports",
+                        "previousWeekReport"
+                )
+        );
+    }
+
+    @Test
+    public void getTraineeTest() {
+
     }
 }

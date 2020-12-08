@@ -44,29 +44,29 @@
                         <div class="jumbotron">
                             <h2 th:text="${'Attendance - Week ' + entry.key}"></h2>
                             <br/>
-                            <table th:each="report : ${list}">
-
-
-                            <tr>
-
-                                <td th:text="${report.attendanceDate}"></td>
-                                <td th:switch="${report.day}">
-                                    <div th:case="1"><strong> :: MONDAY :: </strong></div>
-                                    <div th:case="2"><strong> :: TUESDAY :: </strong></div>
-                                    <div th:case="3"><strong> :: WEDNESDAY :: </strong></div>
-                                    <div th:case="4"><strong> :: THURSDAY :: </strong></div>
-                                    <div th:case="5"><strong> :: FRIDAY :: </strong></div>
-                                </td>
-                                <td th:switch="${report.attendanceId}">
-                                    <div th:case="1">ON TIME</div>
-                                    <div th:case="2">LATE</div>
-                                    <div th:case="3">ABSENT (EXCUSED)</div>
-                                    <div th:case="4">ABSENT (UNEXCUSED)</div>
-                                    <div th:case="5">NO ENTRY</div>
-                                </td>
-
-
-                            </tr>
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Day Of The Week</th>
+                                    <th>Attendance Status</th>
+                                </tr>
+                                <tr th:each="report : ${list}" >
+                                    <td th:text="${report.attendanceDate}"></td>
+                                    <td th:switch="${report.day}">
+                                        <div th:case="1">MONDAY</div>
+                                        <div th:case="2">TUESDAY</div>
+                                        <div th:case="3">WEDNESDAY</div>
+                                        <div th:case="4">THURSDAY</div>
+                                        <div th:case="5">FRIDAY</div>
+                                    </td>
+                                    <td th:switch="${report.attendanceId}">
+                                        <div th:case="1" class="holderTextGreen">ON TIME</div>
+                                        <div th:case="2" class="holderTextOrange">LATE</div>
+                                        <div th:case="3" class="holderTextBlue">ABSENT (EXCUSED)</div>
+                                        <div th:case="4" class="holderTextRed">ABSENT (UNEXCUSED)</div>
+                                        <div th:case="5">NO ENTRY</div>
+                                    </td>
+                                </tr>
 
                             </table>
                         </div>

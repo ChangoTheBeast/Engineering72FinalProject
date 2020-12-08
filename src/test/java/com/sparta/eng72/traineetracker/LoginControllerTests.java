@@ -29,7 +29,7 @@ public class LoginControllerTests {
 
     @Test
     public void postLoginFailureTest() throws Exception {
-        this.mockMvc.perform(post("/loginFailure")).andExpect(status().is4xxClientError());
+        this.mockMvc.perform(post("/loginFailure")).andExpect(status().is3xxRedirection());
     }
 
     @Test

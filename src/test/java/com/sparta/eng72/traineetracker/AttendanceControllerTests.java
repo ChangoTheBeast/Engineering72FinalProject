@@ -2,10 +2,12 @@ package com.sparta.eng72.traineetracker;
 
 import com.sparta.eng72.traineetracker.controllers.AttendanceController;
 import com.sparta.eng72.traineetracker.entities.Trainee;
+import com.sparta.eng72.traineetracker.entities.TraineeAttendance;
 import com.sparta.eng72.traineetracker.entities.Trainer;
 import com.sparta.eng72.traineetracker.services.TraineeService;
 import com.sparta.eng72.traineetracker.services.TrainerService;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -14,8 +16,11 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Matcher;
 
@@ -60,7 +65,7 @@ public class AttendanceControllerTests {
     @WithMockUser(username =trainerName , password = trainerPw,roles = "TRAINER")
     public void displayAttendanceTest() throws Exception {
         this.mockMvc.perform(get("/trainer/traineeAttendance/5")).andDo(print()).andExpect(status().isOk()).andExpect(model().attributeExists(
-                "reports","trainee"));
+                "attendanceReports","trainee"));
     }
 
     @Test
@@ -80,12 +85,30 @@ public class AttendanceControllerTests {
     @Test
     @WithMockUser(username = traineeName , password = traineePw,roles = "TRAINEE")
     public void traineeViewAttendanceTest() throws Exception {
-        this.mockMvc.perform(get("/trainee/trainee-attendance")).andDo(print()).andExpect(status().isOk()).andExpect(model().attributeExists("reports", "trainee"));
+        this.mockMvc.perform(get("/trainee/trainee-attendance")).andDo(print()).andExpect(status().isOk()).andExpect(model().attributeExists("attendanceReports", "trainee"));
     }
 
     @Test
     @WithMockUser(username = traineeName , password = traineePw,roles = "TRAINEE")
     public void traineePercentagesTest() throws Exception {
         this.mockMvc.perform(get("/trainee/profile-percentage")).andDo(print()).andExpect(status().isOk()).andExpect(model().attributeExists("onTimePercentage", "latePercentage", "excusedPercentage", "unexcusedPercentage"));
+    }
+
+    @Test
+    @WithMockUser(username = trainerName, password = trainerPw, roles = "TRAINER")
+    public void weeklyAttendanceTest() throws Exception {
+        this.mockMvc.perform(get("/trainer/weekly-attendance")).andExpect(status().isOk()).andExpect(model().attributeExists("days", "currentWeek", "reports"));
+    }
+
+    @Test
+
+    public void getWeeklyAttendanceReports() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Trainer trainer = trainerService.getTrainerByUsername("MGadhvi@sparta.com").get();
+        int currentWeek = 10;
+        Class<?>[] parameters = {Trainer.class, int.class};
+        Method method = AttendanceController.class.getDeclaredMethod("getWeeklyAttendanceReports", parameters);
+        method.setAccessible(true);
+        Map<Integer, Map<Trainee, List<TraineeAttendance>>> results = (Map<Integer, Map<Trainee, List<TraineeAttendance>>>) method.invoke(attendanceController, trainer, currentWeek);
+        Assertions.assertEquals(10, results.size());
     }
 }

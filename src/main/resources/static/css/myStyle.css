@@ -169,6 +169,7 @@ ul li {
 }
 
 
+/* Assessment page table */
 tr.hide-table-padding td {
     padding: 0;
 }
@@ -188,4 +189,20 @@ tr.hide-table-padding td {
 .accordion-toggle.collapsed .expand-button:after
 {
     content: '+';
+}
+
+/* Attendance Page*/
+.active-on-select:hover {
+    background-color:#aaa;
+    color:white;
+}
+
+.active-on-select:active {
+    background-color:#000;
+    color:white;
+}
+
+.active-fragment {
+    background-color:#000;
+    color:white;
 }

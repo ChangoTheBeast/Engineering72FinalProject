@@ -11,37 +11,41 @@
     </head>
 <body>
 <nav th:replace="~{fragments/publicNavigation}">Navigation</nav>
-<main>
-    <div class="container-fluid">
-        <!-- Page Heading -->
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800" th:text="${trainee.getFirstName() + ' ' + trainee.getLastName() + ' - Attendance'}"></h1>
+<div th:fragment="attendanceFragment">
+    <main>
+        <div class="container-fluid">
+            <!-- Page Heading -->
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 class="h3 mb-0 text-gray-800" th:text="${trainee.getFirstName() + ' ' + trainee.getLastName() + ' - Attendance'}"></h1>
 
-        </div>
-    </div>
-    <br/>
-    <div class="accordion" id="accordionExample">
-        <!--        <tr th:each="entry, stats : ${usersMap}" th:with="user=${entry.value}">-->
-        <!--        <div >-->
-        <div class="card" th:each="entry, stats : ${reports}" th:with="list=${entry.value}">
-            <div class="card-header" th:id="${'heading' + entry.key}">
-                <h2 class="mb-0">
-                    <button aria-expanded="show"
-                            class="btn btn-link btn-block text-left"
-                            data-toggle="collapse"
-                            th:data-target="${'#collapse' + entry.key}"
-                            th:aria-controls="${'collapse' + entry.key}"
-                            th:text="${'Week ' + entry.key}"
-                            type="button">
-                    </button>
-                </h2>
             </div>
-            <div th:id="${'collapse' + entry.key}" class="collapse hide" th:aria-labelledby="${'heading' + entry.key}" data-parent="#accordionExample">
-                <div class="card-body">
-                    <div class="jumbotron">
-                        <h2 th:text="${'Attendance - Week ' + entry.key}"></h2>
-                        <br/>
-                        <table th:each="report : ${list}">
+        </div>
+        <br/>
+        <p th:if="${attendanceReports.isEmpty()}"
+           th:text="${'No attendance reports for ' + trainee.getFirstName() + ' ' + trainee.getLastName()}"></p>
+        <div class="accordion" id="accordionExample">
+            <!--        <tr th:each="entry, stats : ${usersMap}" th:with="user=${entry.value}">-->
+            <!--        <div >-->
+            <div class="card" th:each="entry, stats : ${attendanceReports}" th:with="list=${entry.value}">
+                <div class="card-header" th:id="${'heading' + entry.key}">
+                    <h2 class="mb-0">
+                        <button aria-expanded="show"
+                                class="btn btn-link btn-block text-left"
+                                data-toggle="collapse"
+                                th:data-target="${'#collapse' + entry.key}"
+                                th:aria-controls="${'collapse' + entry.key}"
+                                th:text="${'Week ' + entry.key}"
+                                type="button">
+                        </button>
+                    </h2>
+                </div>
+                <div th:id="${'collapse' + entry.key}" class="collapse hide" th:aria-labelledby="${'heading' + entry.key}" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <div class="jumbotron">
+                            <h2 th:text="${'Attendance - Week ' + entry.key}"></h2>
+                            <br/>
+                            <table th:each="report : ${list}">
+
 
                             <tr>
 
@@ -61,32 +65,23 @@
                                     <div th:case="5">NO ENTRY</div>
                                 </td>
 
-<!--                                <td  th:switch="${report.day}">-->
-<!--                                    <div th:case="1" th:text="${report.attendanceDate} + ' - Monday: ' + ${report.attendanceId}"></div>-->
-<!--                                    <div th:case="2" th:text="${report.attendanceDate} + ' - Tuesday: ' + ${report.attendanceId}"></div>-->
-<!--                                    <div th:case="3" th:text="${report.attendanceDate} + ' - Wednesday: ' + ${report.attendanceId}"></div>-->
-<!--                                    <div th:case="4" th:text="${report.attendanceDate} + ' - Thursday: '  + ${report.attendanceId}"></div>-->
-<!--                                    <div th:case="5" th:text="${report.attendanceDate} + ' - Friday: ' + ${report.attendanceId}"></div>-->
-<!--                                </td>-->
+
                             </tr>
 
-                        </table>
+                            </table>
+                        </div>
+                        <br/>
+                        <form th:action="@{/trainer/attendanceEntry}">
+                                            <button class="btn btn-lg btn-primary btn-block greenBtn" type="submit">
+                                                Edit Attendance
+                                            </button>
+                        </form>
                     </div>
                     <br/>
-                    <form th:action="@{/trainer/attendanceEntry}">
-                                        <button class="btn btn-lg btn-primary btn-block greenBtn" type="submit">
-                                            Edit Attendance
-                                        </button>
-                    </form>
                 </div>
-                <br/>
             </div>
         </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
-</main>
+    </main>
+</div>
 </body>
 </html>

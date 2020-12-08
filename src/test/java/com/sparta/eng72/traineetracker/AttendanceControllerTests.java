@@ -18,6 +18,8 @@ import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -111,4 +113,15 @@ public class AttendanceControllerTests {
         Map<Integer, Map<Trainee, List<TraineeAttendance>>> results = (Map<Integer, Map<Trainee, List<TraineeAttendance>>>) method.invoke(attendanceController, trainer, currentWeek);
         Assertions.assertEquals(10, results.size());
     }
+
+    @Test
+    public void postAllGroupTrainees() {
+        TraineeAttendance traineeAttendance = new TraineeAttendance();
+        traineeAttendance.setAttendanceDate(Date.valueOf(LocalDate.now()));
+        traineeAttendance.setAttendanceId(1);
+        traineeAttendance.setDay(1);
+        traineeAttendance.setWeek(1);
+        Trainee trainee = traineeService.getTraineeByUsername("bbird@spartaglobal.com").get();
+
+        traineeAttendance.setTraineeId(trainee.getTraineeId()); }
 }

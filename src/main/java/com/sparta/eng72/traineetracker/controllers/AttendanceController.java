@@ -161,7 +161,7 @@ public class AttendanceController {
         modelMap.addAttribute("excusedPercentage", excusedPercentage);
         modelMap.addAttribute("unexcusedPercentage", unexcusedPercentage);
 
-        return new ModelAndView("attendancePercentages", modelMap);
+        return new ModelAndView("/fragments/attendancePercentages", modelMap);
     }
 
     @GetMapping("/trainee/profile-percentage/{traineeId}")
@@ -200,7 +200,7 @@ public class AttendanceController {
         modelMap.addAttribute("excusedPercentage", excusedPercentage);
         modelMap.addAttribute("unexcusedPercentage", unexcusedPercentage);
 
-        return new ModelAndView("attendancePercentages", modelMap);
+        return new ModelAndView("/fragments/attendancePercentages", modelMap);
     }
 
     @GetMapping("/trainer/weekly-attendance")

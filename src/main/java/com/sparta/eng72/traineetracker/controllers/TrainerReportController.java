@@ -96,7 +96,7 @@ public class TrainerReportController {
     }
 
     @GetMapping("/trainer/report/{traineeId}")
-    public ModelMap getTrainerWeeklyReportsWithPath(@PathVariable Integer traineeId, ModelMap modelMap) {
+    public ModelAndView getTrainerWeeklyReportsWithPath(@PathVariable Integer traineeId, ModelMap modelMap) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy - K:mm a", Locale.ENGLISH);
         Trainee trainee = traineeService.getTraineeByID(traineeId).get();
         List<WeekReport> reports = weekReportService.getReportsByTraineeID(traineeId);
@@ -106,6 +106,6 @@ public class TrainerReportController {
         modelMap.addAttribute("reports", reports);
         modelMap.addAttribute("now", LocalDateTime.now());
         modelMap.addAttribute("dateFormat", formatter);
-        return modelMap;
+        return new ModelAndView("redirect:/trainee/traineeReport/" + traineeId, modelMap);
     }
 }

@@ -96,7 +96,19 @@ ul li {
     border-color: #AF293B !important;
 }
 
-.holderTextRed{
+.letterGradeB {
+    color: lightgreen;
+}
+
+.letterGradeA {
+    color: darkgreen;
+}
+
+.letterGradeC {
+    color: yellow;
+}
+
+.holderTextRed, .letterGradeF{
     color: crimson;
 }
 
@@ -112,7 +124,7 @@ ul li {
     color: white;
 }
 
-.holderTextOrange{
+.holderTextOrange, .letterGradeD{
     color: darkorange;
 }
 

@@ -76,7 +76,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .and()
-                .exceptionHandling().accessDeniedPage("/error");
+                .exceptionHandling().accessDeniedPage("/error")
+        .and().rememberMe().key("uniqueAndSecret");
     }
 
     @Bean

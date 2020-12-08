@@ -7,8 +7,11 @@ import com.sparta.eng72.traineetracker.utilities.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 
 import java.security.Principal;
@@ -43,23 +46,37 @@ public class TraineeHomeController {
 //    }
 
     @GetMapping("/trainee/home")
-    public String getTrainerForTraineeHomeGrades(Model model, Principal principal) {
+    public ModelAndView getTrainerForTraineeHomeGrades(ModelMap modelMap, Principal principal) {
         Trainee trainee = traineeService.getTraineeByUsername(principal.getName()).get();
         CourseGroup courseGroup = courseGroupService.getGroupByID(trainee.getGroupId()).get();
         Course course = courseService.getCourseByID(courseGroup.getCourseId()).get();
         Optional<WeekReport> reports = weekReportService.getPreviousWeekReportByTraineeID(trainee.getTraineeId());
         if (reports.isPresent()){
-            model.addAttribute("report",reports.get());
+            modelMap.addAttribute("previousWeekReport", reports.get());
         }
         else {
-            model.addAttribute("report",null);
+            modelMap.addAttribute("previousWeekReport",null);
         }
-        model.addAttribute("trainee", trainee);
-        model.addAttribute("courseGroup",courseGroup);
-        model.addAttribute("course", course);
-        model.addAttribute("now", LocalDateTime.now());
+        modelMap.addAttribute("now", LocalDateTime.now());
 
-        return Pages.accessPage(Role.TRAINEE, Pages.TRAINEE_HOME_PAGE);
+        return new ModelAndView(Pages.accessPage(Role.TRAINEE, Pages.TRAINEE_HOME_PAGE), modelMap);
+    }
+
+    @GetMapping("/trainee/home/{traineeId}")
+    public ModelAndView getTrainerForTraineeHomeGrades(@PathVariable Integer traineeId, ModelMap modelMap) {
+        Trainee trainee = traineeService.getTraineeByID(traineeId).get();
+        CourseGroup courseGroup = courseGroupService.getGroupByID(trainee.getGroupId()).get();
+        Course course = courseService.getCourseByID(courseGroup.getCourseId()).get();
+        Optional<WeekReport> reports = weekReportService.getPreviousWeekReportByTraineeID(trainee.getTraineeId());
+        if (reports.isPresent()){
+            modelMap.addAttribute("previousWeekReport", reports.get());
+        }
+        else {
+            modelMap.addAttribute("previousWeekReport",null);
+        }
+        modelMap.addAttribute("now", LocalDateTime.now());
+
+        return new ModelAndView(Pages.accessPage(Role.TRAINEE, Pages.TRAINEE_HOME_PAGE), modelMap);
     }
 
 

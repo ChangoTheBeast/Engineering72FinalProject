@@ -99,7 +99,7 @@ public class TraineeReportController {
 
 
     @GetMapping("/trainee/report")
-    public ModelMap getTraineeWeeklyReports(ModelMap modelMap, Principal principal) {
+    public ModelAndView getTraineeWeeklyReports(ModelMap modelMap, Principal principal) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy - K:mm a", Locale.ENGLISH);
         Integer traineeId = traineeService.getTraineeByUsername(principal.getName()).get().getTraineeId();
         Trainee trainee = traineeService.getTraineeByID(traineeId).get();
@@ -109,6 +109,6 @@ public class TraineeReportController {
         modelMap.addAttribute("reports", reports);
         modelMap.addAttribute("now", LocalDateTime.now());
         modelMap.addAttribute("dateFormat", formatter);
-        return modelMap;
+        return new ModelAndView("/trainee/traineeReport", modelMap) ;
     }
 }

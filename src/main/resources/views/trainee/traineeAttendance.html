@@ -18,7 +18,7 @@
         <div class="accordion" id="accordionExample">
             <div class="container-fluid">
                 <!-- Page Heading -->
-                <h2 style="text-align-last: center" th:text="${'Weekly Attendance'}"></h2>
+                <h2 th:text="${'Weekly Attendance'}"></h2>
             </div>            <br/>
             <div class="card" th:each="entry, stats : ${attendanceReports}" th:with="list=${entry.value}">
                 <div class="card-header" th:id="${'heading' + entry.key}">
@@ -29,7 +29,6 @@
                                 th:data-target="${'#collapse' + entry.key}"
                                 th:aria-controls="${'collapse' + entry.key}"
                                 th:text="${'Week ' + entry.key}"
-                                style="text-align-last: center;"
                                 type="button">
                         </button>
                     </h2>

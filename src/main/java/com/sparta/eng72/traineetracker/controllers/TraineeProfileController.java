@@ -41,7 +41,7 @@ public class TraineeProfileController {
         this.traineeHomeController = traineeHomeController;
     }
 
-    @GetMapping("/trainee/traineeProfile")
+    @GetMapping("/trainee/home")
     public String getTraineeProfile(ModelMap modelMap, Principal principal) {
         Trainee trainee = getTrainee(principal);
         CourseGroup courseGroup = getCourseGroup(trainee);

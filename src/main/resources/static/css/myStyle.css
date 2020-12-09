@@ -64,7 +64,7 @@ ul li {
 }
 
 .completeState2{
-    background-color: darkorange;
+    background-color: #f6c23e;
 }
 
 .completeState3{
@@ -124,7 +124,11 @@ ul li {
     color: white;
 }
 
-.holderTextOrange, .letterGradeD{
+.holderTextOrange{
+    color: #dda20a;
+}
+
+.letterGradeD{
     color: darkorange;
 }
 

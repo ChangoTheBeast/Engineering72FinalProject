@@ -92,6 +92,10 @@
 
         <div th:replace="~{trainee/traineeAssessment :: assessmentFragment}"></div>
 
+        <div th:if="${#httpServletRequest.isUserInRole('TRAINER') == true}">
+            <a class="btn btn-primary" style="width: 100%" th:href="@{/trainer/home}">Back To Dashboard</a>
+        </div>
+
     </div>
 
 </main>

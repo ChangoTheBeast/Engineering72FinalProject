@@ -154,7 +154,7 @@ public class AttendanceController {
         return new ModelAndView("fragments/attendancePercentages", modelMap);
     }
 
-    @GetMapping("/trainee/profile-percentage/{traineeId}")
+    @GetMapping("/trainer/profile-percentage/{traineeId}")
     public ModelAndView getTraineeAttendancePercentage(@PathVariable Integer traineeId, ModelMap modelMap) {
         List<TraineeAttendance> traineeAttendanceList = attendanceService.getTraineeAttendanceByTraineeId(traineeId);
 

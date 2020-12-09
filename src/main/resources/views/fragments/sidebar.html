@@ -38,8 +38,8 @@
         <!-- Nav Item - Dashboard -->
         <li class="nav-item active">
             <a class="nav-link" th:if="${#httpServletRequest.isUserInRole('TRAINEE') == true}" th:href="@{/trainee/home}">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Dashboard</span></a>
+                <i class="fas fa-fw fa-id-card"></i>
+                <span>Profile</span></a>
             <a class="nav-link" th:if="${#httpServletRequest.isUserInRole('TRAINER') == true}" th:href="@{/trainer/home}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span></a>
@@ -47,16 +47,6 @@
 
         <!-- Divider -->
         <hr class="sidebar-divider">
-
-        <!-- Nav Item - Profile -->
-        <li class="nav-item active">
-            <a class="nav-link" th:if="${#httpServletRequest.isUserInRole('TRAINEE') == true}" th:href="@{/trainee/traineeProfile}">
-                <i class="fas fa-fw fa-id-card"></i>
-                <span>Profile</span></a>
-        </li>
-
-        <!-- Divider -->
-        <hr th:if="${#httpServletRequest.isUserInRole('TRAINEE') == true}" class="sidebar-divider">
 
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item">
@@ -84,10 +74,9 @@
             <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Select an Option:</h6>
-                    <a class="collapse-item" th:href="@{/trainee/report}">Reports</a>
                     <a class="collapse-item" th:href="@{/traineeRecentReport}">Feedback Form</a>
+                    <a class="collapse-item" th:href="@{/trainee/report}">Reports History</a>
                     <a class="collapse-item" th:href="@{/trainee/trainee-attendance}">Attendance History</a>
-                    <a class="collapse-item" th:href="@{/trainee/profile-percentage}">Attendance Percentages</a>
                 </div>
             </div>
         </li>
@@ -108,7 +97,7 @@
                     <a class="collapse-item" th:href="@{/trainer/addTrainee}">Trainee Management</a>
                     <a class="collapse-item" th:href="@{/trainer/newWeek}">Set Weeks</a>
                     <a class="collapse-item" th:href="@{/trainer/assessments}">Assessments</a>
-                    <a class="collapse-item" th:href="@{/trainer/attendanceEntry}">Attendance</a>
+                    <a class="collapse-item" th:href="@{/trainer/attendanceEntry}">Enter Attendance</a>
                     <a class="collapse-item" th:href="@{/trainer/weekly-attendance}">Weekly Attendance</a>
                     <div class="collapse-divider"></div>
                 </div>

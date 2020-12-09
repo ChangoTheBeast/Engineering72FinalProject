@@ -18,80 +18,47 @@
     <div class="card shadow mb-4">
 
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary" th:text="${'Attendance Breakdown - ' + ' ' + trainee.getFirstName() + ' ' + trainee.getLastName()}"></h6>
+            <h6 class="m-0 font-weight-bold text-primary" th:text="'Attendance Breakdown'"></h6>
+<!--            <h6 class="m-0 font-weight-bold text-primary" th:text="${'Attendance Breakdown - ' + ' ' + trainee.getFirstName() + ' ' + trainee.getLastName()}"></h6>-->
         </div>
 
         <div class="card-body">
-            <div class="row">
 
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-success shadow h-100 py-2">
+            <div style="text-align: center;">
+                <div class="card-deck">
+                    <div class="card" >
+                        <div class="card-header" style="background: darkgreen">
+                            <small style="color: white">On Time</small>
+                        </div>
                         <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">On Time</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${onTimePercentage}"></div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                                </div>
-                            </div>
+                            <big style="color: darkgreen" th:text="${onTimePercentage}"></big>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-warning shadow h-100 py-2">
+                    <div class="card">
+                        <div class="card-header" style="background: #dda20a">
+                            <small style="color: white">Late</small>
+                        </div>
                         <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Late</div>
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col-auto">
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${latePercentage}"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                                </div>
-                            </div>
+                            <big style="color: #dda20a" th:text="${latePercentage}"></big>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card">
+                        <div class="card-header" style="background: cornflowerblue">
+                            <small style="color: white">Excused Absence</small>
+                        </div>
                         <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Excused Absence</div>
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col-auto">
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${excusedPercentage}"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                                </div>
-                            </div>
+                            <big style="color: cornflowerblue" th:text="${excusedPercentage}"></big>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-danger shadow h-100 py-2">
+                    <div class="card">
+                        <div class="card-header" style="background: crimson">
+                            <small style="color: white">Unexcused Absence</small>
+                        </div>
                         <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Unexcused Absence</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${unexcusedPercentage}"></div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                                </div>
-                            </div>
+                            <big style="color: crimson" th:text="${unexcusedPercentage}"></big>
                         </div>
                     </div>
                 </div>
@@ -99,8 +66,13 @@
          </div>
 
         <div class="card-footer py-3">
-            <h6 class="m-0 font-weight-bold text-primary">
-                <a th:href="@{/trainee/trainee-attendance}">Attendance Details</a>
+            <h6 class="m-0 font-weight-bold text-primary" style="text-align-last: right">
+                <div th:if="${#httpServletRequest.isUserInRole('TRAINEE') == true}">
+                    <a th:href="@{/trainee/trainee-attendance}">Attendance Details</a>
+                </div>
+                <div th:if="${#httpServletRequest.isUserInRole('TRAINER') == true}">
+                    <a th:href="${'/trainer/traineeAttendance/' + trainee.traineeId}">Attendance Details</a>
+                </div>
             </h6>
         </div>
 

@@ -106,6 +106,8 @@ public class TrainerReportController {
         modelMap.addAttribute("reports", reports);
         modelMap.addAttribute("now", LocalDateTime.now());
         modelMap.addAttribute("dateFormat", formatter);
-        return new ModelAndView("redirect:/trainee/traineeReport/" + traineeId, modelMap);
+//        return new ModelAndView("redirect:/trainee/traineeReport/" + traineeId, modelMap);
+        return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_REPORT_PAGE), modelMap);
+
     }
 }

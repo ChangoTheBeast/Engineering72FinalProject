@@ -20,9 +20,10 @@
         </div>
         <br/>
         <p th:if="${reports.isEmpty()}" th:text="${'No reports yet for ' + trainee.getFirstName() + ' ' + trainee.getLastName()}"></p>
+
         <div class="accordion" style="margin-right: 1%; margin-left: 1%">
 
-            <table class="table" style="padding-left: 10%; padding-right: 10%" id="accordionExample" th:if="${!reports.isEmpty()}">
+            <table class="table" id="accordionExample" th:if="${!reports.isEmpty()}">
                 <thead class="thead-light" style="text-align: center">
                 <tr>
                     <th colspan="2"></th>

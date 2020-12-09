@@ -56,28 +56,28 @@ ul li {
 }
 
 .completeState0, .completeState4{
-    background-color: #d46565;
-    border: solid white 1px;
+    background-color: #D85C5C;
+    border: white 1px solid;
 }
 
 .completeState1{
-    background-color: #9ec794;
-    border: solid white 1px;
+    background-color: #60BD60;
+    border: white 1px solid;
 }
 
 .completeState2{
     background-color: #f6c23e;
-    border: solid white 1px;
+    border: white 1px solid;
 }
 
 .completeState3{
-    background-color: #6c93da;
-    border: solid white 1px;
+    background-color: #6C93DA;
+    border: white 1px solid;
 }
 
 .completeState5{
-    background-color: white;
-    border: solid white 1px;
+    background-color: #bdbdbd;
+    border: white 1px solid;
 }
 
 .feedbackFormTextArea{
@@ -102,15 +102,11 @@ ul li {
 }
 
 .letterGradeB {
-    color: lightgreen;
+    color: seagreen;
 }
 
 .letterGradeA {
     color: darkgreen;
-}
-
-.letterGradeC {
-    color: yellow;
 }
 
 .holderTextRed, .letterGradeF{
@@ -129,8 +125,8 @@ ul li {
     color: white;
 }
 
-.holderTextOrange{
-    color: #dda20a;
+.holderTextOrange, .letterGradeC {
+    color: #f6c23e;
 }
 
 .letterGradeD{
@@ -139,6 +135,7 @@ ul li {
 
 .placeholderText{
     color: transparent;
+    width: 60px;
 }
 
 .form-control-dropdown, .form-control-dropdown:focus {
@@ -227,6 +224,7 @@ tr.hide-table-padding td {
     background-color:#000;
     color:white;
 }
+
 
 .reportSubmissionState0 {
     background-color: #d46565;

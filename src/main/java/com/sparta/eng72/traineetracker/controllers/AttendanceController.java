@@ -1,6 +1,7 @@
 package com.sparta.eng72.traineetracker.controllers;
 
 import com.sparta.eng72.traineetracker.entities.*;
+import com.sparta.eng72.traineetracker.repositories.AttendanceRepository;
 import com.sparta.eng72.traineetracker.services.*;
 import com.sparta.eng72.traineetracker.utilities.DateCalculator;
 import com.sparta.eng72.traineetracker.utilities.Pages;
@@ -88,6 +89,7 @@ public class AttendanceController {
             trainee = traineeService.getTraineeByUsername(principal.getName()).get();
         }
         Map<Integer, List<TraineeAttendance>> attendanceByWeek = getAttendanceReports(trainee);
+
         modelMap.addAttribute("currentWeek", courseGroupService.getWeekByGroupId(trainee.getGroupId()));
         modelMap.addAttribute("attendanceReports", attendanceByWeek);
         modelMap.addAttribute("trainee", trainee);

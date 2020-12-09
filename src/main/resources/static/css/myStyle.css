@@ -56,23 +56,28 @@ ul li {
 }
 
 .completeState0, .completeState4{
-    background-color: crimson;
+    background-color: #D85C5C;
+    border: darkgrey 1px solid;
 }
 
 .completeState1{
-    background-color: darkseagreen;
+    background-color: #60BD60;
+    border: darkgrey 1px solid;
 }
 
 .completeState2{
-    background-color: #dda20a;
+    background-color: #f6c23e;
+    border: darkgrey 1px solid;
 }
 
 .completeState3{
-    background-color: cornflowerblue;
+    background-color: #6C93DA;
+    border: darkgrey 1px solid;
 }
 
 .completeState5{
     background-color: white;
+    border: darkgrey 1px solid;
 }
 
 .feedbackFormTextArea{
@@ -121,7 +126,7 @@ ul li {
 }
 
 .holderTextOrange, .letterGradeC {
-    color: #dda20a;
+    color: #f6c23e;
 }
 
 .letterGradeD{

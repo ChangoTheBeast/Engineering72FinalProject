@@ -14,8 +14,25 @@
 <main>
     <div class="container-fluid">
         <!-- Page Heading -->
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800" th:text="'Weekly Attendance Overview'"></h1>
+
+        <h1 style="text-align-last: center" class="h3 mb-0 text-gray-800" th:text="'Weekly Attendance Overview'"></h1>
+
+        <br/>
+        <div class="row" style="justify-content: center;">
+            <table>
+                <tr>
+                    <td class="completeState1 placeholderText">Holder</td>
+                    <td> : On Time, </td>
+                    <td class="completeState2 placeholderText">Holder</td>
+                    <td> : Late, </td>
+                    <td class="completeState3 placeholderText">Holder</td>
+                    <td> : Excused, </td>
+                    <td class="completeState4 placeholderText">Holder</td>
+                    <td> : Unexcused, </td>
+                    <td class="completeState5 placeholderText">Holder</td>
+                    <td> : No Entry  </td>
+                </tr>
+            </table>
         </div>
     </div>
     <br/>
@@ -37,28 +54,6 @@
                 <div class="card-body">
                     <div class="jumbotron">
                         <h2 th:text="${'Attendance - Week ' + entry.key}"></h2>
-                        <br/>
-                        <div class="row">
-                            <table>
-                                <thead>
-                                <tr>
-                                    <th>Key</th>
-                                </tr>
-                                </thead>
-                                <tr>
-                                    <td class="completeState1 holderTextGreen">Holder</td>
-                                    <td> : On Time, </td>
-                                    <td class="completeState2 holderTextOrange">Holder</td>
-                                    <td> : Late, </td>
-                                    <td class="completeState3 holderTextBlue">Holder</td>
-                                    <td> : Excused, </td>
-                                    <td class="completeState4 holderTextRed">Holder</td>
-                                    <td> : Unexcused, </td>
-                                    <td class="completeState5 holderTextWhite">Holder</td>
-                                    <td> : No Entry  </td>
-                                </tr>
-                            </table>
-                        </div>
                         <br/>
                         <table class="table table-bordered">
 

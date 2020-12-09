@@ -16,9 +16,28 @@
 <main>
     <div class="container-fluid">
         <!-- Page Heading -->
-        <h2 th:text="${'Weekly Attendance'}"></h2>
+        <h2 style="text-align-last: center" th:text="${'Weekly Attendance for ' + trainee.getFirstName() + ' ' + trainee.getLastName()}"></h2>
+    </div>
+
+    <br/>
+    <div class="row" style="justify-content: center;">
+        <table>
+            <tr>
+                <td class="completeState1 placeholderText">Holder</td>
+                <td> : On Time, </td>
+                <td class="completeState2 placeholderText">Holder</td>
+                <td> : Late, </td>
+                <td class="completeState3 placeholderText">Holder</td>
+                <td> : Excused, </td>
+                <td class="completeState4 placeholderText">Holder</td>
+                <td> : Unexcused, </td>
+                <td class="completeState5 placeholderText">Holder</td>
+                <td> : No Entry  </td>
+            </tr>
+        </table>
     </div>
     <br/>
+
     <p th:if="${attendanceReports.isEmpty()}" th:text="${'No attendance reports for ' + trainee.getFirstName() + ' ' + trainee.getLastName()}"></p>
 
     <div class="accordion" style="margin-right: 1%; margin-left: 1%">
@@ -26,27 +45,18 @@
         <table class="table" id="accordionExample" th:if="${!attendanceReports.isEmpty()}">
             <thead class="thead-light" style="text-align: center">
                 <tr>
-                    <th scope="col"></th>
-                    <th colspan="1" style="text-align-last: left">Week</th>
-                    <th colspan="5">Weekly Overview</th>
+                    <th colspan="1" style="width: 4%"></th>
+                    <th colspan="1" style="text-align-last: left; width: 10%">Week</th>
+                    <th colspan="5" style="width: 86%">Weekly Overview</th>
                 </tr>
             </thead>
 
             <tbody th:each="entry, stats : ${attendanceReports}" th:with="list=${entry.value}">
 
                 <tr style="text-align: center" class="accordion-toggle collapsed" id="accordion1" data-toggle="collapse" data-parent="#accordion1" th:href="${'#collapse' + entry.key}">
-                    <td class="expand-button"></td>
-<!--                    <td>-->
-<!--                        <div style="text-align-last: left" scope="col" th:text="${'Week ' + entry.key}">Week</div>-->
-<!--                    </td>-->
-<!--                    <td>-->
-<!--                        <div th:each="report : ${list}">-->
-<!--                            <div th:class="'completeState' + ${report.attendanceId}" class="placeholderText">Blank</div>-->
-<!--                        </div>-->
-<!--                    </td>-->
-
-                    <td style="text-align-last: left" scope="col-3" th:text="${'Week ' + entry.key}">Week</td>
-                    <td th:each="report : ${list}" scope="col-7" th:class="'completeState' + ${report.attendanceId}"></td>
+                    <td class="expand-button" style="width: 4%"></td>
+                    <td style="text-align-last: left; width: 10%" th:text="${'Week ' + entry.key}">Week</td>
+                    <td th:each="report : ${list}" style="width: 17.2%" th:class="'completeState' + ${report.attendanceId}"></td>
                 </tr>
 
                 <tr class="hide-table-padding">
@@ -59,12 +69,12 @@
                     </td>
                     <td>
                         <div th:id="${'collapse' + entry.key}" class="collapse in p-3">
-                            <div class="col"><strong>Day Of The Week</strong></div>
+                            <div class="col"><strong>Day</strong></div>
                         </div>
                     </td>
                     <td>
                         <div th:id="${'collapse' + entry.key}" class="collapse in p-3">
-                            <div class="col"><strong>Attendance Status</strong></div>
+                            <div class="col"><strong>Status</strong></div>
                         </div>
                     </td>
                     <td>
@@ -110,7 +120,7 @@
                         </div>
                     </td>
                     <td>
-                        <div th:id="${'collapse' + entry.key}" class="collapse in p-3">
+                        <div th:id="${'collapse' + entry.key}"class="collapse in p-3">
                             <div class="col placeholderText"><strong>Blank</strong></div>
                         </div>
                     </td>

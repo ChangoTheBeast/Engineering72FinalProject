@@ -57,27 +57,27 @@ ul li {
 
 .completeState0, .completeState4{
     background-color: #D85C5C;
-    border: darkgrey 1px solid;
+    border: white 1px solid;
 }
 
 .completeState1{
     background-color: #60BD60;
-    border: darkgrey 1px solid;
+    border: white 1px solid;
 }
 
 .completeState2{
     background-color: #f6c23e;
-    border: darkgrey 1px solid;
+    border: white 1px solid;
 }
 
 .completeState3{
     background-color: #6C93DA;
-    border: darkgrey 1px solid;
+    border: white 1px solid;
 }
 
 .completeState5{
-    background-color: white;
-    border: darkgrey 1px solid;
+    background-color: #bdbdbd;
+    border: white 1px solid;
 }
 
 .feedbackFormTextArea{

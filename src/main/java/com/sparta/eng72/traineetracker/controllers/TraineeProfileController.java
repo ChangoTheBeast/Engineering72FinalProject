@@ -86,6 +86,8 @@ public class TraineeProfileController {
         CourseGroup courseGroup = getCourseGroup(trainee);
         Course course = getCourse(courseGroup);
 
+
+
         /**
          * CCFCP - Controller Controller Factory Controller Pattern
          * Send modelMap to add attributes of the traineeReportController in its @GetMapping method

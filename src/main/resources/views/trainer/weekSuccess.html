@@ -11,50 +11,45 @@
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 </head>
 <body>
-<nav th:replace="~{fragments/sidebar}">Side Navigation</nav>
-<nav th:replace="~{fragments/generalNavigation}">Side Navigation</nav>
-<main>
-    <!-- Begin Page Content -->
-    <div class="container-fluid">
-        <div class="container">
-            <div class="text-center align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 " style="color: #E23561">Success</h1>
+    <nav th:replace="~{fragments/sidebar}">Side Navigation</nav>
+    <nav th:replace="~{fragments/generalNavigation}">Side Navigation</nav>
+    <main>
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+            <div class="container">
+                <div class="text-center align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 " style="color: #E23561">Success</h1>
+                </div>
             </div>
-        </div>
-        <div class="container">
-            <div class="card o-hidden border-0 shadow-lg my-5">
-                <div class="card-body p-0 text-center align-items-center justify-content-between">
-                    <!-- Nested Row within Card Body -->
-                    <h1>Successfully added new weeks for this group!</h1>
-                    <h1 th:text="'Week has changed from Week ' + ${previousWeek} + ' to Week ' + ${currentWeek} "></h1>
-                    <br/>
-                    <div class="row">
-                        <div class="col">
-                            <form th:action = "@{/trainer/home}">
-                                <button class="btn btn-primary" type="submit">Dashboard</button>
-                            </form>
-                        </div>
-                        <div class="col">
-                            <form th:action = "@{/trainer/newWeek}">
-                                <button class="btn btn-primary" type="submit">Add more weeks</button>
-                            </form>
+            <div class="container">
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0 text-center align-items-center justify-content-between">
+                        <!-- Nested Row within Card Body -->
+                        <h1>Successfully added new weeks for this group!</h1>
+                        <h1 th:text="'Week has changed from Week ' + ${previousWeek} + ' to Week ' + ${currentWeek} "></h1>
+                        <br/>
+                        <div class="row">
+                            <div class="col">
+                                <form th:action = "@{/trainer/home}">
+                                    <button class="btn btn-primary" type="submit">Dashboard</button>
+                                </form>
+                            </div>
+                            <div class="col">
+                                <form th:action = "@{/trainer/newWeek}">
+                                    <button class="btn btn-primary" type="submit">Add more weeks</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                    <br/>
-
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
-
-
-</main>
-
-<script src="webjars/jquery/3.5.1/jquery.min.js"></script>
-<script src="webjars/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-<script src="webjars/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-<script src="js/sb-admin-2.min.js"></script>
+    <script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+    <script src="webjars/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="webjars/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <script src="js/sb-admin-2.min.js"></script>
 
 </body>
 </html>

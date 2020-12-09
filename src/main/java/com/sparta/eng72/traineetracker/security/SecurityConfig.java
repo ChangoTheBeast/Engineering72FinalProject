@@ -64,8 +64,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable() //FIXME please enable me
                 .authorizeRequests()
-//                .antMatchers("/trainer*").hasRole("TRAINER")
-//                .antMatchers("/trainee*").hasRole("TRAINEE")
+                .antMatchers("/trainer/**").hasRole("TRAINER")
+                .antMatchers("/trainee/**").hasRole("TRAINEE")
 //                .antMatchers("/anonymous*").anonymous()
                 .antMatchers("/css/**", "/js/**", "/scss/**", "/vendor/**", "/webjars/**", "/index", "/", "/images/**", "/login*").permitAll()
                 .anyRequest().authenticated()

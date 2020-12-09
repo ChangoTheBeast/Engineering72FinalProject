@@ -1,4 +1,4 @@
-package com.sparta.eng72.traineetracker;
+package com.sparta.eng72.traineetracker.controllers;
 
 
 import com.sparta.eng72.traineetracker.controllers.AssessmentController;

@@ -1,4 +1,4 @@
-package com.sparta.eng72.traineetracker;
+package com.sparta.eng72.traineetracker.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -102,7 +102,11 @@ public class AttendanceControllerTests {
     @Test
     @WithMockUser(username = traineeName , password = traineePw,roles = "TRAINEE")
     public void traineePercentagesTest() throws Exception {
-        this.mockMvc.perform(get("/trainee/profile-percentage")).andDo(print()).andExpect(status().isOk()).andExpect(model().attributeExists("onTimePercentage", "latePercentage", "excusedPercentage", "unexcusedPercentage"));
+        this.mockMvc.perform(get("/trainee/profile-percentage"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(model()
+                        .attributeExists("onTimePercentage", "latePercentage", "excusedPercentage", "unexcusedPercentage"));
     }
 
     @Test

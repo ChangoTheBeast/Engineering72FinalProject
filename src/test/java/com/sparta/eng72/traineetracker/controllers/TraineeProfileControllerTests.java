@@ -28,7 +28,7 @@ public class TraineeProfileControllerTests {
     @Test
     @WithMockUser(username =traineeName , password = traineePw,roles = "TRAINEE")
     public void traineeGetTraineeProfileTest() throws Exception {
-        this.mockMvc.perform(get("/trainee/traineeProfile"))
+        this.mockMvc.perform(get("/trainee/home"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists(
                         "trainee",

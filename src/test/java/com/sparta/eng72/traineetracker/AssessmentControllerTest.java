@@ -36,13 +36,4 @@ public class AssessmentControllerTest {
         mockMvc.perform(get("/trainer/assessments/2")).andDo(print()).andExpect(status().isOk()).andExpect(model().attributeExists("traineeId","trainee","assessments"));
     }
 
-    @Test
-    @WithMockUser(username = "bbird@spartaglobal.com", password = "test",roles = "TRAINEE")
-    public void traineeAssessmentPageTest() throws Exception {
-        mockMvc.perform(get("/trainee/assessmentSummary")).andExpect(status().isOk()).andExpect(model().attributeExists("trainee","assessments", "codingGamesAPI"));
-    }
-
-
-
-
 }

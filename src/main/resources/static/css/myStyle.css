@@ -56,23 +56,28 @@ ul li {
 }
 
 .completeState0, .completeState4{
-    background-color: crimson;
+    background-color: #d46565;
+    border: solid white 1px;
 }
 
 .completeState1{
-    background-color: darkseagreen;
+    background-color: #9ec794;
+    border: solid white 1px;
 }
 
 .completeState2{
     background-color: #f6c23e;
+    border: solid white 1px;
 }
 
 .completeState3{
-    background-color: cornflowerblue;
+    background-color: #6c93da;
+    border: solid white 1px;
 }
 
 .completeState5{
     background-color: white;
+    border: solid white 1px;
 }
 
 .feedbackFormTextArea{
@@ -221,4 +226,14 @@ tr.hide-table-padding td {
 .active-fragment {
     background-color:#000;
     color:white;
+}
+
+.reportSubmissionState0 {
+    background-color: #d46565;
+    border: solid white 1px;
+}
+
+.reportSubmissionState1 {
+    background-color: #9ec794;
+    border: solid white 1px;
 }

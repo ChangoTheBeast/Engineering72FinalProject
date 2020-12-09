@@ -16,7 +16,7 @@
     <main>
         <div class="container-fluid">
             <!-- Page Heading -->
-            <h2 style="text-align-last: center" th:text="${'Weekly Reports'}"></h2>
+            <h2 th:text="${'Weekly Reports'}"></h2>
         </div>
         <br/>
         <p th:if="${reports.isEmpty()}" th:text="${'No reports yet for ' + trainee.getFirstName() + ' ' + trainee.getLastName()}"></p>
@@ -30,7 +30,6 @@
                                 th:data-target="${'#collapse' + report.getWeekNum()}"
                                 th:aria-controls="${'collapse' + report.getWeekNum()}"x
                                 th:text="${'Week ' + report.getWeekNum()}"
-                                style="text-align-last: center;"
                                 type="button">
                         </button>
                     </h2>
@@ -38,7 +37,7 @@
                 <div th:id="${'collapse' + report.getWeekNum()}" class="collapse hide" th:aria-labelledby="${'heading' + report.getWeekNum()}" data-parent="#accordionExample">
                     <div class="card-body">
                         <div class="jumbotron">
-                            <h2 th:text="${'Report - Week ' + report.getWeekNum()}"></h2>
+                            <h2 th:text="${'Report for Week ' + report.getWeekNum()}"></h2>
                             <br/>
                             <div class="card-deck">
                                 <div class="card" id="SSCs">

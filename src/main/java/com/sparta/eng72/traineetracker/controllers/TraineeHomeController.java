@@ -45,7 +45,7 @@ public class TraineeHomeController {
 //        this.courseService = courseService;
 //    }
 
-    @GetMapping("/trainee/home")
+    @GetMapping("/trainee/traineeProfile")
     public ModelAndView getTrainerForTraineeHomeGrades(ModelMap modelMap, Principal principal) {
         Trainee trainee = traineeService.getTraineeByUsername(principal.getName()).get();
         CourseGroup courseGroup = courseGroupService.getGroupByID(trainee.getGroupId()).get();

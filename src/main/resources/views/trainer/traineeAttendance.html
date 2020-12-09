@@ -16,8 +16,10 @@
         <p th:if="${attendanceReports.isEmpty()}"
            th:text="${'No attendance reports for ' + trainee.getFirstName() + ' ' + trainee.getLastName()}"></p>
         <div class="accordion" id="accordionExample">
-            <!--        <tr th:each="entry, stats : ${usersMap}" th:with="user=${entry.value}">-->
-            <!--        <div >-->
+            <div class="container-fluid">
+                <!-- Page Heading -->
+                <h2 th:text="${'Weekly Attendance'}"></h2>
+            </div>            <br/>
             <div class="card" th:each="entry, stats : ${attendanceReports}" th:with="list=${entry.value}">
                 <div class="card-header" th:id="${'heading' + entry.key}">
                     <h2 class="mb-0">
@@ -34,7 +36,7 @@
                 <div th:id="${'collapse' + entry.key}" class="collapse hide" th:aria-labelledby="${'heading' + entry.key}" data-parent="#accordionExample">
                     <div class="card-body">
                         <div class="jumbotron">
-                            <h2 th:text="${'Attendance - Week ' + entry.key}"></h2>
+                            <h3 th:text="${'Attendance for Week ' + entry.key}"></h3>
                             <br/>
                             <table class="table table-bordered">
                                 <tr>
@@ -62,14 +64,7 @@
 
                             </table>
                         </div>
-                        <br/>
-                        <form th:action="@{/trainer/attendanceEntry}">
-                                            <button class="btn btn-lg btn-primary btn-block greenBtn" type="submit">
-                                                Edit Attendance
-                                            </button>
-                        </form>
                     </div>
-                    <br/>
                 </div>
             </div>
         </div>

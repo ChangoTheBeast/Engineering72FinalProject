@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
 import java.sql.Date;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -80,20 +81,6 @@ public class AttendanceController {
         return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_ATTENDANCE), modelMap);
     }
 
-//    @GetMapping("/trainee/trainee-attendance")
-//    public ModelAndView getTraineeAttendance(ModelMap modelMap, Principal principal){
-//        Map<Integer, List<AttendanceReport>> attendanceByWeek = getAttendanceReports(trainee);
-//        Trainee trainee = null;
-//        if (traineeService.getTraineeByUsername(principal.getName()).isPresent()) {
-//            trainee = traineeService.getTraineeByUsername(principal.getName()).get();
-//        }
-//        modelMap.addAttribute("attendanceReports", attendanceByWeek);
-////        return new ModelAndView(Pages.accessPage(Role.TRAINEE, Pages.TRAINEE_ATTENDANCE), modelMap);
-//        model.addAttribute("currentWeek", courseGroupService.getWeekByGroupId(trainee.getGroupId()));
-//        model.addAttribute("trainee", trainee);
-//        return new ModelAndView("/trainee/traineeAttendance", modelMap);
-//    }
-
     @GetMapping("/trainee/trainee-attendance")
     public ModelAndView getTraineeAttendance(ModelMap modelMap,Principal principal){
         Trainee trainee = null;
@@ -150,11 +137,12 @@ public class AttendanceController {
         }
 
         double count = onTime + late + excused + unexcused;
+        DecimalFormat decimal = new DecimalFormat("###.##");
 
-        String onTimePercentage = "" + Math.round((onTime/count * 100)) + "%";
-        String latePercentage = "" + Math.round(late/count * 100) + "%";
-        String excusedPercentage = "" + Math.round(excused/count * 100) + "%";
-        String unexcusedPercentage = "" + Math.round(unexcused/count * 100) + "%";
+        String onTimePercentage = "" + decimal.format(onTime/count * 100) + "%";
+        String latePercentage = "" + decimal.format(late/count * 100) + "%";
+        String excusedPercentage = "" + decimal.format(excused/count * 100) + "%";
+        String unexcusedPercentage = "" + decimal.format(unexcused/count * 100) + "%";
 
         modelMap.addAttribute("onTimePercentage", onTimePercentage);
         modelMap.addAttribute("latePercentage", latePercentage);

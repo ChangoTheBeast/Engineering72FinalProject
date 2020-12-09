@@ -64,7 +64,7 @@ ul li {
 }
 
 .completeState2{
-    background-color: #f6c23e;
+    background-color: #dda20a;
 }
 
 .completeState3{
@@ -97,15 +97,11 @@ ul li {
 }
 
 .letterGradeB {
-    color: lightgreen;
+    color: seagreen;
 }
 
 .letterGradeA {
     color: darkgreen;
-}
-
-.letterGradeC {
-    color: yellow;
 }
 
 .holderTextRed, .letterGradeF{
@@ -124,7 +120,7 @@ ul li {
     color: white;
 }
 
-.holderTextOrange{
+.holderTextOrange, .letterGradeC {
     color: #dda20a;
 }
 
@@ -221,4 +217,12 @@ tr.hide-table-padding td {
 .active-fragment {
     background-color:#000;
     color:white;
+}
+
+.col {
+    -ms-flex-preferred-size: 0;
+    flex-basis: 0;
+    -ms-flex-positive: 0;
+    flex-grow: 0;
+    max-width: 100%;
 }

@@ -135,6 +135,7 @@ ul li {
 
 .placeholderText{
     color: transparent;
+    width: 60px;
 }
 
 .form-control-dropdown, .form-control-dropdown:focus {

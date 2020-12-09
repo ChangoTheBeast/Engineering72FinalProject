@@ -161,6 +161,7 @@ public class UserControllerTests {
 
 
     @Test
+    @WithMockUser(username =traineeName , password = traineePw,roles = "TRAINEE")
     public void getNewPasswordTest() throws Exception {
         this.mockMvc.perform(post("/forgotPassword").param("email", "billbird"))
                 .andExpect(status().isOk());
@@ -187,10 +188,13 @@ public class UserControllerTests {
 
         Assertions.assertEquals("FIRST_TIME_USER", testUser.getRole());
 
-        userService.deleteUserByUsername("unit@test.com");
+        Trainee trainee = traineeService.getTraineeByUsername("unit@test.com").get();
+
+        userController.deleteTrainee(trainee.getTraineeId().toString(), modelMap);
     }
 
     @Test
+    @WithMockUser(username =traineeName , password = traineePw,roles = "TRAINEE")
     public void recoverPassword() throws Exception {
         this.mockMvc.perform(get("/recoverPassword")).andExpect(status().isOk());
     }

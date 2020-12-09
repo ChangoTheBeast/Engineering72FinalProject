@@ -28,7 +28,7 @@ public class TraineeProfileControllerTests {
     @Test
     @WithMockUser(username =traineeName , password = traineePw,roles = "TRAINEE")
     public void traineeGetTraineeProfileTest() throws Exception {
-        this.mockMvc.perform(get("/trainee/traineeProfile"))
+        this.mockMvc.perform(get("/trainee/home"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists(
                         "trainee",
@@ -42,7 +42,6 @@ public class TraineeProfileControllerTests {
                         "latePercentage",
                         "excusedPercentage",
                         "unexcusedPercentage",
-                        "currentWeek",
                         "dateFormat",
                         "now",
                         "reports",
@@ -73,7 +72,6 @@ public class TraineeProfileControllerTests {
                         "latePercentage",
                         "excusedPercentage",
                         "unexcusedPercentage",
-                        "currentWeek",
                         "dateFormat",
                         "now",
                         "reports",

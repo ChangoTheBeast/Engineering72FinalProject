@@ -37,8 +37,11 @@ public class TraineeReportController {
 
     @GetMapping("/trainee/report/{week}")
     public String getTraineeFeedbackForm(@PathVariable Integer week, Model model, Principal principal) {
-        Integer traineeId = traineeService.getTraineeByUsername(principal.getName()).get().getTraineeId();
-
+        Optional<Trainee> trainee = traineeService.getTraineeByUsername(principal.getName());
+        Integer traineeId = null;
+        if (trainee.isPresent()) {
+            traineeId = trainee.get().getTraineeId();
+        }
         Optional<WeekReport> weekReportOptional = weekReportService.getWeekReportByTraineeIdAndWeekNum(traineeId, week);
         if (weekReportOptional.isEmpty()) {
             return Pages.accessPage(Role.TRAINEE, Pages.NO_ITEM_IN_DATABASE_ERROR);
@@ -49,51 +52,36 @@ public class TraineeReportController {
 
     @PostMapping("/traineeRecentReport")
     public ModelAndView postRecentReport(Principal principal, ModelMap modelMap) {
-        Trainee trainee = traineeService.getTraineeByUsername(principal.getName()).get();
-
-        Optional<WeekReport> optionalWeekReport = weekReportService.getCurrentWeekReportByTraineeID(trainee.getTraineeId());
-
-        if (optionalWeekReport.isEmpty()) {
-            return new ModelAndView("redirect:"+Pages.accessPage(Role.TRAINEE, Pages.NO_ITEM_IN_DATABASE_ERROR), modelMap);
-        } else {
-            modelMap.addAttribute("traineeFeedback", optionalWeekReport.get());
-        }
-
-        RedirectView redirectView = new RedirectView(Pages.TRAINEE_REPORT_URL+"/"+optionalWeekReport.get().getWeekNum());
-        redirectView.setExposeModelAttributes(false);
-        ModelAndView modelAndView = new ModelAndView(redirectView, modelMap);
-
-        return modelAndView;
+        return getModelAndView(principal, modelMap);
     }
-
     @GetMapping("/traineeRecentReport")
     public ModelAndView getRecentReport(Principal principal, ModelMap modelMap) {
-        Trainee trainee = traineeService.getTraineeByUsername(principal.getName()).get();
-
+        return getModelAndView(principal, modelMap);
+    }
+    private ModelAndView getModelAndView(Principal principal, ModelMap modelMap) {
+        Optional<Trainee> optionalTrainee = traineeService.getTraineeByUsername(principal.getName());
+        Trainee trainee = new Trainee();
+        if (optionalTrainee.isPresent()) {
+            trainee = traineeService.getTraineeByUsername(principal.getName()).get();
+        }
         Optional<WeekReport> optionalWeekReport = weekReportService.getCurrentWeekReportByTraineeID(trainee.getTraineeId());
-
         if (optionalWeekReport.isEmpty()) {
-            return new ModelAndView("redirect:"+Pages.accessPage(Role.TRAINEE, Pages.NO_ITEM_IN_DATABASE_ERROR), modelMap);
+            return new ModelAndView("redirect:"+ Pages.accessPage(Role.TRAINEE, Pages.NO_ITEM_IN_DATABASE_ERROR), modelMap);
         } else {
             modelMap.addAttribute("traineeFeedback", optionalWeekReport.get());
         }
-
         RedirectView redirectView = new RedirectView(Pages.TRAINEE_REPORT_URL+"/"+optionalWeekReport.get().getWeekNum());
         redirectView.setExposeModelAttributes(false);
-        ModelAndView modelAndView = new ModelAndView(redirectView, modelMap);
 
-        return modelAndView;
+        return new ModelAndView(redirectView, modelMap);
     }
 
     @PostMapping("/traineeReportProcessing")
     public RedirectView processReportRequest(Integer reportId, ModelMap modelMap) {
         WeekReport weekReport = weekReportService.getWeekReportByReportId(reportId).get();
-
         Integer weekNum = weekReport.getWeekNum();
-
         RedirectView redirectView = new RedirectView(Pages.TRAINEE_REPORT_URL+"/"+weekNum);
         redirectView.setExposeModelAttributes(false);
-
         return redirectView;
     }
 

@@ -187,6 +187,8 @@ public class AttendanceController {
         String excusedPercentage = "" + decimal.format(excused/count * 100) + "%";
         String unexcusedPercentage = "" + decimal.format(unexcused/count * 100) + "%";
 
+
+        modelMap.addAttribute("trainee", traineeAttendanceList.get(0));
         modelMap.addAttribute("onTimePercentage", onTimePercentage);
         modelMap.addAttribute("latePercentage", latePercentage);
         modelMap.addAttribute("excusedPercentage", excusedPercentage);

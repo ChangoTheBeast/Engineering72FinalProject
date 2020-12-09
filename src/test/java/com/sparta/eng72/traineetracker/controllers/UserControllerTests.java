@@ -1,9 +1,10 @@
-package com.sparta.eng72.traineetracker;
+package com.sparta.eng72.traineetracker.controllers;
 
 import com.sparta.eng72.traineetracker.controllers.UserController;
 import com.sparta.eng72.traineetracker.entities.Trainee;
 import com.sparta.eng72.traineetracker.entities.TraineeAttendance;
 import com.sparta.eng72.traineetracker.entities.User;
+import com.sparta.eng72.traineetracker.repositories.UserRepository;
 import com.sparta.eng72.traineetracker.services.AttendanceService;
 import com.sparta.eng72.traineetracker.services.TraineeService;
 import com.sparta.eng72.traineetracker.services.UserService;
@@ -22,8 +23,7 @@ import java.util.List;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 @SpringBootTest
@@ -41,6 +41,9 @@ public class UserControllerTests {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private MockMvc mockMvc;
@@ -119,7 +122,8 @@ public class UserControllerTests {
         ModelMap modelMap = new ModelMap();
         userController.addNewUser(newUserForm, modelMap);
 
-        this.mockMvc.perform(post("/addFirstPassword").param("password", "test_password")).andExpect(status().isOk());
+        this.mockMvc.perform(post("/addFirstPassword")
+                .param("password", "test_password")).andExpect(status().isOk());
 
         Trainee trainee = traineeService.getTraineeByUsername("unit@test.com").get();
         userController.deleteTrainee(trainee.getTraineeId().toString(), modelMap);
@@ -127,9 +131,71 @@ public class UserControllerTests {
     }
 
     @Test
+    @WithMockUser(roles = "TRAINEE")
     public void getChangePasswordScreenTest() throws Exception {
-        this.mockMvc.perform(get("/changePassword").param("error", ""))
+        this.mockMvc.perform(get("/changePassword").param("error", "true"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("showError"));
+    }
+
+    @Test
+    @WithMockUser(username =traineeName , password = traineePw,roles = "TRAINEE")
+    public void changePasswordTest() throws Exception {
+        String password = "test1";
+        String oldPassword = "test";
+
+        this.mockMvc.perform(post("/passwordChange")
+                .param("password", password)
+                .param("oldPassword", oldPassword)).andExpect(status().is3xxRedirection());
+
+        Assertions.assertTrue(userService.isPasswordSame(traineeName, password));
+
+        this.mockMvc.perform(post("/passwordChange")
+                .param("password", password)
+                .param("oldPassword", oldPassword)).andExpect(status().is3xxRedirection()).andExpect(flash().attributeExists("error")).andDo(print());
+
+        Assertions.assertFalse(userService.isPasswordSame(traineeName, oldPassword));
+
+        userService.changePasswordByUsername(traineeName, oldPassword);
+    }
+
+
+    @Test
+    @WithMockUser(username =traineeName , password = traineePw,roles = "TRAINEE")
+    public void getNewPasswordTest() throws Exception {
+        this.mockMvc.perform(post("/forgotPassword").param("email", "billbird"))
+                .andExpect(status().isOk());
+        User user = userService.getUserOptional(traineeName).get();
+        Assertions.assertNotEquals("FIRST_TIME_USER", user.getRole());
+
+        NewUserForm newUserForm = new NewUserForm();
+        newUserForm.setEmail("unit@test.com");
+        newUserForm.setFirstName("Unit");
+        newUserForm.setLastName("Test");
+        newUserForm.setGroupId(2);
+        ModelMap modelMap = new ModelMap();
+
+        userController.addNewUser(newUserForm, modelMap);
+
+        User testUser = userService.getUserOptional("unit@test.com").get();
+        testUser.setRole("TRAINEE");
+        userRepository.save(testUser);
+
+        this.mockMvc.perform(post("/forgotPassword").param("email", "unit@test.com"))
+                .andExpect(status().isOk());
+
+        testUser = userService.getUserOptional("unit@test.com").get();
+
+        Assertions.assertEquals("FIRST_TIME_USER", testUser.getRole());
+
+        Trainee trainee = traineeService.getTraineeByUsername("unit@test.com").get();
+
+        userController.deleteTrainee(trainee.getTraineeId().toString(), modelMap);
+    }
+
+    @Test
+    @WithMockUser(username =traineeName , password = traineePw,roles = "TRAINEE")
+    public void recoverPassword() throws Exception {
+        this.mockMvc.perform(get("/recoverPassword")).andExpect(status().isOk());
     }
 }

@@ -143,9 +143,9 @@ public class UserController {
 
         return new ModelAndView(Pages.accessPage(Role.ANY, Pages.PASSWORD_SENT_PAGE), modelMap);
     }
+
     @GetMapping("/recoverPassword")
     public ModelAndView recoverPassword(ModelMap modelMap){
-        //return new ModelAndView()
         return new ModelAndView(Pages.accessPage(Role.ANY, Pages.RECOVER_PASSWORD_PAGE), modelMap);
     }
 

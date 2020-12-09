@@ -225,10 +225,13 @@ tr.hide-table-padding td {
     color:white;
 }
 
-.col {
-    -ms-flex-preferred-size: 0;
-    flex-basis: 0;
-    -ms-flex-positive: 0;
-    flex-grow: 0;
-    max-width: 100%;
+
+.reportSubmissionState0 {
+    background-color: #d46565;
+    border: solid white 1px;
+}
+
+.reportSubmissionState1 {
+    background-color: #9ec794;
+    border: solid white 1px;
 }

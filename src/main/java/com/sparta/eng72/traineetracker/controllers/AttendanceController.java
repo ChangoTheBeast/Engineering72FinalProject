@@ -178,10 +178,12 @@ public class AttendanceController {
 
         double count = onTime + late + excused + unexcused;
 
-        String onTimePercentage = "" + Math.round((onTime/count * 100)) + "%";
-        String latePercentage = "" + Math.round(late/count * 100) + "%";
-        String excusedPercentage = "" + Math.round(excused/count * 100) + "%";
-        String unexcusedPercentage = "" + Math.round(unexcused/count * 100) + "%";
+        DecimalFormat decimal = new DecimalFormat("###.##");
+
+        String onTimePercentage = "" + decimal.format(onTime/count * 100) + "%";
+        String latePercentage = "" + decimal.format(late/count * 100) + "%";
+        String excusedPercentage = "" + decimal.format(excused/count * 100) + "%";
+        String unexcusedPercentage = "" + decimal.format(unexcused/count * 100) + "%";
 
         modelMap.addAttribute("onTimePercentage", onTimePercentage);
         modelMap.addAttribute("latePercentage", latePercentage);

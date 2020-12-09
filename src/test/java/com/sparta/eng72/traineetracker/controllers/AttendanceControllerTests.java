@@ -152,7 +152,7 @@ public class AttendanceControllerTests {
     @Test
     @WithMockUser(username = trainerName, password = trainerPw, roles = "TRAINER")
     public void getTraineeAttendancePercentageTest() throws Exception {
-        this.mockMvc.perform(get("/trainee/profile-percentage/41")).andExpect(status().isOk()).andExpect(model().attributeExists("onTimePercentage", "latePercentage", "excusedPercentage", "unexcusedPercentage"));
+        this.mockMvc.perform(get("/trainee/profile-percentage/41")).andExpect(status().isOk()).andExpect(model().attributeExists("onTimePercentage", "latePercentage", "excusedPercentage", "unexcusedPercentage", "trainee"));
     }
 
     @Test

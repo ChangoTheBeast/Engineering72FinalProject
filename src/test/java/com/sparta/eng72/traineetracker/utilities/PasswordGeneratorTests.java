@@ -1,4 +1,4 @@
-package com.sparta.eng72.traineetracker;
+package com.sparta.eng72.traineetracker.utilities;
 
 import com.sparta.eng72.traineetracker.utilities.PasswordGenerator;
 import org.junit.jupiter.api.Test;

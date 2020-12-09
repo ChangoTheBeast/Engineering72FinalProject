@@ -1,4 +1,4 @@
-package com.sparta.eng72.traineetracker;
+package com.sparta.eng72.traineetracker.entities;
 
 import com.sparta.eng72.traineetracker.entities.CSVUser;
 import com.sparta.eng72.traineetracker.utilities.Role;

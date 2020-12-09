@@ -1,4 +1,4 @@
-package com.sparta.eng72.traineetracker;
+package com.sparta.eng72.traineetracker.controllers;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

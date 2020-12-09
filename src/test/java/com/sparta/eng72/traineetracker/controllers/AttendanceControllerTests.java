@@ -1,11 +1,13 @@
-package com.sparta.eng72.traineetracker;
+package com.sparta.eng72.traineetracker.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sparta.eng72.traineetracker.controllers.AttendanceController;
+import com.sparta.eng72.traineetracker.entities.CourseGroup;
 import com.sparta.eng72.traineetracker.entities.Trainee;
 import com.sparta.eng72.traineetracker.entities.TraineeAttendance;
 import com.sparta.eng72.traineetracker.entities.Trainer;
+import com.sparta.eng72.traineetracker.services.CourseGroupService;
 import com.sparta.eng72.traineetracker.services.TraineeService;
 import com.sparta.eng72.traineetracker.services.TrainerService;
 import org.hamcrest.Matchers;
@@ -48,6 +50,9 @@ public class AttendanceControllerTests {
 
     @Autowired
     private TrainerService trainerService;
+
+    @Autowired
+    private CourseGroupService courseGroupService;
 
     @Autowired
     private MockMvc mockMvc;
@@ -97,7 +102,11 @@ public class AttendanceControllerTests {
     @Test
     @WithMockUser(username = traineeName , password = traineePw,roles = "TRAINEE")
     public void traineePercentagesTest() throws Exception {
-        this.mockMvc.perform(get("/trainee/profile-percentage")).andDo(print()).andExpect(status().isOk()).andExpect(model().attributeExists("onTimePercentage", "latePercentage", "excusedPercentage", "unexcusedPercentage"));
+        this.mockMvc.perform(get("/trainee/profile-percentage"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(model()
+                        .attributeExists("onTimePercentage", "latePercentage", "excusedPercentage", "unexcusedPercentage"));
     }
 
     @Test
@@ -122,12 +131,14 @@ public class AttendanceControllerTests {
     public void postAllGroupTraineesTest() throws Exception {
 
         TraineeAttendance traineeAttendance = new TraineeAttendance();
-        traineeAttendance.setAttendanceDate(Date.valueOf(LocalDate.now()));
+
         traineeAttendance.setAttendanceId(1);
         traineeAttendance.setDay(1);
         traineeAttendance.setWeek(1);
         Trainee trainee = traineeService.getTraineeByUsername("bbird@spartaglobal.com").get();
+        CourseGroup courseGroup = courseGroupService.getGroupByID(trainee.getGroupId()).get();
         traineeAttendance.setTraineeId(trainee.getTraineeId());
+        traineeAttendance.setAttendanceDate(Date.valueOf(courseGroup.getStartDate().toLocalDate()));
         this.mockMvc.perform(post("/trainer/attendanceEntry")
                 .param("traineeId", traineeAttendance.getTraineeId().toString())
                 .param("attendanceId", traineeAttendance.getAttendanceId().toString())

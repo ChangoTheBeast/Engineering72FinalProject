@@ -100,19 +100,9 @@ public class AttendanceControllerTests {
     }
 
     @Test
-    @WithMockUser(username = traineeName , password = traineePw,roles = "TRAINEE")
-    public void traineePercentagesTest() throws Exception {
-        this.mockMvc.perform(get("/trainee/profile-percentage"))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(model()
-                        .attributeExists("onTimePercentage", "latePercentage", "excusedPercentage", "unexcusedPercentage"));
-    }
-
-    @Test
     @WithMockUser(username = trainerName, password = trainerPw, roles = "TRAINER")
     public void weeklyAttendanceTest() throws Exception {
-        this.mockMvc.perform(get("/trainer/weekly-attendance")).andExpect(status().isOk()).andExpect(model().attributeExists("days", "currentWeek", "reports"));
+        this.mockMvc.perform(get("/trainer/weekly-attendance")).andExpect(status().isOk()).andExpect(model().attributeExists("days", "reports"));
     }
 
     @Test
@@ -147,17 +137,5 @@ public class AttendanceControllerTests {
                 .param("attendanceDate", traineeAttendance.getAttendanceDate().toString()))
                 .andExpect(status().isOk());
 
-    }
-
-    @Test
-    @WithMockUser(username = trainerName, password = trainerPw, roles = "TRAINER")
-    public void getTraineeAttendancePercentageTest() throws Exception {
-        this.mockMvc.perform(get("/trainer/profile-percentage/41")).andExpect(status().isOk()).andExpect(model().attributeExists("onTimePercentage", "latePercentage", "excusedPercentage", "unexcusedPercentage", "trainee"));
-    }
-
-    @Test
-    @WithMockUser(username = trainerName, password = trainerPw, roles = "TRAINER")
-    public void getTraineeAttendanceTest() throws Exception {
-        this.mockMvc.perform(post("/trainer/viewTrainee").param("btnStatus", "attendance")).andExpect(status().is3xxRedirection());
     }
 }

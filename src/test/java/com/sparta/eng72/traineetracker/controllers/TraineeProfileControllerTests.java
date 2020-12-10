@@ -35,16 +35,12 @@ public class TraineeProfileControllerTests {
                         "courseGroup",
                         "course",
                         "codingGamesAPI",
-                        "traineeId",
                         "assessments",
-                        "attendanceReports",
                         "onTimePercentage",
                         "latePercentage",
                         "excusedPercentage",
                         "unexcusedPercentage",
-                        "dateFormat",
                         "now",
-                        "reports",
                         "previousWeekReport"
                 )
         );
@@ -65,16 +61,12 @@ public class TraineeProfileControllerTests {
                         "courseGroup",
                         "course",
                         "codingGamesAPI",
-                        "traineeId",
                         "assessments",
-                        "attendanceReports",
                         "onTimePercentage",
                         "latePercentage",
                         "excusedPercentage",
                         "unexcusedPercentage",
-                        "dateFormat",
                         "now",
-                        "reports",
                         "previousWeekReport"
                 )
         );

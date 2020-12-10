@@ -72,14 +72,6 @@ class TrainerReportControllerTest {
 
     @Test
     @WithMockUser(username = trainerName, password = trainerPw, roles = "TRAINER")
-    void getTrainerFeedbackForm() throws Exception {
-        this.mockMvc.perform(post("/trainer/reportTraineeWeekProcessing")
-                .param("reportId", "1"))
-                .andExpect(status().is3xxRedirection());
-    }
-
-    @Test
-    @WithMockUser(username = trainerName, password = trainerPw, roles = "TRAINER")
     void testGetTrainerFeedbackForm() throws Exception {
         this.mockMvc.perform(get("/trainer/report/41/1"))
                 .andExpect(status().isOk())
@@ -90,15 +82,6 @@ class TrainerReportControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(model()
                         .attributeDoesNotExist("trainee", "trainerFeedback"));
-    }
-
-    @Test
-    @WithMockUser(username = trainerName, password = trainerPw, roles = "TRAINER")
-    void getTrainerWeeklyReports() throws Exception {
-        this.mockMvc.perform(post("/trainer/viewTrainee")
-                .param("btnStatus", "reports")
-                .param("traineeId", "41"))
-                .andExpect(status().is3xxRedirection());
     }
 
 

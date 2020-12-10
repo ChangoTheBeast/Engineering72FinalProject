@@ -52,11 +52,17 @@ public class AttendanceController {
 
         List<Trainee> trainees = traineeService.getTraineesByGroupId(groupId);
         Date startDate = Date.valueOf(getGroup(groupId).getStartDate().toLocalDate());
+        Date endDate = Date.valueOf(getGroup(groupId).getEndDate().toLocalDate());
         populateAttendanceEntryModelMap(modelMap, trainees, startDate);
 
         int dayOfWeek = getDayOfWeek(traineeAttendance, startDate);
         if (dayOfWeek == 6 || dayOfWeek == 7) {
             modelMap.addAttribute("error", "Trainees are out of office on weekends!");
+            return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_ATTENDANCE_PAGE), modelMap);
+        }
+
+        if(traineeAttendance.getAttendanceDate().after(endDate)){
+            modelMap.addAttribute("error", "This course has finished!");
             return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_ATTENDANCE_PAGE), modelMap);
         }
 

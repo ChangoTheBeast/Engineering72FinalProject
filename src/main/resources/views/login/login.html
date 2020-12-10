@@ -39,17 +39,24 @@
                                             <div class="form-group">
                                                 <input name="password" type="password" class="form-control form-control-user" id="inputPassword" placeholder="Password">
                                             </div>
+
+                                            
+
                                             <div class="form-group">
                                                 <div class="custom-control custom-checkbox small">
                                                     <input type="checkbox" class="custom-control-input" id="customCheck" name="remember-me">
                                                     <label class="custom-control-label" for="customCheck">Remember Me</label>
                                                 </div>
                                             </div>
+
+
+
+
                                             <div style="color:red; text-align: center; margin-bottom: 10px;">
-                                                <div th:if="${param.error}">
+                                                <div class="small" th:if="${param.error}">
                                                     Invalid username and password.
                                                 </div>
-                                                <div th:if="${param.logout}">
+                                                <div class="small" th:if="${param.logout}">
                                                     You have been logged out.
                                                 </div>
                                             </div>

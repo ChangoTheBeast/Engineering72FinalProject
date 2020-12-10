@@ -100,8 +100,9 @@
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
-                            <label for="traineeSelector">Select Trainee:</label>
-                            <select class="form-control" id="traineeSelector" th:name="traineeId">
+                            <label class="font-weight-bold mb-0" style="margin-bottom: 0;" for="traineeSelector">Manage Trainees</label>
+                            <hr class="mb-sm-3 mt-0" style=" margin-bottom: 10px; margin-top: 0;">
+                            <select class="form-control" style="text-align-last: center" id="traineeSelector" th:name="traineeId">
                                 <option th:each="trainee: ${traineeList}" th:value="${trainee.traineeId}" th:text="${trainee.firstName} + ' ' + ${trainee.lastName}">Trainee</option>
                             </select>
                         </div>
@@ -165,7 +166,7 @@
                     </div>
                 </div>
                 <br>
-                <div class="float-right d-flex justify-content-center" style="width:80.02%">
+                <div class="float-right d-flex justify-content-center mb-md-4" style="width:80.02%">
                     <table>
                         <tbody>
                             <tr>

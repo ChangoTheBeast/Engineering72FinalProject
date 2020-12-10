@@ -17,11 +17,6 @@
     <!-- Begin Page Content -->
     <div class="container-fluid">
         <div class="container">
-            <div class="text-center align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 " style="color: #E23561">Add Weeks</h1>
-            </div>
-        </div>
-        <div class="container">
             <!-- Page Heading -->
             <!-- Outer Row -->
             <div class="row justify-content-center">
@@ -32,35 +27,24 @@
                         <div class="card-body p-0">
                             <!-- Nested Row within Card Body -->
                             <div class="row align-content-center text-center">
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 align-self-center">
                                 <div class="p-5">
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Add Weeks to Groups</h1>
                                     </div>
+                                    <hr/>
                                     <p th:if="${error}" th:text="${error}" class="letterGradeF"></p>
                                     <p th:if="${success}" th:text="${success}" class="letterGradeA"></p>
                                     <form class="form-signin align-content-center text-center" th:action="@{/trainer/addNewWeek}" method="POST">
-                                            <table>
-                                                <tr>
-                                                    <div class="form-group">
-                                                        <td><label for="dropdown">Select Group:</label></td>
-                                                        <td>
-                                                            <select class="form-control" id="dropdown" name="groupId">
-                                                                <option value="0"> -- </option>
-                                                                <option th:each="group : ${allGroups}"
-                                                                        th:value="${group.groupId}"
-                                                                        th:text="${group.groupName}"></option>
-                                                            </select>
-                                                        </td>
-                                                    </div>
-                                                </tr>
-                                            </table>
-                                        <br/>
-                                        <button class="btn btn-lg btn-primary btn-block" name="submit" type="submit" value="submit">Add Week</button>
-                                    </form>
-                                    <br/>
-                                    <form th:action = "@{/trainer/home}">
-                                        <button class="btn btn-lg btn-primary btn-block" type="submit">Back To Dashboard</button>
+                                        <div class="row justify-content-center">
+                                            <select class="form-control" id="dropdown" name="groupId">
+                                                <option value="" hidden>Select Group</option>
+                                                <option th:each="group : ${allGroups}"
+                                                        th:value="${group.groupId}"
+                                                        th:text="${group.groupName}"></option>
+                                            </select>
+                                        </div>
+                                        <button class="btn btn-lg btn-primary btn-block mt-3" name="submit" type="submit" value="submit">Add Week</button>
                                     </form>
                                 </div>
                                 </div>

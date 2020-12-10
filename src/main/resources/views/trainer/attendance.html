@@ -21,11 +21,6 @@
     <!-- Begin Page Content -->
     <div class="container-fluid">
         <div class="container">
-            <div class="container">
-                <div class="text-center align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 " style="color: #E23561">Enter Attendance</h1>
-                </div>
-            </div>
             <div class="row justify-content-center">
                 <div class="card o-hidden border-0 shadow-lg my-5">
                     <div class="card-body p-0">
@@ -33,9 +28,7 @@
                         <div class="row">
                             <div class="p-5">
                                 <h1 class="h3 mb-3 font-weight-normal" style="text-align-last: center">ATTENDANCE</h1>
-                                <br/>
-                                <p th:if="${error}" th:text="${error}" class="letterGradeF" style="text-align: center;"></p>
-                                <p th:if="${success}" th:text="${success}" class="letterGradeA" style="text-align: center"></p>
+                                <hr/>
                                 <form class="form-signin" th:action="@{/trainer/attendanceEntry}" th:object="${traineeAttendance}" method="post">
                                     <div class="form-group" style="text-align: center">
                                         <label><strong>Select Date</strong></label>
@@ -67,6 +60,8 @@
                                         </table>
                                     </div>
                                     <br/>
+                                    <p th:if="${error}" th:text="${error}" class="letterGradeF" style="text-align: center;"></p>
+                                    <p th:if="${success}" th:text="${success}" class="letterGradeA" style="text-align: center"></p>
                                     <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
                                 </form>
                             </div>

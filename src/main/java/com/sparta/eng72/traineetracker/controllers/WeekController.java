@@ -24,17 +24,13 @@ public class WeekController {
 
     private final CourseGroupService courseGroupService;
     private final TraineeService traineeService;
-    private final UserService userService;
-    private final TrainerService trainerService;
     private final WeekReportService weekReportService;
     private final CourseService courseService;
 
     @Autowired
-    public WeekController(CourseGroupService courseGroupService, TraineeService traineeService, UserService userService, TrainerService trainerService, WeekReportService weekReportService, CourseService courseService) {
+    public WeekController(CourseGroupService courseGroupService, TraineeService traineeService, WeekReportService weekReportService, CourseService courseService) {
         this.courseGroupService = courseGroupService;
         this.traineeService = traineeService;
-        this.userService = userService;
-        this.trainerService = trainerService;
         this.weekReportService = weekReportService;
         this.courseService = courseService;
     }
@@ -50,9 +46,8 @@ public class WeekController {
         modelMap.addAttribute("allGroups", courseGroupService.getAllCourseGroups());
 
         int groupID = Integer.parseInt(groupId);
-
-        CourseGroup group = courseGroupService.getGroupByID(groupID).get();
-        int courseDuration = courseService.getCourseByID(group.getCourseId()).get().getDuration();
+        CourseGroup group = getGroup(Integer.parseInt(groupId));
+        int courseDuration = getCourse(group).getDuration();
         int week_num = courseGroupService.getWeekByGroupId(groupID);
 
         if (week_num == Integer.MIN_VALUE || week_num >= courseDuration) {
@@ -63,51 +58,76 @@ public class WeekController {
 
         courseGroupService.incrementWeek(groupID);
 
-        List<Trainee> trainees = traineeService.getTraineesByGroupId(groupID);
-        List<WeekReport> weekReports = new ArrayList<>();
-        for(Trainee trainee: trainees){
-            WeekReport weekReport = new WeekReport();
-            weekReport.setTraineeId(trainee.getTraineeId());
-            weekReport.setWeekNum(week_num);
-            LocalDate deadlineDay = LocalDate.now().with(TemporalAdjusters.next(DayOfWeek.THURSDAY));
-            LocalDateTime deadline = deadlineDay.atTime(17, 30);
-            weekReport.setDeadline(deadline);
-
-            weekReport.setTrainerCompletedFlag((byte) 0);
-            weekReport.setTraineeConsultantGradeFlag((byte) 0);
-            weekReport.setTraineeContinueFlag((byte) 0);
-            weekReport.setTraineeStartFlag((byte) 0);
-            weekReport.setTraineeStopFlag((byte) 0);
-            weekReport.setTraineeSubmittedFlag((byte) 0);
-            weekReport.setTraineeTechnicalGradeFlag((byte) 0);
-
-            weekReport.setConsultantGradeTrainer("");
-            weekReport.setConsultantGradeTrainee("");
-            weekReport.setTechnicalGradeTrainee("");
-            weekReport.setTechnicalGradeTrainer("");
-
-            weekReport.setOverallGradeTrainer("");
-
-            weekReport.setMostRecentEdit(LocalDateTime.now());
-
-            weekReport.setStartTrainee("");
-            weekReport.setStartTrainer("");
-            weekReport.setStopTrainee("");
-            weekReport.setStopTrainer("");
-            weekReport.setContinueTrainee("");
-            weekReport.setContinueTrainer("");
-
-            weekReport.setTrainerComments("");
-
-            weekReports.add(weekReport);
-        }
+        List<WeekReport> weekReports = getWeekReports(groupID, week_num);
         weekReportService.createReports(weekReports);
 
-        String success = "Week has changed from Week " + (week_num-1) + " to Week " + week_num +
+        String success = "Course Week has changed to Week " + week_num +
                 " for " + courseGroupService.getGroupByID(groupID).get().getGroupName();
 
         modelMap.addAttribute("success", success);
         return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_ADD_WEEK_PAGE), modelMap);
+    }
+
+    private WeekReport populateWeekReport(int week_num, Trainee trainee) {
+        WeekReport weekReport = new WeekReport();
+        weekReport.setTraineeId(trainee.getTraineeId());
+        weekReport.setWeekNum(week_num);
+        LocalDate deadlineDay = LocalDate.now().with(TemporalAdjusters.next(DayOfWeek.THURSDAY));
+        LocalDateTime deadline = deadlineDay.atTime(17, 30);
+        weekReport.setDeadline(deadline);
+
+        weekReport.setTrainerCompletedFlag((byte) 0);
+        weekReport.setTraineeConsultantGradeFlag((byte) 0);
+        weekReport.setTraineeContinueFlag((byte) 0);
+        weekReport.setTraineeStartFlag((byte) 0);
+        weekReport.setTraineeStopFlag((byte) 0);
+        weekReport.setTraineeSubmittedFlag((byte) 0);
+        weekReport.setTraineeTechnicalGradeFlag((byte) 0);
+
+        weekReport.setConsultantGradeTrainer("");
+        weekReport.setConsultantGradeTrainee("");
+        weekReport.setTechnicalGradeTrainee("");
+        weekReport.setTechnicalGradeTrainer("");
+
+        weekReport.setOverallGradeTrainer("");
+
+        weekReport.setMostRecentEdit(LocalDateTime.now());
+
+        weekReport.setStartTrainee("");
+        weekReport.setStartTrainer("");
+        weekReport.setStopTrainee("");
+        weekReport.setStopTrainer("");
+        weekReport.setContinueTrainee("");
+        weekReport.setContinueTrainer("");
+
+        weekReport.setTrainerComments("");
+        return weekReport;
+    }
+
+    private List<WeekReport> getWeekReports(int groupID, int week_num) {
+        List<Trainee> trainees = traineeService.getTraineesByGroupId(groupID);
+        List<WeekReport> weekReports = new ArrayList<>();
+        for(Trainee trainee: trainees){
+            WeekReport weekReport = populateWeekReport(week_num, trainee);
+            weekReports.add(weekReport);
+        }
+        return weekReports;
+    }
+
+    private CourseGroup getGroup(Integer groupId) {
+        CourseGroup group = null;
+        if (courseGroupService.getGroupByID(groupId).isPresent()) {
+            group = courseGroupService.getGroupByID(groupId).get();
+        }
+        return group;
+    }
+
+    private Course getCourse(CourseGroup group) {
+        Course course = null;
+        if(courseService.getCourseByID(group.getCourseId()).isPresent()){
+            course = courseService.getCourseByID(group.getCourseId()).get();
+        }
+        return course;
     }
 
 }

@@ -17,36 +17,24 @@ public class LoginController {
 
     @GetMapping("/")
     public String getSimpleRedirect() {
-        return "redirect:"+Pages.accessPage(Role.ANY, Pages.LOGIN_PAGE_URL);
+        return "redirect:" + Pages.accessPage(Role.ANY, Pages.LOGIN_PAGE_URL);
     }
 
-
-
     @GetMapping("/login")
-    public String getLogin(ModelMap modelMap,
-                           @ModelAttribute("loginResult") final Object loginResult) {
-
+    public String getLogin(ModelMap modelMap, @ModelAttribute("loginResult") final Object loginResult) {
         modelMap.addAttribute("showError", loginResult);
-
-
         return Pages.accessPage(Role.ANY, Pages.LOGIN_PAGE);
     }
 
     @GetMapping("/loginFailure")
-    public ModelAndView getLoginFailure(ModelMap modelMap,
-                                        RedirectAttributes redirectAttributes,
-                                        HttpServletRequest request) {
-
+    public ModelAndView getLoginFailure(ModelMap modelMap, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("loginResult", "true");
-
-        return new ModelAndView("redirect:/"+Pages.LOGIN_PAGE_URL, modelMap);
+        return new ModelAndView("redirect:" + Pages.LOGIN_PAGE_URL, modelMap);
     }
 
     @PostMapping("/loginFailure")
-    public ModelAndView postLoginFailure(ModelMap modelMap,
-                                         RedirectAttributes redirectAttributes,
-                                         HttpServletRequest request) {
-        return new ModelAndView("redirect:/"+Pages.LOGIN_PAGE_URL, modelMap);
+    public ModelAndView postLoginFailure(ModelMap modelMap) {
+        return new ModelAndView("redirect:" + Pages.LOGIN_PAGE_URL, modelMap);
     }
 
 }

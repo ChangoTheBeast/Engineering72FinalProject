@@ -1,44 +1,36 @@
 package com.sparta.eng72.traineetracker.controllers;
 
-import com.sparta.eng72.traineetracker.entities.Course;
-import com.sparta.eng72.traineetracker.entities.CourseGroup;
-import com.sparta.eng72.traineetracker.entities.Trainee;
-import com.sparta.eng72.traineetracker.services.CourseGroupService;
-import com.sparta.eng72.traineetracker.services.CourseService;
-import com.sparta.eng72.traineetracker.services.TraineeService;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.sparta.eng72.traineetracker.entities.*;
+import com.sparta.eng72.traineetracker.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.servlet.http.HttpServletRequest;
-import java.net.URI;
 import java.security.Principal;
+import java.text.DecimalFormat;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Controller
 public class TraineeProfileController {
 
-    TraineeService traineeService;
-    CourseGroupService courseGroupService;
-    CourseService courseService;
-    AssessmentController assessmentController;
-    AttendanceController attendanceController;
-    TraineeReportController traineeReportController;
-    TrainerReportController trainerReportController;
-    TraineeHomeController traineeHomeController;
+    private final AttendanceService attendanceService;
+    private final WeekReportService weekReportService;
+    private final CodingGamesAPIService codingGamesAPIService;
+    private final TraineeService traineeService;
+    private final CourseGroupService courseGroupService;
+    private final CourseService courseService;
 
     @Autowired
-    public TraineeProfileController(TraineeService traineeService, CourseGroupService courseGroupService, CourseService courseService, AssessmentController assessmentController, AttendanceController attendanceController, TraineeReportController traineeReportController, TrainerReportController trainerReportController, TraineeHomeController traineeHomeController) {
+    public TraineeProfileController(AttendanceService attendanceService, WeekReportService weekReportService, CodingGamesAPIService codingGamesAPIService, TraineeService traineeService, CourseGroupService courseGroupService, CourseService courseService) {
+        this.attendanceService = attendanceService;
+        this.weekReportService = weekReportService;
+        this.codingGamesAPIService = codingGamesAPIService;
         this.traineeService = traineeService;
         this.courseGroupService = courseGroupService;
         this.courseService = courseService;
-        this.assessmentController = assessmentController;
-        this.attendanceController = attendanceController;
-        this.traineeReportController = traineeReportController;
-        this.trainerReportController = trainerReportController;
-        this.traineeHomeController = traineeHomeController;
     }
 
     @GetMapping("/trainee/home")
@@ -46,37 +38,46 @@ public class TraineeProfileController {
         Trainee trainee = getTrainee(principal);
         CourseGroup courseGroup = getCourseGroup(trainee);
         Course course = getCourse(courseGroup);
+        WeekReport report = getWeekReport(trainee);
+        List<JsonNode> assessments = getAssessments(trainee);
+        List<TraineeAttendance> traineeAttendanceList = attendanceService.getTraineeAttendanceByTraineeId(trainee.getTraineeId());
 
-        /**
-         * CCFCP - Controller Controller Factory Controller Pattern
-         * Send modelMap to add attributes of the traineeReportController in its @GetMapping method
-         */
+        double onTime = 0, late = 0, excused = 0, unexcused = 0;
+        for(TraineeAttendance attendance : traineeAttendanceList){
+            switch (attendance.getAttendanceId()) {
+                case 1:
+                    onTime++;
+                    continue;
+                case 2:
+                    late++;
+                    continue;
+                case 3:
+                    excused++;
+                    continue;
+                case 4:
+                    unexcused++;
+                    continue;
+                default:
+                    continue;
+            }
+        }
 
-        ModelAndView assessmentModelAndView = assessmentController.getTrainerTraineeAssessments(trainee.getTraineeId(), modelMap);
-        ModelAndView attendanceModelAndView = attendanceController.getTraineeAttendance(modelMap, principal);
-        ModelAndView attendancePercentages = attendanceController.getTraineeAttendancePercentage(principal, modelMap);
-        ModelAndView previousWeekReportModelAndView = traineeHomeController.getTrainerForTraineeHomeGrades(modelMap, principal);
-        ModelAndView weeklyReportsModelAndView = traineeReportController.getTraineeWeeklyReports(modelMap, principal);
+        double count = onTime + late + excused + unexcused;
+        DecimalFormat decimal = new DecimalFormat("###.##");
 
-        modelMap.mergeAttributes(assessmentModelAndView.getModelMap());
-        modelMap.mergeAttributes(attendanceModelAndView.getModelMap());
-        modelMap.mergeAttributes(attendancePercentages.getModelMap());
-        modelMap.mergeAttributes(previousWeekReportModelAndView.getModelMap());
-        modelMap.mergeAttributes(weeklyReportsModelAndView.getModelMap());
+        String onTimePercentage = getPercentage(onTime, count, decimal);
+        String latePercentage = getPercentage(late, count, decimal);
+        String excusedPercentage = getPercentage(excused, count, decimal);
+        String unexcusedPercentage = getPercentage(unexcused, count, decimal);
 
-        modelMap.addAttribute("trainee", trainee);
-        modelMap.addAttribute("courseGroup", courseGroup);
-        modelMap.addAttribute("course", course);
+        getTraineeHomeModelMap(modelMap, trainee, courseGroup, course, report, assessments, onTimePercentage, latePercentage, excusedPercentage, unexcusedPercentage);
 
         return "trainee/traineeProfile";
-//        return Pages.accessPage(Role.TRAINEE, Pages.TRAINEE_PROFILE_PAGE);
     }
-
-
 
     @RequestMapping(value="/trainer/viewTrainee", method= RequestMethod.POST, params="btnStatus=profile")
     public String getTraineeProfile(Integer traineeId) {
-        return "redirect:/trainer/traineeProfile/"+traineeId;
+        return "redirect:/trainer/traineeProfile/" + traineeId;
     }
 
     @GetMapping("/trainer/traineeProfile/{traineeId}")
@@ -85,32 +86,55 @@ public class TraineeProfileController {
         Trainee trainee = getTrainee(traineeId);
         CourseGroup courseGroup = getCourseGroup(trainee);
         Course course = getCourse(courseGroup);
+        WeekReport report = getWeekReport(trainee);
+        List<JsonNode> assessments = getAssessments(trainee);
+        List<TraineeAttendance> traineeAttendanceList = attendanceService.getTraineeAttendanceByTraineeId(traineeId);
 
+        double onTime = 0, late = 0, excused = 0, unexcused = 0;
+        for(TraineeAttendance attendance : traineeAttendanceList){
+            switch (attendance.getAttendanceId()) {
+                case 1:
+                    onTime++;
+                    continue;
+                case 2:
+                    late++;
+                    continue;
+                case 3:
+                    excused++;
+                    continue;
+                case 4:
+                    unexcused++;
+                    continue;
+                default:
+                    continue;
+            }
+        }
 
+        double count = onTime + late + excused + unexcused;
+        DecimalFormat decimal = new DecimalFormat("###.##");
 
-        /**
-         * CCFCP - Controller Controller Factory Controller Pattern
-         * Send modelMap to add attributes of the traineeReportController in its @GetMapping method
-         */
+        String onTimePercentage = getPercentage(onTime, count, decimal);
+        String latePercentage = getPercentage(late, count, decimal);
+        String excusedPercentage = getPercentage(excused, count, decimal);
+        String unexcusedPercentage = getPercentage(unexcused, count, decimal);
 
-        ModelAndView assessmentModelAndView = assessmentController.getTrainerTraineeAssessments(traineeId, modelMap);
-        ModelAndView attendanceModelAndView = attendanceController.getTraineeAttendanceWithPath(traineeId, modelMap);
-        ModelAndView attendancePercentages = attendanceController.getTraineeAttendancePercentage(traineeId, modelMap);
-        ModelAndView previousWeekReportModelAndView = traineeHomeController.getTrainerForTraineeHomeGrades(traineeId, modelMap);
-        ModelAndView weeklyReportsModelAndView = trainerReportController.getTrainerWeeklyReportsWithPath(traineeId, modelMap);
+        getTraineeHomeModelMap(modelMap, trainee, courseGroup, course, report, assessments, onTimePercentage, latePercentage, excusedPercentage, unexcusedPercentage);
 
-        modelMap.mergeAttributes(assessmentModelAndView.getModelMap());
-        modelMap.mergeAttributes(attendanceModelAndView.getModelMap());
-        modelMap.mergeAttributes(attendancePercentages.getModelMap());
-        modelMap.mergeAttributes(previousWeekReportModelAndView.getModelMap());
-        modelMap.mergeAttributes(weeklyReportsModelAndView.getModelMap());
+        return "trainee/traineeProfile";
+    }
 
+    private void getTraineeHomeModelMap(ModelMap modelMap, Trainee trainee, CourseGroup courseGroup, Course course, WeekReport report, List<JsonNode> assessments, String onTimePercentage, String latePercentage, String excusedPercentage, String unexcusedPercentage) {
+        modelMap.addAttribute("onTimePercentage", onTimePercentage);
+        modelMap.addAttribute("latePercentage", latePercentage);
+        modelMap.addAttribute("excusedPercentage", excusedPercentage);
+        modelMap.addAttribute("unexcusedPercentage", unexcusedPercentage);
+        modelMap.addAttribute("previousWeekReport", report);
+        modelMap.addAttribute("now", LocalDateTime.now());
+        modelMap.addAttribute("codingGamesAPI", new CodingGamesAPIService());
+        modelMap.addAttribute("assessments", assessments);
         modelMap.addAttribute("trainee", trainee);
         modelMap.addAttribute("courseGroup", courseGroup);
         modelMap.addAttribute("course", course);
-
-        return "trainee/traineeProfile";
-//        return Pages.accessPage(Role.TRAINEE, Pages.TRAINEE_PROFILE_PAGE);
     }
 
     //Get Trainee as "TRAINEE"
@@ -145,6 +169,26 @@ public class TraineeProfileController {
             course = courseService.getCourseByID(courseGroup != null ? courseGroup.getCourseId() : null).get();
         }
         return course;
+    }
+
+    private WeekReport getWeekReport(Trainee trainee) {
+        WeekReport report = null;
+        if (weekReportService.getPreviousWeekReportByTraineeID(trainee.getTraineeId() != null ? trainee.getTraineeId() : null).isPresent()) {
+            report = weekReportService.getPreviousWeekReportByTraineeID(trainee.getTraineeId() != null ? trainee.getTraineeId() : null).get();
+        }
+        return report;
+    }
+
+    private List<JsonNode> getAssessments(Trainee trainee) {
+        return codingGamesAPIService.getAllReportsByEmail(trainee.getUsername());
+    }
+
+    private String getPercentage(double late, double count, DecimalFormat decimal) {
+        double percentage = late / count * 100;
+        if(percentage >= 0)  {
+            return "" + decimal.format(percentage) + "%";
+        }
+        return "NO ENTRY";
     }
 
 }

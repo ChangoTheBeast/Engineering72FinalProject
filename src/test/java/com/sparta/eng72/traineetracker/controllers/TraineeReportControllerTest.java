@@ -48,7 +48,7 @@ class TraineeReportControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "unit@test", password = "test", roles = "TRAINEE")
+    @WithMockUser(username = "TKhan@sparta.com", password = "test", roles = "TRAINEE")
     void getNoTraineeFeedbackFormTest() throws Exception {
         this.mockMvc.perform(get("/trainee/report/1"))
                 .andExpect(status().isOk())

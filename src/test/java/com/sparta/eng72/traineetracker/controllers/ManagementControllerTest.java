@@ -42,20 +42,6 @@ public class ManagementControllerTest {
     private final String traineeName = "bbird@spartaglobal.com";
     private final String traineePw = "test";
 
-
-    @Test
-    @WithMockUser(username = trainerName, password = trainerPw, roles = "TRAINER")
-    public void getTrainerGroupViewTest() throws Exception {
-        this.mockMvc.perform(get("/trainer/group"))
-                .andExpect(status().isOk())
-                .andExpect(model().attributeExists(
-                        "assignGroupForm",
-                        "allTrainees",
-                        "allGroups",
-                        "allCourses",
-                        "newClass"));
-    }
-
     @Test
     @WithMockUser(username = trainerName, password = trainerPw, roles = "TRAINER")
     public void createGroupTest() throws Exception {

@@ -45,7 +45,6 @@ public class AttendanceController {
 
         modelMap.addAttribute("courseStartDate", startDate);
         modelMap.addAttribute("today", today);
-        modelMap.addAttribute("todayString", today.toString());
         modelMap.addAttribute("trainees", trainees);
         modelMap.addAttribute("traineeAttendance", traineeAttendance);
         return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_ATTENDANCE_PAGE), modelMap);
@@ -53,17 +52,31 @@ public class AttendanceController {
 
     @PostMapping("/trainer/attendanceEntry")
     public ModelAndView postAllGroupTrainees(@ModelAttribute TraineeAttendance traineeAttendance, ModelMap modelMap){
-
         int groupId = traineeService.getTraineeByID(traineeAttendance.getTraineeId()).get().getGroupId();
+        List<Trainee> trainees = traineeService.getTraineesByGroupId(groupId);
+        LocalDate today = LocalDate.now();
         Date startDate = Date.valueOf(courseGroupService.getGroupByID(groupId).get().getStartDate().toLocalDate());
+        int dayOfWeek = DateCalculator.getDay(traineeAttendance.getAttendanceDate(), startDate);
+
+        modelMap.addAttribute("courseStartDate", startDate);
+        modelMap.addAttribute("today", today);
+        modelMap.addAttribute("trainees", trainees);
+
+        if(dayOfWeek == 6 || dayOfWeek == 7){
+            modelMap.addAttribute("error", "Trainees are out of office on weekends!");
+            return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_ATTENDANCE_PAGE), modelMap);
+        }
+
         traineeAttendance.setWeek(DateCalculator.getWeek(traineeAttendance.getAttendanceDate(), startDate));
-        traineeAttendance.setDay(DateCalculator.getDay(traineeAttendance.getAttendanceDate(), startDate));
+        traineeAttendance.setDay(dayOfWeek);
         attendanceService.saveAttendance(traineeAttendance);
 
         Trainee trainee = traineeService.getTraineeByID(traineeAttendance.getTraineeId()).get();
-        modelMap.addAttribute("date", traineeAttendance.getAttendanceDate());
-        modelMap.addAttribute("trainee", trainee);
-        return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_ATTENDANCE_SUCCESS), modelMap);
+        String success = "Attendance successfully entered for " + trainee.getFirstName() + " " + trainee.getLastName()
+                + " for date " + traineeAttendance.getAttendanceDate();
+
+        modelMap.addAttribute("success", success);
+        return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_ATTENDANCE_PAGE), modelMap);
 
     }
 
@@ -151,7 +164,7 @@ public class AttendanceController {
         modelMap.addAttribute("excusedPercentage", excusedPercentage);
         modelMap.addAttribute("unexcusedPercentage", unexcusedPercentage);
 
-        return new ModelAndView("fragments/attendancePercentages", modelMap);
+        return new ModelAndView(Pages.ATTENDANCE_PERCENTAGES, modelMap);
     }
 
     @GetMapping("/trainee/profile-percentage/{traineeId}")
@@ -194,7 +207,7 @@ public class AttendanceController {
         modelMap.addAttribute("excusedPercentage", excusedPercentage);
         modelMap.addAttribute("unexcusedPercentage", unexcusedPercentage);
 
-        return new ModelAndView("fragments/attendancePercentages", modelMap);
+        return new ModelAndView(Pages.ATTENDANCE_PERCENTAGES, modelMap);
     }
 
     @GetMapping("/trainer/weekly-attendance")

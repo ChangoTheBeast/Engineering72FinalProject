@@ -27,51 +27,39 @@ public class WeekController {
     private final UserService userService;
     private final TrainerService trainerService;
     private final WeekReportService weekReportService;
+    private final CourseService courseService;
 
     @Autowired
-    public WeekController(CourseGroupService courseGroupService, TraineeService traineeService, UserService userService, TrainerService trainerService, WeekReportService weekReportService) {
+    public WeekController(CourseGroupService courseGroupService, TraineeService traineeService, UserService userService, TrainerService trainerService, WeekReportService weekReportService, CourseService courseService) {
         this.courseGroupService = courseGroupService;
         this.traineeService = traineeService;
         this.userService = userService;
         this.trainerService = trainerService;
         this.weekReportService = weekReportService;
+        this.courseService = courseService;
     }
 
-//    @GetMapping("/newWeek")
-//    public ModelAndView addNewWeek(ModelMap modelMap, Principal principal){
-//        String username = principal.getName();
-//        System.out.println(username);
-//        User user = userService.getUserByUsername(username);
-////        if (user.getRole()!= Role.TRAINER){
-////            return new ModelAndView(Pages.accessPage(Role.ANY,Pages.ACCESS_ERROR), modelMap);
-////        }
-//        Optional<Trainer> trainerOptional = trainerService.getTrainerByUsername(username);
-//        Trainer trainer = trainerOptional.get();
-//        int group_id = trainer.getGroupId();
-//        courseGroupService.incrementWeek(group_id);
-//        int week_num = courseGroupService.getWeekByGroupId(group_id);
-//        List<Trainee> trainees = traineeService.getTraineesByGroupId(group_id);
-//        List<WeekReport> weekReports = new ArrayList<>();
-//        for(Trainee trainee: trainees){
-//           WeekReport weekReport = new WeekReport();
-//           weekReport.setTraineeId(trainee.getTraineeId());
-//           weekReport.setWeekNum(week_num);
-//
-//           LocalDate deadlineDay =LocalDate.now().with(TemporalAdjusters.next(DayOfWeek.THURSDAY));
-//           LocalDateTime deadline = deadlineDay.atTime(18, 30);
-//           weekReport.setDeadline(deadline);
-//           weekReports.add(weekReport);
-//        }
-//        weekReportService.createReports(weekReports);
-//        return new ModelAndView(Pages.accessPage(Role.TRAINER,Pages.TRAINER_HOME), modelMap);
-//    }
+    @GetMapping("/trainer/newWeek")
+    public ModelAndView newWeekPage(ModelMap modelMap){
+        modelMap.addAttribute("allGroups", courseGroupService.getAllCourseGroups());
+        return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_ADD_WEEK_PAGE), modelMap);
+    }
+
     @PostMapping("/trainer/addNewWeek")
     public ModelAndView getNewWeek(@RequestParam String groupId, ModelMap modelMap){
+        modelMap.addAttribute("allGroups", courseGroupService.getAllCourseGroups());
+
         int groupID = Integer.parseInt(groupId);
+
+        CourseGroup group = courseGroupService.getGroupByID(groupID).get();
+        int courseDuration = courseService.getCourseByID(group.getCourseId()).get().getDuration();
+
         courseGroupService.incrementWeek(groupID);
         int week_num = courseGroupService.getWeekByGroupId(groupID);
-        if (week_num == Integer.MIN_VALUE) {
-            return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_ADD_WEEK_URL), modelMap);
+        if (week_num == Integer.MIN_VALUE || week_num >= courseDuration) {
+            String error = "" + group.getGroupName() + " is currently in the final week of the course!";
+            modelMap.addAttribute("error", error);
+            return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_ADD_WEEK_PAGE), modelMap);
         }
         List<Trainee> trainees = traineeService.getTraineesByGroupId(groupID);
         List<WeekReport> weekReports = new ArrayList<>();
@@ -79,7 +67,7 @@ public class WeekController {
             WeekReport weekReport = new WeekReport();
             weekReport.setTraineeId(trainee.getTraineeId());
             weekReport.setWeekNum(week_num);
-            LocalDate deadlineDay =LocalDate.now().with(TemporalAdjusters.next(DayOfWeek.THURSDAY));
+            LocalDate deadlineDay = LocalDate.now().with(TemporalAdjusters.next(DayOfWeek.THURSDAY));
             LocalDateTime deadline = deadlineDay.atTime(17, 30);
             weekReport.setDeadline(deadline);
 
@@ -112,17 +100,12 @@ public class WeekController {
             weekReports.add(weekReport);
         }
         weekReportService.createReports(weekReports);
-        modelMap.addAttribute("currentWeek", Integer.toString(week_num));
-        modelMap.addAttribute("previousWeek", Integer.toString(week_num-1));
-        return new ModelAndView(Pages.accessPage(Role.TRAINER,Pages.TRAINER_WEEK_SUCCESS_PAGE), modelMap);
-    }
 
+        String success = "Week has changed from Week " + (week_num-1) + " to Week " + week_num +
+                " for " + courseGroupService.getGroupByID(groupID).get().getGroupName();
 
-    @GetMapping("/trainer/newWeek")
-    public ModelAndView newWeekPage(ModelMap modelMap){
-        List<CourseGroup> groups = courseGroupService.getAllCourseGroups();
-        modelMap.addAttribute("allGroups", groups);
-        //return new ModelAndView()
+        modelMap.addAttribute("success", success);
         return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_ADD_WEEK_PAGE), modelMap);
     }
+
 }

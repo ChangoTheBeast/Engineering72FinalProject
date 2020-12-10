@@ -68,6 +68,7 @@ public class Pages {
 
     //Any =======================================================================================
     public static final String CONSULTANCY = "/trainee/consultancy";
+    public static final String ATTENDANCE_PERCENTAGES = "/fragments/attendancePercentages";
 
 
     //ERROR =========================================================================================

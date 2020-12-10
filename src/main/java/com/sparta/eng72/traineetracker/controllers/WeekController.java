@@ -53,14 +53,16 @@ public class WeekController {
 
         CourseGroup group = courseGroupService.getGroupByID(groupID).get();
         int courseDuration = courseService.getCourseByID(group.getCourseId()).get().getDuration();
-
-        courseGroupService.incrementWeek(groupID);
         int week_num = courseGroupService.getWeekByGroupId(groupID);
+
         if (week_num == Integer.MIN_VALUE || week_num >= courseDuration) {
             String error = "" + group.getGroupName() + " is currently in the final week of the course!";
             modelMap.addAttribute("error", error);
             return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_ADD_WEEK_PAGE), modelMap);
         }
+
+        courseGroupService.incrementWeek(groupID);
+
         List<Trainee> trainees = traineeService.getTraineesByGroupId(groupID);
         List<WeekReport> weekReports = new ArrayList<>();
         for(Trainee trainee: trainees){

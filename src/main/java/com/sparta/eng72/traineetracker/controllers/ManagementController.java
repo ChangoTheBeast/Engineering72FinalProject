@@ -43,21 +43,40 @@ public class ManagementController {
     }
 
     @PostMapping("/trainer/createGroup")
-    public ModelAndView createGroup(@ModelAttribute CourseGroup newClass, ModelMap model) {
-        newClass.setCurrentWeek(0);
-        if(!courseGroupService.saveNewGroup(newClass)){
-            return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_NEW_GROUP_ALREADY_EXISTS_PAGE));
+    public ModelAndView createGroup(@ModelAttribute CourseGroup newClass, ModelMap modelMap) {
+
+        modelMap.addAttribute("assignGroupForm", new AssignGroupForm());
+        modelMap.addAttribute("allTrainees", traineeService.getAllTrainees());
+        modelMap.addAttribute("allGroups", courseGroupService.getAllCourseGroups());
+        modelMap.addAttribute("allCourses", courseService.getAllCourses());
+        modelMap.addAttribute("newClass", new CourseGroup());
+
+        for(CourseGroup group : courseGroupService.getAllCourseGroups()){
+            if(newClass.getGroupName().equals(group.getGroupName())){
+                String error = "A group with name " + newClass.getGroupName() + " already exists";
+                modelMap.addAttribute("addError", error);
+                return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_GROUPS_PAGE), modelMap);
+            }
         }
-            return new ModelAndView("redirect:"+Pages.accessPage(Role.TRAINER, Pages.TRAINER_GROUPS_URL));
+
+        newClass.setCurrentWeek(0);
+        courseGroupService.saveNewGroup(newClass);
+
+        String success = "New group with name " + newClass.getGroupName() + " successfully created";
+        modelMap.addAttribute("addSuccess", success);
+        return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_GROUPS_PAGE), modelMap);
     }
 
-    @GetMapping("/trainer/modifyGroup")
+    @GetMapping("/trainer/manageClass")
     public ModelAndView getGroupChange(@ModelAttribute AssignGroupForm assignGroupForm, ModelMap modelMap) {
 
-        modelMap.addAttribute("trainee", new Trainee());
-        modelMap.addAttribute("group", new CourseGroup());
+        modelMap.addAttribute("assignGroupForm", new AssignGroupForm());
+        modelMap.addAttribute("allTrainees", traineeService.getAllTrainees());
+        modelMap.addAttribute("allGroups", courseGroupService.getAllCourseGroups());
+        modelMap.addAttribute("allCourses", courseService.getAllCourses());
+        modelMap.addAttribute("newClass", new CourseGroup());
 
-        return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_GROUPS_SUBMIT_PAGE), modelMap);
+        return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_GROUPS_PAGE), modelMap);
 
     }
 
@@ -65,10 +84,18 @@ public class ManagementController {
     public ModelAndView postGroupChange(@ModelAttribute AssignGroupForm assignGroupForm, ModelMap modelMap) {
 
         Trainee trainee = traineeService.changeTraineeCourseGroupByID(assignGroupForm.getTraineeId(), assignGroupForm.getGroupId());
-        modelMap.addAttribute("trainee", trainee);
-        modelMap.addAttribute("group", courseGroupService.getGroupByID(trainee.getGroupId()).get());
-      
-        return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_GROUPS_SUBMIT_PAGE), modelMap);
+
+        modelMap.addAttribute("assignGroupForm", new AssignGroupForm());
+        modelMap.addAttribute("allTrainees", traineeService.getAllTrainees());
+        modelMap.addAttribute("allGroups", courseGroupService.getAllCourseGroups());
+        modelMap.addAttribute("allCourses", courseService.getAllCourses());
+        modelMap.addAttribute("newClass", new CourseGroup());
+
+        String success = "Assigned " + trainee.getFirstName() + " " + trainee.getLastName() + " to " + courseGroupService.getGroupByID(trainee.getGroupId()).get().getGroupName();
+
+        modelMap.addAttribute("modifySuccess", success);
+
+        return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_GROUPS_PAGE), modelMap);
 
     }
 

@@ -25,29 +25,29 @@
                         <div style="text-align: center;">
                             <div class="card-deck">
                                 <div class="card" >
-                                    <div class="card-header">
-                                        <small class="text-muted">Consultant Grade</small>
+                                    <div class="card-header" style="background: #60bd60">
+                                        <small style="color: white;">Consultant Grade</small>
                                     </div>
                                     <div class="card-body">
-                                        <big class="text-muted" th:text="${previousWeekReport.getConsultantGradeTrainer()}"></big>
+                                        <big class="text-muted" style="font-weight: bolder" th:text="${previousWeekReport.getConsultantGradeTrainer()}"></big>
                                     </div>
                                 </div>
 
                                 <div class="card">
-                                    <div class="card-header">
-                                        <small class="text-muted">Technical Grade</small>
+                                    <div class="card-header" style="background: #6c93da">
+                                        <small style="color: white;">Technical Grade</small>
                                     </div>
                                     <div class="card-body">
-                                        <big class="text-muted" th:text="${previousWeekReport.getTechnicalGradeTrainer()}"></big>
+                                        <big class="text-muted" style="font-weight: bolder" th:text="${previousWeekReport.getTechnicalGradeTrainer()}"></big>
                                     </div>
                                 </div>
 
                                 <div class="card">
-                                    <div class="card-header">
-                                        <small class="text-muted">Overall Grade</small>
+                                    <div class="card-header" style="background: #d85c5c">
+                                        <small style="color: white;">Overall Grade</small>
                                     </div>
                                     <div class="card-body">
-                                        <big class="text-muted" th:text="${previousWeekReport.getOverallGradeTrainer()}"></big>
+                                        <big class="text-muted" style="font-weight: bolder" th:text="${previousWeekReport.getOverallGradeTrainer()}"></big>
                                     </div>
                                 </div>
                             </div>

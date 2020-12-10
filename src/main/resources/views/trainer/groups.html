@@ -34,6 +34,7 @@
                                 <div class="p-5">
                                     <form class="form-signin" th:action="@{/trainer/modifyGroup}" th:object="${assignGroupForm}" method="POST">
                                         <h1 class="h3 mb-3 font-weight-normal">Assign Trainee to a Class</h1>
+                                        <p th:if="${modifySuccess}" th:text="${modifySuccess}" class="letterGradeA"></p>
                                         <div class="form-group" style="text-align: left">
                                             <table>
                                                 <tr>
@@ -60,10 +61,12 @@
                                             </table>
                                         </div>
                                         <br/>
-                                        <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+                                        <button class="btn btn-lg btn-primary btn-block" type="submit">Assign Trainee</button>
                                     </form>
                                     <br/>
                                     <h1 class="h3 mb-3 font-weight-normal">Create Class</h1>
+                                    <p th:if="${addError}" th:text="${addError}" class="letterGradeF"></p>
+                                    <p th:if="${addSuccess}" th:text="${addSuccess}" class="letterGradeA"></p>
                                     <form class="form-signin" th:action="@{/trainer/createGroup}" th:object="${newClass}" method="POST">
                                         <table>
                                             <tr>
@@ -93,7 +96,7 @@
                                             </tr>
                                         </table>
                                         <br/>
-                                        <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+                                        <button class="btn btn-lg btn-primary btn-block" type="submit">Create Class</button>
                                     </form>
                                 </div>
                             </div>

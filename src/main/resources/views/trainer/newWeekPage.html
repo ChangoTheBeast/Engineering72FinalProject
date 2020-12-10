@@ -37,6 +37,8 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Add Weeks to Groups</h1>
                                     </div>
+                                    <p th:if="${error}" th:text="${error}" class="letterGradeF"></p>
+                                    <p th:if="${success}" th:text="${success}" class="letterGradeA"></p>
                                     <form class="form-signin align-content-center text-center" th:action="@{/trainer/addNewWeek}" method="POST">
                                             <table>
                                                 <tr>
@@ -54,12 +56,17 @@
                                                 </tr>
                                             </table>
                                         <br/>
-                                        <button class="btn btn-lg btn-primary btn-block" name="submit" type="submit" value="submit" >Submit</button>
+                                        <button class="btn btn-lg btn-primary btn-block" name="submit" type="submit" value="submit">Add Week</button>
+                                    </form>
+                                    <br/>
+                                    <form th:action = "@{/trainer/home}">
+                                        <button class="btn btn-lg btn-primary btn-block" type="submit">Back To Dashboard</button>
                                     </form>
                                 </div>
                                 </div>
 
                                 <div class="col-lg-6 d-none d-lg-block" style="padding-top: 15px">
+                                    <p class="placeholderText">&nbsp;</p>
                                     <img th:src="@{/images/addweeks2.png}" style="width: 90%">
                                 </div>
                             </div>

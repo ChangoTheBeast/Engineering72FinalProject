@@ -12,7 +12,7 @@ public class Pages {
     public static final String LOGIN_PAGE_URL = "/login";
     public static final String LOGIN_FAILURE_URL = "/login";
     public static final String USER_NOT_FOUND_PAGE = "/login/userNotFound";
-    public static final String FIRST_PASSWORD_PAGE = "/trainee/firstTimeLogin";
+    public static final String FIRST_PASSWORD_PAGE = "/first-time-user/firstTimeLogin";
     public static final String FIRST_PASSWORD_URL = "trainee/firstPassword";
     public static final String LOGOUT_CURRENT_USER = "/login/login";
     public static final String CHANGE_PASSWORD_PAGE = "/login/passwordChanger";
@@ -68,6 +68,7 @@ public class Pages {
 
     //Any =======================================================================================
     public static final String CONSULTANCY = "/trainee/consultancy";
+    public static final String ATTENDANCE_PERCENTAGES = "/fragments/attendancePercentages";
 
 
     //ERROR =========================================================================================

@@ -11,8 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -27,14 +29,16 @@ public class TrainerHomeController {
     public final WeekReportService weekReportService;
     public final CourseGroupService courseGroupService;
     public final CourseService courseService;
+    public final AttendanceService attendanceService;
 
     @Autowired
-    public TrainerHomeController(TraineeService traineeService, TrainerService trainerService, WeekReportService weekReportService, CourseGroupService courseGroupService, CourseService courseService) {
+    public TrainerHomeController(TraineeService traineeService, TrainerService trainerService, WeekReportService weekReportService, CourseGroupService courseGroupService, CourseService courseService, AttendanceService attendanceService) {
         this.traineeService = traineeService;
         this.trainerService = trainerService;
         this.weekReportService = weekReportService;
         this.courseGroupService = courseGroupService;
         this.courseService = courseService;
+        this.attendanceService = attendanceService;
     }
 
     @GetMapping("/trainer/home")
@@ -76,6 +80,42 @@ public class TrainerHomeController {
         CourseGroup courseGroup = courseGroupService.getGroupByID(trainer.getGroupId()).get();
         Course course = courseService.getCourseByID(courseGroup.getCourseId()).get();
 
+        double onTime = 0, late = 0, excused = 0, unexcused = 0;
+        for(Trainee trainee : traineeList){
+            List<TraineeAttendance> traineeAttendanceList = attendanceService.getTraineeAttendanceByTraineeId(trainee.getTraineeId());
+            for(TraineeAttendance attendance : traineeAttendanceList){
+                switch (attendance.getAttendanceId()) {
+                    case 1:
+                        onTime++;
+                        continue;
+                    case 2:
+                        late++;
+                        continue;
+                    case 3:
+                        excused++;
+                        continue;
+                    case 4:
+                        unexcused++;
+                        continue;
+                    default:
+                        continue;
+                }
+            }
+        }
+
+        double count = onTime + late + excused + unexcused;
+        DecimalFormat decimal = new DecimalFormat("###.##");
+
+        String onTimePercentage = "" + decimal.format(onTime/count * 100) + "%";
+        String latePercentage = "" + decimal.format(late/count * 100) + "%";
+        String excusedPercentage = "" + decimal.format(excused/count * 100) + "%";
+        String unexcusedPercentage = "" + decimal.format(unexcused/count * 100) + "%";
+
+        modelMap.addAttribute("groupOnTime", onTimePercentage);
+        modelMap.addAttribute("groupLate", latePercentage);
+        modelMap.addAttribute("groupExcused", excusedPercentage);
+        modelMap.addAttribute("groupUnexcused", unexcusedPercentage);
+
         modelMap.addAttribute("trainer", trainer);
         modelMap.addAttribute("courseGroup",courseGroup);
         modelMap.addAttribute("course", course);
@@ -90,12 +130,13 @@ public class TrainerHomeController {
         return "/trainer/trainerHome";
     }
 
-    @GetMapping("/trainer/addTrainee")
-    public String newUserForm(Model model) {
-        model.addAttribute("newUserForm", new NewUserForm());
-        model.addAttribute("allGroups", courseGroupService.getAllCourseGroups());
-        model.addAttribute("allTrainees", traineeService.getAllTrainees());
-        return Pages.accessPage(Role.TRAINER, Pages.TRAINER_NEW_USER_PAGE);
+
+    @GetMapping("/trainer/manageTrainee")
+    public ModelAndView newUserForm(ModelMap modelMap) {
+        modelMap.addAttribute("newUserForm", new NewUserForm());
+        modelMap.addAttribute("allGroups", courseGroupService.getAllCourseGroups());
+        modelMap.addAttribute("allTrainees", traineeService.getAllTrainees());
+        return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_NEW_USER_PAGE), modelMap);
     }
 
 

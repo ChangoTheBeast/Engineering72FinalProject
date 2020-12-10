@@ -42,7 +42,7 @@ public class UserController {
         this.attendanceService = attendanceService;
     }
 
-    @GetMapping("/trainee/tempPassword")
+    @GetMapping("/first-time-user/tempPassword")
     public ModelAndView getPasswordInitialiser(ModelMap modelMap) {
         return new ModelAndView(Pages.accessPage(Role.FIRST_TIME_USER, Pages.FIRST_PASSWORD_PAGE), modelMap);
     }
@@ -54,12 +54,17 @@ public class UserController {
         return new ModelAndView(Pages.accessPage(Role.ANY, Pages.LOGOUT_CURRENT_USER), modelMap);
     }
 
-    @PostMapping("/trainer/addNewUser")
+    @PostMapping("/trainer/addTrainee")
     public ModelAndView addNewUser(@ModelAttribute NewUserForm newUserForm, ModelMap modelMap) {
 
+        modelMap.addAttribute("newUserForm", new NewUserForm());
+        modelMap.addAttribute("allGroups", courseGroupService.getAllCourseGroups());
+        modelMap.addAttribute("allTrainees", traineeService.getAllTrainees());
+
         if (traineeService.getTraineeByUsername(newUserForm.getEmail()).isPresent()) {
-            modelMap.addAttribute("email", newUserForm.getEmail());
-            return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_NEW_USER_ALREADY_EXISTS_PAGE), modelMap);
+            String error = "Trainee with email " + newUserForm.getEmail() + " already exists.";
+            modelMap.addAttribute("addError", error);
+            return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_NEW_USER_PAGE), modelMap);
         }
         userService.addNewUser(newUserForm.getEmail());
         Trainee trainee = new Trainee();
@@ -96,21 +101,26 @@ public class UserController {
         }
         attendanceService.saveAllAttendances(traineeAttendances);
 
-
-        modelMap.addAttribute("trainee", trainee);
-        return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_NEW_USER_SUCCESS), modelMap);
+        String success = "Added " + trainee.getFirstName() + " " + trainee.getLastName() + " as a new user";
+        modelMap.addAttribute("addSuccess", success);
+        return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_NEW_USER_PAGE), modelMap);
     }
 
     @PostMapping("/trainer/deleteTrainee")
     public ModelAndView deleteTrainee(@RequestParam String traineeId, ModelMap modelMap) {
+        modelMap.addAttribute("newUserForm", new NewUserForm());
+        modelMap.addAttribute("allGroups", courseGroupService.getAllCourseGroups());
+        modelMap.addAttribute("allTrainees", traineeService.getAllTrainees());
+
         int traineeIdInt = Integer.parseInt(traineeId);
         Trainee trainee = traineeService.getTraineeByID(traineeIdInt).get();
         userService.deleteUserByUsername(trainee.getUsername());
         weekReportService.deleteReportsByTraineeID(traineeIdInt);
         traineeService.deleteTraineeByID(traineeIdInt);
 
-        modelMap.addAttribute("trainee", trainee);
-        return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_DELETE_SUCCESS), modelMap);
+        String success = "Deleted trainee " + trainee.getFirstName() + " " + trainee.getLastName();
+        modelMap.addAttribute("deleteSuccess", success);
+        return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_NEW_USER_PAGE), modelMap);
     }
 
     @PostMapping("/passwordChange")
@@ -121,12 +131,10 @@ public class UserController {
             return new ModelAndView("redirect:"+Pages.accessPage(Role.ANY, Pages.LOGOUT_CURRENT_USER), modelMap);
         }else{
             redirectAttributes.addFlashAttribute("error", "true");
-            return new ModelAndView("redirect:"+"/changePassword", modelMap);
+            return new ModelAndView("redirect:/changePassword", modelMap);
         }
-
-
-
     }
+
     @GetMapping("/changePassword")
     public ModelAndView getChangePasswordScreen(@ModelAttribute("error") final Object error, ModelMap modelMap){
 

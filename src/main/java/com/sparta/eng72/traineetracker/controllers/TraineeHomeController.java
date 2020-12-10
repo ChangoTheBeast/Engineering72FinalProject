@@ -37,14 +37,6 @@ public class TraineeHomeController {
         this.attendanceService = attendanceService;
     }
 
-//    @Autowired
-//    public TraineeHomeController(WeekReportService weekReportService, TraineeService traineeService, CourseGroupService courseGroupService, CourseService courseService) {
-//        this.weekReportService = weekReportService;
-//        this.traineeService = traineeService;
-//        this.courseGroupService = courseGroupService;
-//        this.courseService = courseService;
-//    }
-
     @GetMapping("/trainee/traineeProfile")
     public ModelAndView getTrainerForTraineeHomeGrades(ModelMap modelMap, Principal principal) {
         Trainee trainee = traineeService.getTraineeByUsername(principal.getName()).get();

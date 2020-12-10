@@ -154,6 +154,11 @@ ul li {
     outline: none;
 }
 
+select {
+    text-align-last: center;
+}
+
+
 .table-bordered{
     margin-left: auto;
     margin-right: auto;
@@ -234,4 +239,9 @@ tr.hide-table-padding td {
 .reportSubmissionState1 {
     background-color: #9ec794;
     border: solid white 1px;
+}
+
+.card.shadow {
+    margin-left: 3rem!important;
+    margin-right: 3rem!important;
 }

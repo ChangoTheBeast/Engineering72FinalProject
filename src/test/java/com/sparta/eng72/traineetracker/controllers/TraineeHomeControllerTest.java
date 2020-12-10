@@ -25,7 +25,7 @@ class TraineeHomeControllerTest {
     WeekReportService weekReportService;
 
     @Test
-    @WithMockUser(roles = "TRAINEE")
+    @WithMockUser(username = "bbird@spartaglobal.com", password = "tst", roles = "TRAINEE")
     void submitTraineeFeedbackForm() throws Exception {
         WeekReport weekReport = weekReportService.getReportByID(1).get();
         this.mockMvc.perform(post("/trainee/updateReport")

@@ -76,23 +76,30 @@ public class TraineeHomeController {
     @PostMapping("/trainee/updateReport")
     public String submitTraineeFeedbackForm(Integer reportId, String stopTrainee, String startTrainee,
                                             String continueTrainee, String traineeConsulGrade,
-                                            String traineeTechGrade){
+                                            String traineeTechGrade, Principal principal){
 
-        WeekReport weekReport = weekReportService.getWeekReportByReportId(reportId).get();
-        weekReport.setStopTrainee(stopTrainee);
-        weekReport.setStartTrainee(startTrainee);
-        weekReport.setContinueTrainee(continueTrainee);
-        weekReport.setTechnicalGradeTrainee(traineeTechGrade);
-        weekReport.setConsultantGradeTrainee(traineeConsulGrade);
-        weekReport.setTraineeConsultantGradeFlag((byte) 1);
-        weekReport.setTraineeTechnicalGradeFlag((byte) 1);
-        weekReport.setTraineeStartFlag((byte) 1);
-        weekReport.setTraineeStopFlag((byte) 1);
-        weekReport.setTraineeContinueFlag((byte) 1);
-        weekReport.setMostRecentEdit(LocalDateTime.now());
+        Trainee trainee = traineeService.getTraineeByUsername(principal.getName()).get();
 
-        weekReportService.updateWeekReport(weekReport);
+        List<WeekReport> reports = weekReportService.getReportsByTraineeID(trainee.getTraineeId());
+
+        for (WeekReport report : reports) {
+            if (report.getReportId().equals(reportId)) {
+                WeekReport weekReport = weekReportService.getWeekReportByReportId(reportId).get();
+                weekReport.setStopTrainee(stopTrainee);
+                weekReport.setStartTrainee(startTrainee);
+                weekReport.setContinueTrainee(continueTrainee);
+                weekReport.setTechnicalGradeTrainee(traineeTechGrade);
+                weekReport.setConsultantGradeTrainee(traineeConsulGrade);
+                weekReport.setTraineeConsultantGradeFlag((byte) 1);
+                weekReport.setTraineeTechnicalGradeFlag((byte) 1);
+                weekReport.setTraineeStartFlag((byte) 1);
+                weekReport.setTraineeStopFlag((byte) 1);
+                weekReport.setTraineeContinueFlag((byte) 1);
+                weekReport.setMostRecentEdit(LocalDateTime.now());
+                weekReportService.updateWeekReport(weekReport);
+                return Pages.accessPage(Role.TRAINEE, "redirect:"+Pages.TRAINEE_HOME_URL);
+            }
+        }
         return Pages.accessPage(Role.TRAINEE, "redirect:"+Pages.TRAINEE_HOME_URL);
     }
-
 }

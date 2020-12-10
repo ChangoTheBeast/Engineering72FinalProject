@@ -42,7 +42,7 @@ public class UserController {
         this.attendanceService = attendanceService;
     }
 
-    @GetMapping("/trainee/tempPassword")
+    @GetMapping("/first-time-user/tempPassword")
     public ModelAndView getPasswordInitialiser(ModelMap modelMap) {
         return new ModelAndView(Pages.accessPage(Role.FIRST_TIME_USER, Pages.FIRST_PASSWORD_PAGE), modelMap);
     }

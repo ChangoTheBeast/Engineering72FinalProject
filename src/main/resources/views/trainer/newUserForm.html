@@ -31,8 +31,10 @@
                             <!-- Nested Row within Card Body -->
                             <div class="row">
                                     <div class="p-5">
-                                        <form class="form-signin" th:action="@{/trainer/addNewUser}" th:object="${newUserForm}" method="POST">
+                                        <form class="form-signin" th:action="@{/trainer/addTrainee}" th:object="${newUserForm}" method="POST">
                                             <h1 class="h3 mb-3 font-weight-normal">Create new Trainee</h1>
+                                            <p th:if="${addError}" th:text="${addError}" class="letterGradeF"></p>
+                                            <p th:if="${addSuccess}" th:text="${addSuccess}" class="letterGradeA"></p>
                                             <div class="form-group" style="text-align: left">
                                                 <table>
                                                     <tr>
@@ -63,10 +65,11 @@
                                                 </table>
                                             </div>
                                             <br/>
-                                            <button class="btn btn-lg btn-primary btn-block greenBtn" type="submit">Submit</button>
+                                            <button class="btn btn-lg btn-primary btn-block greenBtn" type="submit">Create New Trainee</button>
                                         </form>
                                         <br/>
                                         <h1 class="h3 mb-3 font-weight-normal">Delete Trainee</h1>
+                                        <p th:if="${deleteSuccess}" th:text="${deleteSuccess}" class="letterGradeA"></p>
                                         <form th:action="@{/trainer/deleteTrainee}" method="post">
                                             <tr>Trainee</tr>
                                             <tr>

@@ -29,9 +29,9 @@ public class UserController {
 
     private final UserService userService;
     private final TraineeService traineeService;
-    public final WeekReportService weekReportService;
-    private CourseGroupService courseGroupService;
-    private AttendanceService attendanceService;
+    private final WeekReportService weekReportService;
+    private final CourseGroupService courseGroupService;
+    private final AttendanceService attendanceService;
 
     @Autowired
     public UserController(AttendanceService attendanceService, CourseGroupService courseGroupService, UserService userService, TraineeService traineeService, WeekReportService weekReportService) {
@@ -67,22 +67,16 @@ public class UserController {
             return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_NEW_USER_PAGE), modelMap);
         }
         userService.addNewUser(newUserForm.getEmail());
-        Trainee trainee = new Trainee();
-        trainee.setFirstName(newUserForm.getFirstName());
-        trainee.setLastName(newUserForm.getLastName());
-        trainee.setUsername(newUserForm.getEmail());
-        trainee.setGroupId(newUserForm.getGroupId());
+        Trainee trainee = setNewTrainee(newUserForm);
         traineeService.addNewTrainee(trainee);
 
         int groupId = newUserForm.getGroupId();
+
         Date startDate = Date.valueOf(courseGroupService.getGroupByID(groupId).get().getStartDate().toLocalDate());
         Date endDate = Date.valueOf(courseGroupService.getGroupByID(groupId).get().getEndDate().toLocalDate());
 
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(startDate);
-        Calendar endCalendar = new GregorianCalendar();
-        endCalendar.setTime(endDate);
-        endCalendar.add(Calendar.DATE,1);
+        Calendar calendar = getStartCalendar(startDate);
+        Calendar endCalendar = getEndCalendar(endDate);
         List<TraineeAttendance> traineeAttendances = new ArrayList();
         while (calendar.before(endCalendar)) {
             Date date = new java.sql.Date(calendar.getTimeInMillis());
@@ -90,12 +84,7 @@ public class UserController {
                 calendar.add(Calendar.DATE, 1);
                 continue;
             }
-            TraineeAttendance traineeAttendance = new TraineeAttendance();
-            traineeAttendance.setAttendanceId(5);
-            traineeAttendance.setAttendanceDate(date);
-            traineeAttendance.setTraineeId(traineeService.getTraineeByUsername(newUserForm.getEmail()).get().getTraineeId());
-            traineeAttendance.setDay(calendar.get(Calendar.DAY_OF_WEEK)-1);
-            traineeAttendance.setWeek(DateCalculator.getWeek(date,startDate));
+            TraineeAttendance traineeAttendance = setDefaultAttendance(newUserForm, startDate, calendar, date);
             traineeAttendances.add(traineeAttendance);
             calendar.add(Calendar.DATE, 1);
         }
@@ -104,6 +93,38 @@ public class UserController {
         String success = "Added " + trainee.getFirstName() + " " + trainee.getLastName() + " as a new user";
         modelMap.addAttribute("addSuccess", success);
         return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_NEW_USER_PAGE), modelMap);
+    }
+
+    private Calendar getEndCalendar(Date date) {
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE,1);
+        return calendar;
+    }
+
+    private Calendar getStartCalendar(Date date) {
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        return calendar;
+    }
+
+    private Trainee setNewTrainee(NewUserForm newUserForm) {
+        Trainee trainee = new Trainee();
+        trainee.setFirstName(newUserForm.getFirstName());
+        trainee.setLastName(newUserForm.getLastName());
+        trainee.setUsername(newUserForm.getEmail());
+        trainee.setGroupId(newUserForm.getGroupId());
+        return trainee;
+    }
+
+    private TraineeAttendance setDefaultAttendance(NewUserForm newUserForm, Date startDate, Calendar calendar, Date date) {
+        TraineeAttendance traineeAttendance = new TraineeAttendance();
+        traineeAttendance.setAttendanceId(5);
+        traineeAttendance.setAttendanceDate(date);
+        traineeAttendance.setTraineeId(traineeService.getTraineeByUsername(newUserForm.getEmail()).get().getTraineeId());
+        traineeAttendance.setDay(calendar.get(Calendar.DAY_OF_WEEK)-1);
+        traineeAttendance.setWeek(DateCalculator.getWeek(date, startDate));
+        return traineeAttendance;
     }
 
     @PostMapping("/trainer/deleteTrainee")

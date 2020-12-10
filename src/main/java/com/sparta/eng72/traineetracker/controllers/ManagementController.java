@@ -32,24 +32,16 @@ public class ManagementController {
         this.courseService = courseService;
     }
 
-    @GetMapping("/trainer/group")
-    public String getTrainerGroupView(Model model) {
-        model.addAttribute("assignGroupForm", new AssignGroupForm());
-        model.addAttribute("allTrainees", traineeService.getAllTrainees());
-        model.addAttribute("allGroups", courseGroupService.getAllCourseGroups());
-        model.addAttribute("allCourses", courseService.getAllCourses());
-        model.addAttribute("newClass", new CourseGroup());
-        return Pages.accessPage(Role.TRAINER, Pages.TRAINER_GROUPS_PAGE);
+    @GetMapping("/trainer/manageClass")
+    public ModelAndView getGroupChange(@ModelAttribute AssignGroupForm assignGroupForm, ModelMap modelMap) {
+        getManageClassModelMap(modelMap);
+        return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_GROUPS_PAGE), modelMap);
     }
+
 
     @PostMapping("/trainer/createGroup")
     public ModelAndView createGroup(@ModelAttribute CourseGroup newClass, ModelMap modelMap) {
-
-        modelMap.addAttribute("assignGroupForm", new AssignGroupForm());
-        modelMap.addAttribute("allTrainees", traineeService.getAllTrainees());
-        modelMap.addAttribute("allGroups", courseGroupService.getAllCourseGroups());
-        modelMap.addAttribute("allCourses", courseService.getAllCourses());
-        modelMap.addAttribute("newClass", new CourseGroup());
+        getManageClassModelMap(modelMap);
 
         for(CourseGroup group : courseGroupService.getAllCourseGroups()){
             if(newClass.getGroupName().equals(group.getGroupName())){
@@ -67,36 +59,23 @@ public class ManagementController {
         return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_GROUPS_PAGE), modelMap);
     }
 
-    @GetMapping("/trainer/manageClass")
-    public ModelAndView getGroupChange(@ModelAttribute AssignGroupForm assignGroupForm, ModelMap modelMap) {
-
-        modelMap.addAttribute("assignGroupForm", new AssignGroupForm());
-        modelMap.addAttribute("allTrainees", traineeService.getAllTrainees());
-        modelMap.addAttribute("allGroups", courseGroupService.getAllCourseGroups());
-        modelMap.addAttribute("allCourses", courseService.getAllCourses());
-        modelMap.addAttribute("newClass", new CourseGroup());
-
-        return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_GROUPS_PAGE), modelMap);
-
-    }
-
     @PostMapping("/trainer/modifyGroup")
     public ModelAndView postGroupChange(@ModelAttribute AssignGroupForm assignGroupForm, ModelMap modelMap) {
 
         Trainee trainee = traineeService.changeTraineeCourseGroupByID(assignGroupForm.getTraineeId(), assignGroupForm.getGroupId());
+        getManageClassModelMap(modelMap);
 
+        String success = "Assigned " + trainee.getFirstName() + " " + trainee.getLastName() + " to " + courseGroupService.getGroupByID(trainee.getGroupId()).get().getGroupName();
+        modelMap.addAttribute("modifySuccess", success);
+        return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_GROUPS_PAGE), modelMap);
+    }
+
+    private void getManageClassModelMap(ModelMap modelMap) {
         modelMap.addAttribute("assignGroupForm", new AssignGroupForm());
         modelMap.addAttribute("allTrainees", traineeService.getAllTrainees());
         modelMap.addAttribute("allGroups", courseGroupService.getAllCourseGroups());
         modelMap.addAttribute("allCourses", courseService.getAllCourses());
         modelMap.addAttribute("newClass", new CourseGroup());
-
-        String success = "Assigned " + trainee.getFirstName() + " " + trainee.getLastName() + " to " + courseGroupService.getGroupByID(trainee.getGroupId()).get().getGroupName();
-
-        modelMap.addAttribute("modifySuccess", success);
-
-        return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_GROUPS_PAGE), modelMap);
-
     }
 
 

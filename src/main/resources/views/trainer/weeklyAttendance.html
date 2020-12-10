@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/fragments :: layout(~{::head}, ~{::nav}, ~{::main})}">
+<head th:replace="~{fragments/head :: headFragment(title='Trainee Tracker')}">
+    <head>
+        <meta charset="UTF-8">
+        <link rel ="stylesheet" href="/css/myStyle.css"/>
+        <link rel ="stylesheet" href="webjars/bootstrap/4.5.2/css/bootstrap.css"/>
+        <link rel="stylesheet" href="vendor/fontawesome-free/css/all.min.css" >
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+        <title>Trainee Attendance</title>
+    </head>
+<body>
+<nav th:replace="~{fragments/publicNavigation}">Navigation</nav>
+<main>
+    <div class="container-fluid">
+        <!-- Page Heading -->
+
+        <h1 style="text-align-last: center" class="h3 mb-0 text-gray-800" th:text="'Weekly Attendance Overview'"></h1>
+
+        <br/>
+        <div class="row" style="justify-content: center;">
+            <table>
+                <tr>
+                    <td class="completeState1 placeholderText">Holder</td>
+                    <td>&nbsp;: On Time &nbsp;</td>
+                    <td class="completeState2 placeholderText">Holder</td>
+                    <td>&nbsp;: Late &nbsp;</td>
+                    <td class="completeState3 placeholderText">Holder</td>
+                    <td>&nbsp;: Excused &nbsp;</td>
+                    <td class="completeState4 placeholderText">Holder</td>
+                    <td>&nbsp;: Unexcused &nbsp;</td>
+                    <td class="completeState5 placeholderText">Holder</td>
+                    <td>&nbsp;: No Entry </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <br/>
+
+    <p th:if="${reports.isEmpty()}" th:text="${'No attendance reports to be displayed'}"></p>
+
+    <div class="accordion" style="margin-right: 1%; margin-left: 1%">
+
+        <table class="table" id="accordionExample" th:if="${!reports.isEmpty()}">
+            <thead class="thead-light" style="text-align: center">
+            <tr>
+                <th colspan="1" style="width: 4%"></th>
+                <th colspan="1" style="text-align-last: left; width: 20%">Week</th>
+                <th colspan="5" style="border-top: 1px solid #e3e6f0;"></th>
+            </tr>
+            </thead>
+
+            <tbody th:each="entry, stats : ${reports}" th:with="map=${entry.value}">
+                <tr style="text-align: center" class="accordion-toggle collapsed" id="accordion1" data-toggle="collapse" data-parent="#accordion1" th:href="${'#collapse' + entry.key}">
+                    <td class="expand-button" style="width: 4%"></td>
+                    <td style="text-align-last: left; width: 20%" th:text="${'Week ' + entry.key}">Week</td>
+                    <td colspan="5" style="border-top: 1px solid #e3e6f0;"></td>
+                </tr>
+
+                <tr class="hide-table-padding">
+                    <td th:id="${'collapse' + entry.key}" class="collapse in p-3"></td>
+                    <th th:id="${'collapse' + entry.key}" class="collapse in p-3" >Trainee Name</th>
+                    <th th:id="${'collapse' + entry.key}" class="collapse in p-3" th:each="day: ${days}" th:text="${day}"></th>
+                </tr>
+
+                <tr class="hide-table-padding" th:each="insideEntry, stats : ${map}" th:with="records=${insideEntry.value}">
+                    <td th:id="${'collapse' + entry.key}" class="collapse in p-3"></td>
+                    <th th:id="${'collapse' + entry.key}" class="collapse in p-3"
+                        th:text="${insideEntry.key.firstName} + ' ' + ${insideEntry.key.lastName}"></th>
+                    <td th:id="${'collapse' + entry.key}" class="collapse in p-3"
+                        th:each="weekReport: ${records}" th:class="'completeState' + ${weekReport.attendanceId}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+
+
+
+
+<!--            <div class="card" th:each="entry, stats : ${reports}" th:with="map=${entry.value}">-->
+<!--            <div class="card-header" th:id="${'heading' + entry.key}">-->
+<!--                <h2 class="mb-0">-->
+<!--                    <button aria-expanded="show"-->
+<!--                            class="btn btn-link btn-block text-left"-->
+<!--                            data-toggle="collapse"-->
+<!--                            th:data-target="${'#collapse' + entry.key}"-->
+<!--                            th:aria-controls="${'collapse' + entry.key}"-->
+<!--                            th:text="${'Week ' + entry.key}"-->
+<!--                            type="button">-->
+<!--                    </button>-->
+<!--                </h2>-->
+<!--            </div>-->
+<!--            <div th:id="${'collapse' + entry.key}" class="collapse hide" th:aria-labelledby="${'heading' + entry.key}" data-parent="#accordionExample">-->
+<!--                <div class="card-body">-->
+<!--                    <div class="jumbotron">-->
+<!--                        <h2 th:text="${'Attendance - Week ' + entry.key}"></h2>-->
+<!--                        <br/>-->
+<!--                        <table class="table table-bordered">-->
+
+<!--                            <thead>-->
+<!--                            <tr>-->
+<!--                                <th th:rowspan="2">Trainee</th>-->
+<!--                                <th th:each="day: ${days}" th:text="${day}"></th>-->
+<!--                            </tr>-->
+
+
+<!--                            </thead>-->
+<!--                            <tbody>-->
+<!--                            <tr th:each="entry, stats : ${map}" th:with="records=${entry.value}">-->
+<!--                                <th scope="row" th:text="${entry.key.firstName} + ' ' + ${entry.key.lastName}">Trainee Name</th>-->
+<!--                                <td th:each="weekReport: ${records}" th:class="'completeState' + ${weekReport.attendanceId}"></td>-->
+<!--                            </tr>-->
+<!--                            </tbody>-->
+
+<!--                        </table>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+    </div>
+</main>
+</body>
+</html>

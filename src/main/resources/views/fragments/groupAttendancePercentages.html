@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head th:replace="~{fragments/head :: headFragment(title='Trainee Tracker')}">
+    <meta charset="UTF-8">
+    <link rel ="stylesheet" href="/css/myStyle.css"/>
+    <link rel ="stylesheet" href="webjars/bootstrap/4.5.2/css/bootstrap.css"/>
+    <link rel="stylesheet" href="vendor/fontawesome-free/css/all.min.css" >
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<div th:fragment="groupAttendanceFragment">
+
+    <div class="card shadow mb-4">
+
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary" th:text="'Overall Group Attendance'"></h6>
+        </div>
+
+        <div class="card-body">
+
+            <div style="text-align: center;">
+                <div class="card-deck">
+                    <div class="card" >
+                        <div class="card-header" style="background: #60bd60">
+                            <small style="color: white">On Time</small>
+                        </div>
+                        <div class="card-body">
+                            <big style="color: darkgreen" th:text="${groupOnTime}"></big>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header" style="background: #e6b469">
+                            <small style="color: white">Late</small>
+                        </div>
+                        <div class="card-body">
+                            <big style="color: #dda20a" th:text="${groupLate}"></big>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header" style="background: #6c93da">
+                            <small style="color: white">Excused Absence</small>
+                        </div>
+                        <div class="card-body">
+                            <big style="color: cornflowerblue" th:text="${groupExcused}"></big>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header" style="background: #d85c5c">
+                            <small style="color: white">Unexcused Absence</small>
+                        </div>
+                        <div class="card-body">
+                            <big style="color: crimson" th:text="${groupUnexcused}"></big>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer py-3">
+            <h6 class="m-0 font-weight-bold text-primary" style="text-align-last: right">
+                <div>
+                    <a th:href="@{/trainer/attendanceEntry}">Enter Class Attendance</a>
+                </div>
+            </h6>
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+</html>

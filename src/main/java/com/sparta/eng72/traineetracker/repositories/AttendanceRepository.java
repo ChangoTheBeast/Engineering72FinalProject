@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface AttendanceRepository extends CrudRepository<TraineeAttendance, TraineeAttendancePK> {
     List<TraineeAttendance> getTraineeAttendanceByTraineeId(Integer traineeId);
+    List<TraineeAttendance> getTraineeAttendanceByTraineeIdAndWeek(Integer traineeId, Integer week);
 }

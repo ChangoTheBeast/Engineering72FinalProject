@@ -1,4 +1,4 @@
-package com.sparta.eng72.traineetracker;
+package com.sparta.eng72.traineetracker.controllers;
 
 
 import com.sparta.eng72.traineetracker.controllers.AssessmentController;
@@ -35,14 +35,5 @@ public class AssessmentControllerTest {
     public void trainerTraineeAssessmentPageTest() throws Exception {
         mockMvc.perform(get("/trainer/assessments/2")).andDo(print()).andExpect(status().isOk()).andExpect(model().attributeExists("traineeId","trainee","assessments"));
     }
-
-    @Test
-    @WithMockUser(username = "bbird@spartaglobal.com", password = "pwd",roles = "TRAINEE")
-    public void traineeAssessmentPageTest() throws Exception {
-        mockMvc.perform(get("/trainee/assessments/2")).andDo(print()).andExpect(status().isOk()).andExpect(model().attributeExists("traineeId","trainee","assessments"));
-    }
-
-
-
 
 }

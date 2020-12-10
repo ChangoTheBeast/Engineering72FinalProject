@@ -92,107 +92,100 @@
                 </div>
             </div>
         </div>
+
+        <div th:replace="~{fragments/groupAttendancePercentages :: groupAttendanceFragment}"></div>
+
         <div class="container-md">
-            <div>
-                <form th:action="@{/trainer/viewTrainee}" method="POST">
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="traineeSelector">Select Trainee:</label>
-                                <select class="form-control" id="traineeSelector" th:name="traineeId">
-                                    <option th:each="trainee: ${traineeList}" th:value="${trainee.traineeId}" th:text="${trainee.firstName} + ' ' + ${trainee.lastName}">Trainee</option>
-                                </select>
-                            </div>
-                            <button type="submit" th:name="btnStatus" th:value="profile" class="btn btn-primary">View Trainee Profile</button>
-                            <button type="submit" th:name="btnStatus" th:value="attendance" class="btn btn-primary">View Trainee Attendance</button>
+            <form th:action="@{/trainer/viewTrainee}" method="post">
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label class="font-weight-bold mb-0" style="margin-bottom: 0;" for="traineeSelector">Manage Trainees</label>
+                            <hr class="mb-sm-3 mt-0" style=" margin-bottom: 10px; margin-top: 0;">
+                            <select class="form-control" style="text-align-last: center" id="traineeSelector" th:name="traineeId">
+                                <option th:each="trainee: ${traineeList}" th:value="${trainee.traineeId}" th:text="${trainee.firstName} + ' ' + ${trainee.lastName}">Trainee</option>
+                            </select>
                         </div>
+                        <button type="submit" th:name="btnStatus" th:value="profile" class="btn btn-primary" style="width: 100%;">View Trainee Profile</button>
                     </div>
-                </form>
-            </div>
 
+                    <div class="col">
                         <div class="col">
-                            <div class="col">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Missed Deadlines:</h5>
-                                    <h6 class="card-subtitle mb-2 text-muted">Trainees who have not submitted their feedback forms for the current week</h6>
-                                    <p class="card-text">
-                                        <ul>
-                                            <li class="missedDeadline" th:each="missedDeadlineTrainee: ${missedDeadlineList}" th:text="${missedDeadlineTrainee.firstName} + ' ' + ${missedDeadlineTrainee.lastName}"></li>
-                                        </ul>
-                                    </p>
-                                </div>
-                            </div>
-                            </div>
-                        <br/>
-                        <div class="col">
-                            <div class="card">
-                                <div class="card-body traineeDashboardCard">
-                                    <h5 class="card-title">Feedback Pending:</h5>
-                                    <h6 class="card-subtitle mb-2 text-muted">Trainer feedback to be completed</h6>
-                                    <p class="card-text">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Missed Deadlines:</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Trainees who have not submitted their feedback forms for the current week</h6>
+                                <p class="card-text">
                                     <ul>
-                                        <li th:each="missingFeedbackTrainee: ${toCompleteList}" th:text="${missingFeedbackTrainee.firstName} + ' ' + ${missingFeedbackTrainee.lastName}"></li>
+                                        <li class="missedDeadline" th:each="missedDeadlineTrainee: ${missedDeadlineList}" th:text="${missedDeadlineTrainee.firstName} + ' ' + ${missedDeadlineTrainee.lastName}"></li>
                                     </ul>
-                                    </p>
-                                </div>
+                                </p>
                             </div>
                         </div>
-                            <br/>
+                        </div>
+                    <br/>
+
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body traineeDashboardCard">
+                                <h5 class="card-title">Feedback Pending:</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Trainer feedback to be completed</h6>
+                                <p class="card-text">
+                                <ul>
+                                    <li th:each="missingFeedbackTrainee: ${toCompleteList}" th:text="${missingFeedbackTrainee.firstName} + ' ' + ${missingFeedbackTrainee.lastName}"></li>
+                                </ul>
+                                </p>
+                            </div>
                         </div>
                     </div>
-                    <div class="row align-content-center text-center">
-                        <h5 class="text-center align-content-center" style="color: #2d2e33">Feedback Report Submission Tracker</h5>
+                        <br/>
                     </div>
-                    <div class="row">
-                        <div class="table-responsive">
-                            <table class="table table-hover">
-                            <thead>
-                            <tr>
-                                <th th:rowspan="2">Trainee</th>
-                                <th class="text-center" th:colspan="${courseDuration}">Week</th>
-                            </tr>
-                            <tr>
-                                <th th:each="i: ${courseDurationList}" th:text="${i}"></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="traineeCounter: ${traineeCounter}">
-                                <th scope="row" th:text="${traineeList.get(traineeCounter).getFirstName()} + ' ' + ${traineeList.get(traineeCounter).getLastName()}">Trainee Name</th>
-                                <td th:each="weekReport: ${traineeCompletedList.get(traineeCounter)}" th:class="'completeState' + ${weekReport.getTraineeSubmittedFlag()}"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        </div>
+                </div>
+                <div class="row align-content-center text-center">
+                    <h5 class="text-center align-content-center" style="color: #2d2e33">Feedback Report Submission Tracker</h5>
+                </div>
+                <div class="row">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th th:rowspan="2" style="text-align-last: center;">Trainee</th>
+                            <th class="text-center" style="width: 19.98%" th:colspan="${courseDuration}">Week</th>
+                        </tr>
+                        <tr>
+                            <th th:each="i: ${courseDurationList}" th:text="${i}" style="width: 6.66%; text-align-last: center;"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="traineeCounter: ${traineeCounter}">
+                            <th scope="row" th:text="${traineeList.get(traineeCounter).getFirstName()} + ' ' + ${traineeList.get(traineeCounter).getLastName()}">Trainee Name</th>
+                            <td th:each="weekReport: ${traineeCompletedList.get(traineeCounter)}" th:class="'reportSubmissionState' + ${weekReport.getTraineeSubmittedFlag()}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
                     </div>
-                    <div class="row">
-                        <table>
-                            <thead>
+                </div>
+                <br>
+                <div class="float-right d-flex justify-content-center mb-md-4" style="width:80.02%">
+                    <table>
+                        <tbody>
                             <tr>
-                                <th colspan="2">Key</th>
+                                <td class="completeState1 holderTextGreen">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td class="px-3">Submitted</td>
+                                <td class="completeState4 holderTextRed">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td class="px-3">Passed Deadline</td>
                             </tr>
-                            </thead>
-                            <tr>
-                                <td class="completeState0 holderTextRed">Holder</td>
-                                <td> Past Deadline</td>
-                            </tr>
-                            <tr>
-                                <td class="completeState1 holderTextGreen">Holder</td>
-                                <td> Submitted</td>
-                            </tr>
-                        </table>
-                    </div>
-                </form>
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </div>
     </div>
-
-
 
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
 
-
 </main>
-
 </body>
 </html>

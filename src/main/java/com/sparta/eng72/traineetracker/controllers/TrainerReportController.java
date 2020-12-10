@@ -41,39 +41,14 @@ public class TrainerReportController {
         WeekReport weekReport = weekReportService.getWeekReportByReportId(reportId).get();
         Integer traineeId = weekReport.getTraineeId();
         Trainee trainee = traineeService.getTraineeByID(traineeId).get();
-        List <WeekReport> reports = weekReportService.getReportsByTraineeID(traineeId);
-
+        List<WeekReport> reports = weekReportService.getReportsByTraineeID(traineeId);
         Collections.reverse(reports);
 
-        weekReport.setStopTrainer(stopTrainer);
-        weekReport.setStartTrainer(startTrainer);
-        weekReport.setContinueTrainer(continueTrainer);
-        weekReport.setTrainerComments(trainerComments);
-        weekReport.setTechnicalGradeTrainer(trainerTechGrade);
-        weekReport.setConsultantGradeTrainer(trainerConsulGrade);
-        weekReport.setOverallGradeTrainer(trainerOverallGrade);
-        weekReport.setTrainerCompletedFlag((byte) 1);
-
+        populateWeeklyReport(trainerTechGrade, trainerConsulGrade, trainerOverallGrade, trainerComments, stopTrainer, startTrainer, continueTrainer, weekReport);
         weekReportService.updateWeekReport(weekReport);
-        modelMap.addAttribute("traineeId", traineeId);
-        modelMap.addAttribute("trainee", trainee);
-        modelMap.addAttribute("reports", reports);
-        modelMap.addAttribute("now", LocalDateTime.now());
 
-        RedirectView redirectView = new RedirectView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_HOME_URL));
-        redirectView.setExposeModelAttributes(false);
-        return new ModelAndView(redirectView, modelMap);
-    }
-
-    @PostMapping("/trainer/reportTraineeWeekProcessing")
-    public ModelAndView getTrainerFeedbackForm(Integer reportId, ModelMap modelMap) {
-
-        WeekReport weekReport = weekReportService.getWeekReportByReportId(reportId).get();
-
-        RedirectView redirectView = new RedirectView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_REPORT_URL+"/"+weekReport.getTraineeId()+"/"+weekReport.getWeekNum()));
-        redirectView.setExposeModelAttributes(false);
-        ModelAndView modelAndView = new ModelAndView(redirectView, modelMap);
-        return modelAndView;
+        getWeeklyReportModelMap(modelMap, traineeId, trainee, reports);
+        return new ModelAndView(new RedirectView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_HOME_URL)), modelMap);
     }
 
     @GetMapping("/trainer/report/{traineeId}/{weekNum}")
@@ -85,27 +60,36 @@ public class TrainerReportController {
         WeekReport report = optionalWeekReport.get();
         modelMap.addAttribute("trainee", traineeService.getTraineeByID(traineeId).get());
         modelMap.addAttribute("trainerFeedback", report);
-
         return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_FEEDBACK_FORM_PAGE), modelMap);
     }
 
-
-    @RequestMapping(value="/trainer/viewTrainee", method = RequestMethod.POST, params="btnStatus=reports")
-    public String getTrainerWeeklyReports(Integer traineeId, Model model) {
-        return Pages.accessPage(Role.TRAINER, "redirect:"+Pages.TRAINER_REPORT_URL+"/"+traineeId);
-    }
-
     @GetMapping("/trainer/report/{traineeId}")
-    public ModelMap getTrainerWeeklyReportsWithPath(@PathVariable Integer traineeId, ModelMap modelMap) {
+    public ModelAndView getTrainerWeeklyReportsWithPath(@PathVariable Integer traineeId, ModelMap modelMap) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy - K:mm a", Locale.ENGLISH);
         Trainee trainee = traineeService.getTraineeByID(traineeId).get();
         List<WeekReport> reports = weekReportService.getReportsByTraineeID(traineeId);
         Collections.reverse(reports);
+
+        getWeeklyReportModelMap(modelMap, traineeId, trainee, reports);
+        modelMap.addAttribute("dateFormat", formatter);
+        return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_REPORT_PAGE), modelMap);
+    }
+
+    private void getWeeklyReportModelMap(ModelMap modelMap, Integer traineeId, Trainee trainee, List<WeekReport> reports) {
         modelMap.addAttribute("traineeId", traineeId);
         modelMap.addAttribute("trainee", trainee);
         modelMap.addAttribute("reports", reports);
         modelMap.addAttribute("now", LocalDateTime.now());
-        modelMap.addAttribute("dateFormat", formatter);
-        return modelMap;
+    }
+
+    private void populateWeeklyReport(String trainerTechGrade, String trainerConsulGrade, String trainerOverallGrade, String trainerComments, String stopTrainer, String startTrainer, String continueTrainer, WeekReport weekReport) {
+        weekReport.setStopTrainer(stopTrainer);
+        weekReport.setStartTrainer(startTrainer);
+        weekReport.setContinueTrainer(continueTrainer);
+        weekReport.setTrainerComments(trainerComments);
+        weekReport.setTechnicalGradeTrainer(trainerTechGrade);
+        weekReport.setConsultantGradeTrainer(trainerConsulGrade);
+        weekReport.setOverallGradeTrainer(trainerOverallGrade);
+        weekReport.setTrainerCompletedFlag((byte) 1);
     }
 }

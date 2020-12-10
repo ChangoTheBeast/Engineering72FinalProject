@@ -62,9 +62,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         http
+                .csrf().disable() //FIXME please enable me
                 .authorizeRequests()
-//                .antMatchers("/trainer*").hasRole("TRAINER")
-//                .antMatchers("/trainee*").hasRole("TRAINEE")
+                .antMatchers("/trainer/**").hasRole("TRAINER")
+                .antMatchers("/trainee/**").hasRole("TRAINEE")
+                .antMatchers("/first-time-user/firstTimeLogin").hasRole("FIRST_TIME_USER")
 //                .antMatchers("/anonymous*").anonymous()
                 .antMatchers("/css/**", "/js/**", "/scss/**", "/vendor/**", "/webjars/**", "/index", "/", "/images/**", "/login*").permitAll()
                 .anyRequest().authenticated()
@@ -75,7 +77,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .and()
-                .exceptionHandling().accessDeniedPage("/error");
+                .exceptionHandling().accessDeniedPage("/error")
+        .and().rememberMe().key("uniqueAndSecret");
     }
 
     @Bean

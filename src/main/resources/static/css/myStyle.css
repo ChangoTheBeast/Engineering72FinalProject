@@ -52,15 +52,32 @@
 }
 
 ul li {
-    color: crimson;
+    color: #000000;
 }
 
-.completeState0{
-    background-color: crimson;
+.completeState0, .completeState4{
+    background-color: #D85C5C;
+    border: white 1px solid;
 }
 
 .completeState1{
-    background-color: darkseagreen;
+    background-color: #60BD60;
+    border: white 1px solid;
+}
+
+.completeState2{
+    background-color: #f6c23e;
+    border: white 1px solid;
+}
+
+.completeState3{
+    background-color: #6C93DA;
+    border: white 1px solid;
+}
+
+.completeState5{
+    background-color: #e0e0e0;
+    border: white 1px solid;
 }
 
 .feedbackFormTextArea{
@@ -84,13 +101,147 @@ ul li {
     border-color: #AF293B !important;
 }
 
-.holderTextRed{
+.letterGradeB {
+    color: seagreen;
+}
+
+.letterGradeA {
+    color: darkgreen;
+}
+
+.holderTextRed, .letterGradeF{
     color: crimson;
 }
 
 .holderTextGreen{
     color: darkseagreen;
 }
+
+.holderTextBlue{
+    color: cornflowerblue;
+}
+
+.holderTextWhite{
+    color: white;
+}
+
+.holderTextOrange, .letterGradeC {
+    color: #f6c23e;
+}
+
+.letterGradeD{
+    color: darkorange;
+}
+
 .placeholderText{
     color: transparent;
+    width: 60px;
+}
+
+.form-control-dropdown, .form-control-dropdown:focus {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #6e707e;
+    border: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    outline: none;
+}
+
+select {
+    text-align-last: center;
+}
+
+
+.table-bordered{
+    margin-left: auto;
+    margin-right: auto;
+    align-content: center;
+    text-align-all: center;
+}
+
+
+/*styling for assessment page*/
+.flex-list {
+    position: relative;
+    margin: 1em;
+    overflow: hidden;
+}
+.flex-list ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-left: -1px;
+    list-style-type: none;
+}
+.flex-list li {
+    flex-grow: 1;
+    flex-basis: auto;
+    margin: .25em 0;
+    padding: 0 1em;
+    text-align: center;
+    border-left: 1px solid #ccc;
+    /*background-color: ;*/
+}
+
+
+/* Assessment page table */
+tr.hide-table-padding td {
+    padding: 0;
+}
+
+.expand-button {
+    position: relative;
+}
+
+.accordion-toggle .expand-button:after
+{
+    position: absolute;
+    left:.75rem;
+    top: 50%;
+    transform: translate(0, -50%);
+    content: '-';
+}
+.accordion-toggle.collapsed .expand-button:after
+{
+    content: '+';
+}
+
+/* Attendance Page*/
+.active-on-select:hover {
+    background-color:#aaa;
+    color:white;
+}
+
+.active-on-select:active {
+    background-color:#000;
+    color:white;
+}
+
+.active-fragment {
+    background-color:#000;
+    color:white;
+}
+
+
+.reportSubmissionState0 {
+    background-color: #d46565;
+    border: solid white 1px;
+}
+
+.reportSubmissionState1 {
+    background-color: #9ec794;
+    border: solid white 1px;
+}
+
+.card.shadow {
+    margin-left: 3rem!important;
+    margin-right: 3rem!important;
 }

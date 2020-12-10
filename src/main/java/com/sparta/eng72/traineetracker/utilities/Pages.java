@@ -8,12 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 public class Pages {
 
     //LOGIN =========================================================================================
-    public static final String HOME_PAGE = "/home";
     public static final String LOGIN_PAGE = "/login/login";
     public static final String LOGIN_PAGE_URL = "/login";
     public static final String LOGIN_FAILURE_URL = "/login";
     public static final String USER_NOT_FOUND_PAGE = "/login/userNotFound";
-    public static final String FIRST_PASSWORD_PAGE = "/trainee/firstTimeLogin";
+    public static final String FIRST_PASSWORD_PAGE = "/first-time-user/firstTimeLogin";
     public static final String FIRST_PASSWORD_URL = "trainee/firstPassword";
     public static final String LOGOUT_CURRENT_USER = "/login/login";
     public static final String CHANGE_PASSWORD_PAGE = "/login/passwordChanger";
@@ -26,7 +25,7 @@ public class Pages {
     //TRAINEE =======================================================================================
     public static final String TRAINEE_HOME_PAGE = "/trainee/traineeHome";
     public static final String TRAINEE_HOME_URL = "/trainee/home";
-    public static final String TRAINEE_GUIDE_PAGE = "/trainee/traineeGuide";
+    public static final String TRAINEE_GUIDE_PAGE = "/traineeGuide";
     public static final String TRAINEE_GUIDE_URL = "/trainee/guide";
     public static final String TRAINEE_REPORT_PAGE = "/trainee/traineeReport";
     public static final String TRAINEE_REPORT_URL = "/trainee/report";
@@ -63,17 +62,19 @@ public class Pages {
     public static final String TRAINER_ASSESSMENTS ="/trainer/trainerAssessment";
     public static final String TRAINER_ATTENDANCE_PAGE ="/trainer/attendance";
     public static final String TRAINER_ATTENDANCE_SUCCESS ="/trainer/attendanceSuccess";
+    public static final String TRAINER_WEEKLY_ATTENDANCE ="/trainer/weeklyAttendance";
 
 
 
     //Any =======================================================================================
-    public static final String CONSULTANCY = "/trainee/consultancy";
+    public static final String CONSULTANCY = "/consultancy";
+    public static final String ATTENDANCE_PERCENTAGES = "/fragments/attendancePercentages";
 
 
     //ERROR =========================================================================================
     public static final String ACCESS_ERROR = "/errors/accessError";
     public static final String PAGE_NOT_FOUND_ERROR = "/errors/pagenotfounderror";
-    public static final String NO_ITEM_IN_DATABASE_ERROR = "/errors/itemNotFound";
+    public static final String NO_ITEM_IN_DATABASE_ERROR = "/errors/pagenotfounderror";
     public static String accessPage(String requiredRole, String page) {
 
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();

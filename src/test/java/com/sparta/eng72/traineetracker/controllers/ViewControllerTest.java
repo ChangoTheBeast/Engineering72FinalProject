@@ -21,13 +21,13 @@ class ViewControllerTest {
     @Test
     @WithMockUser(roles = "TRAINEE")
     void getConsultancySkills() throws Exception {
-        this.mockMvc.perform(get("/trainee/consultancy")).andExpect(status().isOk());
+        this.mockMvc.perform(get("/consultancy")).andExpect(status().isOk());
     }
 
     @Test
     @WithMockUser(roles = "TRAINEE")
     void getTraineeGuide() throws Exception {
-        this.mockMvc.perform(get("/trainee/guide")).andExpect(status().isOk());
+        this.mockMvc.perform(get("/guide")).andExpect(status().isOk());
     }
 
     @Test

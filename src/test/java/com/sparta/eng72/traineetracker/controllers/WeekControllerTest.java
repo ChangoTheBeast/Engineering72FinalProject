@@ -54,7 +54,7 @@ class WeekControllerTest {
                 .param("groupId", newClass.getGroupId().toString()))
                 .andExpect(status().isOk())
                 .andExpect(model()
-                        .attributeExists("currentWeek", "previousWeek"));
+                        .attributeExists("success"));
 
         newClass = courseGroupRepository.findCourseGroupByGroupName("Engineering 74");
 

@@ -64,23 +64,23 @@ public class UserControllerTests {
         newUserForm.setGroupId(2);
         ModelMap modelMap = new ModelMap();
 
-        this.mockMvc.perform(post("/trainer/addNewUser")
+        this.mockMvc.perform(post("/trainer/addTrainee")
                 .param("firstName", newUserForm.getFirstName())
                 .param("email", newUserForm.getEmail())
                 .param("lastName", newUserForm.getLastName())
                 .param("groupId", newUserForm.getGroupId().toString()))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists("trainee"));
+                .andExpect(model().attributeExists("addSuccess"));
 
         Assertions.assertNotEquals(null,traineeService.getTraineeByUsername("unit@test.com"));
 
-        this.mockMvc.perform(post("/trainer/addNewUser")
+        this.mockMvc.perform(post("/trainer/addTrainee")
                 .param("firstName", newUserForm.getFirstName())
                 .param("email", newUserForm.getEmail())
                 .param("lastName", newUserForm.getLastName())
                 .param("groupId", newUserForm.getGroupId().toString()))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists("email"));
+                .andExpect(model().attributeExists("addError"));
 
         Trainee trainee = new Trainee();
         trainee = traineeService.getTraineeByUsername("unit@test.com").get();
@@ -108,7 +108,7 @@ public class UserControllerTests {
     @Test
     @WithMockUser(username =traineeName , password = traineePw,roles = "TRAINEE")
     public void getPasswordInitialiserTest() throws Exception {
-        this.mockMvc.perform(get("/trainee/tempPassword")).andExpect(status().isOk());
+        this.mockMvc.perform(get("/first-time-user/tempPassword")).andExpect(status().isOk());
     }
 
     @Test

@@ -25,7 +25,7 @@ public class Pages {
     //TRAINEE =======================================================================================
     public static final String TRAINEE_HOME_PAGE = "/trainee/traineeHome";
     public static final String TRAINEE_HOME_URL = "/trainee/home";
-    public static final String TRAINEE_GUIDE_PAGE = "/trainee/traineeGuide";
+    public static final String TRAINEE_GUIDE_PAGE = "/traineeGuide";
     public static final String TRAINEE_GUIDE_URL = "/trainee/guide";
     public static final String TRAINEE_REPORT_PAGE = "/trainee/traineeReport";
     public static final String TRAINEE_REPORT_URL = "/trainee/report";
@@ -67,7 +67,7 @@ public class Pages {
 
 
     //Any =======================================================================================
-    public static final String CONSULTANCY = "/trainee/consultancy";
+    public static final String CONSULTANCY = "/consultancy";
     public static final String ATTENDANCE_PERCENTAGES = "/fragments/attendancePercentages";
 
 

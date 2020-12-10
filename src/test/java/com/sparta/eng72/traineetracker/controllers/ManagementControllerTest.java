@@ -80,7 +80,7 @@ public class ManagementControllerTest {
                 .param("courseId", newClass.getCourseId().toString())
                 .param("currentWeek", newClass.getCurrentWeek().toString())
                 .param("startDate", newClass.getStartDate().toString())
-                .param("endDate", newClass.getEndDate().toString())).andExpect(status().is3xxRedirection());
+                .param("endDate", newClass.getEndDate().toString())).andExpect(status().isOk());
 
         CourseGroup courseGroup = courseGroupRepository.findCourseGroupByGroupName("Engineering 74");
 
@@ -92,9 +92,9 @@ public class ManagementControllerTest {
     @Test
     @WithMockUser(username = trainerName, password = trainerPw, roles = "TRAINER")
     public void getGroupChangeTest() throws Exception {
-        this.mockMvc.perform(get("/trainer/modifyGroup"))
+        this.mockMvc.perform(get("/trainer/manageClass"))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists("trainee", "group"));
+                .andExpect(model().attributeExists("allTrainees", "allGroups", "assignGroupForm", "allCourses", "newClass"));
     }
 
     @Test
@@ -108,7 +108,7 @@ public class ManagementControllerTest {
                 .param("groupId", assignGroupForm.getGroupId().toString())
                 .param("traineeId", assignGroupForm.getTraineeId().toString()))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists("trainee", "group"));
+                .andExpect(model().attributeExists("modifySuccess"));
 
         Assertions.assertEquals(3, traineeService.getTraineeByID(2).get().getGroupId());
 

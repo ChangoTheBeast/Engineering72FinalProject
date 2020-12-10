@@ -64,7 +64,7 @@ class TraineeReportControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "rlouch.rl@gmail.com", password = "test", roles = "TRAINEE")
+    @WithMockUser(username = "TKhan@sparta.com", password = "test", roles = "TRAINEE")
     void postNoRecentReportTest() throws Exception {
         this.mockMvc.perform(post("/traineeRecentReport"))
                 .andExpect(status().is3xxRedirection())

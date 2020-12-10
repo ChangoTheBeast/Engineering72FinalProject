@@ -22,7 +22,7 @@ public class TrainerHomeControllerTests {
     @Test
     @WithMockUser(roles = "TRAINER")
     public void newUserFormTest() throws Exception {
-        this.mockMvc.perform(get("/trainer/addTrainee"))
+        this.mockMvc.perform(get("/trainer/manageTrainee"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("newUserForm", "allGroups", "allTrainees"));
     }

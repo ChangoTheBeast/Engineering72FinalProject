@@ -37,7 +37,7 @@
                                     <p th:if="${success}" th:text="${success}" class="letterGradeA"></p>
                                     <form class="form-signin align-content-center text-center" th:action="@{/trainer/addNewWeek}" method="POST">
                                         <div class="row justify-content-center">
-                                            <select class="form-control" id="dropdown" name="groupId">
+                                            <select class="form-control" id="dropdown" name="groupId" required>
                                                 <option value="" hidden>Select Group</option>
                                                 <option th:each="group : ${allGroups}"
                                                         th:value="${group.groupId}"

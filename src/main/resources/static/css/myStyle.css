@@ -241,7 +241,6 @@ tr.hide-table-padding td {
     border: solid white 1px;
 }
 
-.card.shadow {
-    margin-left: 3rem!important;
-    margin-right: 3rem!important;
+.main-centered {
+    text-align: -webkit-center;
 }

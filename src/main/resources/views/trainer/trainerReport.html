@@ -14,169 +14,156 @@
 <div th:fragment="reportsFragment">
 
     <main>
-        <div class="container-fluid">
-            <!-- Page Heading -->
-            <h2 style="text-align-last: center" th:text="${'Weekly Reports for ' + trainee.getFirstName() + ' ' + trainee.getLastName()}"></h2>
-        </div>
-        <br/>
-        <p th:if="${reports.isEmpty()}" th:text="${'No reports yet for ' + trainee.getFirstName() + ' ' + trainee.getLastName()}"></p>
-        <div class="accordion" style="margin-right: 1%; margin-left: 1%">
 
-            <table class="table" id="accordionExample" th:if="${!reports.isEmpty()}">
-                <thead class="thead-light" style="text-align: center">
-                <tr>
-                    <th colspan="2"></th>
-                    <th colspan="3">Trainer Assigned Grades</th>
-                </tr>
-                <tr>
-                    <th scope="col"></th>
-                    <th scope="col" style="text-align-last: left">Week</th>
-                    <th scope="col">Overall Grade</th>
-                    <th scope="col">Technical Grade</th>
-                    <th scope="col">Consultant Grade</th>
-                </tr>
-                </thead>
+        <div class="card shadow mx-3">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold text-primary" th:text="${'Weekly Reports for ' + trainee.getFirstName() + ' ' + trainee.getLastName()}"></h6>
+            </div>
+            <div class="card-body">
+                <p th:if="${reports.isEmpty()}" th:text="${'No reports yet for ' + trainee.getFirstName() + ' ' + trainee.getLastName()}"></p>
+                <div class="accordion" style="margin-right: 1%; margin-left: 1%">
 
-                <tbody th:each="report : ${reports}">
+                    <table class="table" id="accordionExample" th:if="${!reports.isEmpty()}">
+                        <thead class="thead-light" style="text-align: center">
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col" style="text-align-last: left">Week</th>
+                            <th scope="col">Overall Grade</th>
+                            <th scope="col">Technical Grade</th>
+                            <th scope="col">Consultant Grade</th>
+                        </tr>
+                        </thead>
 
-                <tr style="text-align: center" class="accordion-toggle collapsed" id="accordion1" data-toggle="collapse" data-parent="#accordion1" th:href="${'#collapse' + report.getWeekNum()}">
-                    <td class="expand-button"></td>
-                    <th style="text-align-last: left" scope="row" th:text="${'Week ' + report.getWeekNum()}">Week</th>
-                    <td th:class="'letterGrade' + ${report.getOverallGradeTrainer()}" th:text="${report.getOverallGradeTrainer()}">Overall Grade</td>
-                    <td th:class="'letterGrade' + ${report.getTechnicalGradeTrainer()}" th:text="${report.getTechnicalGradeTrainer()}">Technical Grade</td>
-                    <td th:class="'letterGrade' + ${report.getConsultantGradeTrainer()}" th:text="${report.getConsultantGradeTrainer()}">Consultant Grade</td>
-                </tr>
+                        <tbody th:each="report : ${reports}">
 
-                <tr class="hide-table-padding">
-                    <td></td>
-                    <td colspan="2">
-                        <div th:id="${'collapse' + report.getWeekNum()}" class="collapse in p-3">
-                            <div class="row">
-                                <div class="col-10"><strong>Trainee SSCs</strong></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3">Start</div>
-                                <div class="col-7" th:text="${report.getStartTrainee()}"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3">Stop</div>
-                                <div class="col-7" th:text="${report.getStopTrainee()}"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3">Continue</div>
-                                <div class="col-7" th:text="${report.getContinueTrainee()}"></div>
-                            </div>
-                        </div>
-                    </td>
-                    <td colspan="2">
-                        <div th:id="${'collapse' + report.getWeekNum()}" class="collapse in p-3">
-                            <div class="row">
-                                <div class="col-10"><strong>Trainee Grades</strong></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-10 placeholderText">Overall Grade</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-4">Technical Grade</div>
-                                <div class="col-6" th:text="${report.getTechnicalGradeTrainee()}"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-4">Consultant Grade</div>
-                                <div class="col-6" th:text="${report.getConsultantGradeTrainee()}"></div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
+                        <tr style="text-align: center" class="accordion-toggle collapsed" id="accordion1" data-toggle="collapse" data-parent="#accordion1" th:href="${'#collapse' + report.getWeekNum()}">
+                            <td class="expand-button"></td>
+                            <th style="text-align-last: left" scope="row" th:text="${'Week ' + report.getWeekNum()}">Week</th>
+                            <td th:class="'letterGrade' + ${report.getOverallGradeTrainer()}" th:text="${report.getOverallGradeTrainer()}">Overall Grade</td>
+                            <td th:class="'letterGrade' + ${report.getTechnicalGradeTrainer()}" th:text="${report.getTechnicalGradeTrainer()}">Technical Grade</td>
+                            <td th:class="'letterGrade' + ${report.getConsultantGradeTrainer()}" th:text="${report.getConsultantGradeTrainer()}">Consultant Grade</td>
+                        </tr>
 
-                <tr class="hide-table-padding">
-                    <td></td>
-                    <td colspan="2">
-                        <div th:id="${'collapse' + report.getWeekNum()}" class="collapse in p-3">
-                            <div class="row">
-                                <div class="col-10"><strong>Trainer SSCs</strong></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3">Start</div>
-                                <div class="col-7" th:text="${report.getStartTrainer()}"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3">Stop</div>
-                                <div class="col-7" th:text="${report.getStopTrainer()}"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3">Continue</div>
-                                <div class="col-7" th:text="${report.getContinueTrainer()}"></div>
-                            </div>
-                        </div>
-                    </td>
-                    <td colspan="2">
-                        <div th:id="${'collapse' + report.getWeekNum()}" class="collapse in p-3">
-                            <div class="row">
-                                <div class="col-10"><strong>Trainer Grades</strong></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-4">Overall Grade</div>
-                                <div class="col-6" th:text="${report.getOverallGradeTrainer()}"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-4">Technical Grade</div>
-                                <div class="col-6" th:text="${report.getTechnicalGradeTrainer()}"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-4">Consultant Grade</div>
-                                <div class="col-6" th:text="${report.getConsultantGradeTrainer()}"></div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
+                        <tr class="hide-table-padding">
+                            <td></td>
+                            <td colspan="2">
+                                <div th:id="${'collapse' + report.getWeekNum()}" class="collapse in p-3">
+                                    <div class="row">
+                                        <div class="col-10"><strong>Trainee SSCs</strong></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3">Start</div>
+                                        <div class="col-7" th:text="${report.getStartTrainee()}"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3">Stop</div>
+                                        <div class="col-7" th:text="${report.getStopTrainee()}"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3">Continue</div>
+                                        <div class="col-7" th:text="${report.getContinueTrainee()}"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td colspan="2">
+                                <div th:id="${'collapse' + report.getWeekNum()}" class="collapse in p-3">
+                                    <div class="row">
+                                        <div class="col-10"><strong>Trainee Grades</strong></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-10 placeholderText">Overall Grade</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4">Technical Grade</div>
+                                        <div class="col-6" th:text="${report.getTechnicalGradeTrainee()}"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4">Consultant Grade</div>
+                                        <div class="col-6" th:text="${report.getConsultantGradeTrainee()}"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
 
-                <tr class="hide-table-padding">
-                    <td></td>
-                    <td colspan="2">
-                        <div th:id="${'collapse' + report.getWeekNum()}" class="collapse in p-3">
-                            <div class="row">
-                                <div class="col-3"><strong>Comments: </strong></div>
-                                <div class="col-7"th:text="${report.getTrainerComments()}"></div>
-                            </div>
-                        </div>
-                    </td>
-                    <td colspan="2">
-                    </td>
-                </tr>
+                        <tr class="hide-table-padding">
+                            <td></td>
+                            <td colspan="2">
+                                <div th:id="${'collapse' + report.getWeekNum()}" class="collapse in p-3">
+                                    <div class="row">
+                                        <div class="col-10"><strong>Trainer SSCs</strong></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3">Start</div>
+                                        <div class="col-7" th:text="${report.getStartTrainer()}"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3">Stop</div>
+                                        <div class="col-7" th:text="${report.getStopTrainer()}"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3">Continue</div>
+                                        <div class="col-7" th:text="${report.getContinueTrainer()}"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td colspan="2">
+                                <div th:id="${'collapse' + report.getWeekNum()}" class="collapse in p-3">
+                                    <div class="row">
+                                        <div class="col-10"><strong>Trainer Grades</strong></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4">Overall Grade</div>
+                                        <div class="col-6" th:text="${report.getOverallGradeTrainer()}"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4">Technical Grade</div>
+                                        <div class="col-6" th:text="${report.getTechnicalGradeTrainer()}"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4">Consultant Grade</div>
+                                        <div class="col-6" th:text="${report.getConsultantGradeTrainer()}"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
 
-                <tr class="hide-table-padding">
-                    <td></td>
-                    <td colspan="2">
-                        <div th:id="${'collapse' + report.getWeekNum()}" class="collapse in p-3">
-                            <div class="row">
-                                <div class="col-3"><strong>Deadline: </strong></div>
-                                <div class="col-7" th:text="${report.getDeadline().format(dateFormat)}"></div>
-                            </div>
-                        </div>
-                    </td>
-                    <td colspan="2">
-                        <div th:id="${'collapse' + report.getWeekNum()}" class="collapse in p-3">
-                            <div class="row">
-                                <div class="col-3"><strong>Last Edited: </strong></div>
-                                <div class="col-7" th:text="${report.getMostRecentEdit().format(dateFormat)}"></div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr class="hide-table-padding">
-                    <td></td>
-                    <td colspan="4">
-                        <div th:id="${'collapse' + report.getWeekNum()}" class="collapse in p-3">
-                            <form th:action="${'/trainer/report/' + trainee.traineeId + '/' + report.getWeekNum()}" method="get">
-                                <button class="btn btn-lg btn-primary btn-block greenBtn" type="submit" th:if="${now.isBefore(report.getDeadline())}" th:name="reportId" th:value="${report.getReportId()}">
-                                    Edit Report
-                                </button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                        <tr class="hide-table-padding">
+                            <td></td>
+                            <td colspan="2">
+                                <div th:id="${'collapse' + report.getWeekNum()}" class="collapse in p-3">
+                                    <div class="row">
+                                        <div class="col-3"><strong>Comments: </strong></div>
+                                        <div class="col-7"th:text="${report.getTrainerComments()}"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td colspan="2">
+                            </td>
+                        </tr>
+
+                        <tr class="hide-table-padding">
+                            <td></td>
+                            <td colspan="2">
+                                <div th:id="${'collapse' + report.getWeekNum()}" class="collapse in p-3">
+                                    <div class="row">
+                                        <div class="col-3"><strong>Deadline: </strong></div>
+                                        <div class="col-7" th:text="${report.getDeadline().format(dateFormat)}"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td colspan="2">
+                                <div th:id="${'collapse' + report.getWeekNum()}" class="collapse in p-3">
+                                    <div class="row">
+                                        <div class="col-3"><strong>Last Edited: </strong></div>
+                                        <div class="col-7" th:text="${report.getMostRecentEdit().format(dateFormat)}"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </main>
 </div>

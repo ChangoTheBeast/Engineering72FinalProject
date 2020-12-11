@@ -12,67 +12,62 @@
 <body>
 <nav th:replace="~{fragments/publicNavigation}">Navigation</nav>
 <main>
-    <div class="container-fluid">
-        <!-- Page Heading -->
 
-        <h1 style="text-align-last: center" class="h3 mb-0 text-gray-800" th:text="'Weekly Attendance Overview'"></h1>
+    <div class="card shadow mx-3">
+        <div class="card-header">
+            <h6 class="m-0 font-weight-bold text-primary">Weekly Attendance Overview</h6>
+        </div>
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <div class=" placeholderText completeState1 "></div>
+                <div class=" col-md-offset-1 ml-2 mr-4"> On Time</div>
+                <div class=" placeholderText completeState2 "></div>
+                <div class=" col-md-offset-1 ml-2 mr-4"> Late </div>
+                <div class=" placeholderText completeState3 "></div>
+                <div class="  col-md-offset-1 ml-2 mr-4"> Excused </div>
+                <div class=" placeholderText completeState4 "></div>
+                <div class="  col-md-offset-1 ml-2 mr-4"> Unexcused </div>
+                <div class=" placeholderText completeState5 "></div>
+                <div class="  col-md-offset-1 ml-2 mr-4"> No Entry </div>
+            </div>
+            <p th:if="${reports.isEmpty()}" th:text="${'No attendance reports to be displayed'}"></p>
+            <div class="accordion mt-3 mx-3">
+                <table class="table" id="accordionExample" th:if="${!reports.isEmpty()}">
+                    <thead class="thead-light" style="text-align: center">
+                    <tr>
+                        <th colspan="1" style="width: 4%"></th>
+                        <th colspan="1" style="text-align-last: left; width: 20%" class="font-weight-bold">Week</th>
+                        <th colspan="5" style="border-top: 1px solid #e3e6f0;"></th>
+                    </tr>
+                    </thead>
 
-        <br/>
-        <div class="row" style="justify-content: center;">
-            <table>
-                <tr>
-                    <td class="completeState1 placeholderText">Holder</td>
-                    <td>&nbsp;: On Time &nbsp;</td>
-                    <td class="completeState2 placeholderText">Holder</td>
-                    <td>&nbsp;: Late &nbsp;</td>
-                    <td class="completeState3 placeholderText">Holder</td>
-                    <td>&nbsp;: Excused &nbsp;</td>
-                    <td class="completeState4 placeholderText">Holder</td>
-                    <td>&nbsp;: Unexcused &nbsp;</td>
-                    <td class="completeState5 placeholderText">Holder</td>
-                    <td>&nbsp;: No Entry </td>
-                </tr>
-            </table>
+                    <tbody th:each="entry, stats : ${reports}" th:with="map=${entry.value}">
+                    <tr style="text-align: center" class="accordion-toggle collapsed" id="accordion1" data-toggle="collapse" data-parent="#accordion1" th:href="${'#collapse' + entry.key}">
+                        <td class="expand-button" style="width: 4%"></td>
+                        <td style="text-align-last: left; width: 20%" th:text="${'Week ' + entry.key}" class="font-weight-bold">Week</td>
+                        <td colspan="5" style="border-top: 1px solid #e3e6f0;"></td>
+                    </tr>
+
+                    <tr class="hide-table-padding">
+                        <td th:id="${'collapse' + entry.key}" class="collapse in p-3"></td>
+                        <th th:id="${'collapse' + entry.key}" class="collapse in p-3" >Trainee Name</th>
+                        <th th:id="${'collapse' + entry.key}" class="collapse in p-3" th:each="day: ${days}" th:text="${day}"></th>
+                    </tr>
+
+                    <tr class="hide-table-padding" th:each="insideEntry, stats : ${map}" th:with="records=${insideEntry.value}">
+                        <td th:id="${'collapse' + entry.key}" class="collapse in p-3"></td>
+                        <td th:id="${'collapse' + entry.key}" class="collapse in p-3"
+                            th:text="${insideEntry.key.firstName} + ' ' + ${insideEntry.key.lastName}"></td>
+                        <td th:id="${'collapse' + entry.key}" class="collapse in p-3"
+                            th:each="weekReport: ${records}" th:class="'completeState' + ${weekReport.attendanceId}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-    <br/>
 
-    <p th:if="${reports.isEmpty()}" th:text="${'No attendance reports to be displayed'}"></p>
 
-    <div class="accordion" style="margin-right: 1%; margin-left: 1%">
-
-        <table class="table" id="accordionExample" th:if="${!reports.isEmpty()}">
-            <thead class="thead-light" style="text-align: center">
-            <tr>
-                <th colspan="1" style="width: 4%"></th>
-                <th colspan="1" style="text-align-last: left; width: 20%" class="font-weight-bold">Week</th>
-                <th colspan="5" style="border-top: 1px solid #e3e6f0;"></th>
-            </tr>
-            </thead>
-
-            <tbody th:each="entry, stats : ${reports}" th:with="map=${entry.value}">
-                <tr style="text-align: center" class="accordion-toggle collapsed" id="accordion1" data-toggle="collapse" data-parent="#accordion1" th:href="${'#collapse' + entry.key}">
-                    <td class="expand-button" style="width: 4%"></td>
-                    <td style="text-align-last: left; width: 20%" th:text="${'Week ' + entry.key}" class="font-weight-bold">Week</td>
-                    <td colspan="5" style="border-top: 1px solid #e3e6f0;"></td>
-                </tr>
-
-                <tr class="hide-table-padding">
-                    <td th:id="${'collapse' + entry.key}" class="collapse in p-3"></td>
-                    <th th:id="${'collapse' + entry.key}" class="collapse in p-3" >Trainee Name</th>
-                    <th th:id="${'collapse' + entry.key}" class="collapse in p-3" th:each="day: ${days}" th:text="${day}"></th>
-                </tr>
-
-                <tr class="hide-table-padding" th:each="insideEntry, stats : ${map}" th:with="records=${insideEntry.value}">
-                    <td th:id="${'collapse' + entry.key}" class="collapse in p-3"></td>
-                    <td th:id="${'collapse' + entry.key}" class="collapse in p-3"
-                        th:text="${insideEntry.key.firstName} + ' ' + ${insideEntry.key.lastName}"></td>
-                    <td th:id="${'collapse' + entry.key}" class="collapse in p-3"
-                        th:each="weekReport: ${records}" th:class="'completeState' + ${weekReport.attendanceId}"></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
 </main>
 </body>
 </html>

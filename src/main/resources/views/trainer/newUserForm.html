@@ -27,63 +27,52 @@
                             <div class="row">
                                     <div class="p-5 text-center">
                                         <form class="form-signin" th:action="@{/trainer/addTrainee}" th:object="${newUserForm}" method="POST">
-                                            <h1 class="h3 mb-3 font-weight-normal">Create new Trainee</h1>
+                                            <h1 class="h3 mb-3 font-weight-normal">Create New Trainee</h1>
                                             <hr/>
-                                            <p th:if="${addError}" th:text="${addError}" class="letterGradeF"></p>
-                                            <p th:if="${addSuccess}" th:text="${addSuccess}" class="letterGradeA"></p>
-                                            <div class="form-group" style="text-align: left">
-                                                <table>
-                                                    <tr>
-                                                        <td>Email</td>
-                                                        <td>First Name</td>
-                                                        <td>Last Name</td>
-                                                        <td>Class</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <input class="form-control" type="email" th:field="*{email}" required>
-                                                        </td>
-                                                        <td>
-                                                            <input class="form-control" type="text" th:field="*{firstName}" required>
-                                                        </td>
-                                                        <td>
-                                                            <input class="form-control" type="text" th:field="*{lastName}" required>
-                                                        </td>
-                                                        <td>
-                                                            <select style="text-align-last: center" class="form-control" th:field="*{groupId}" required>
-                                                                <option value=""> -- </option>
-                                                                <option th:each="group : ${allGroups}"
-                                                                        th:value="${group.groupId}"
-                                                                        th:text="${group.groupName}"></option>
-                                                                </select>
-                                                        </td>
-                                                    </tr>
-                                                </table>
+
+                                            <div class="row">
+                                                <div class="col-md-3">Email </div>
+                                                <div class="col-md-3 col-md-offset-2">First Name</div>
+                                                <div class="col-md-3 col-md-offset-2">Last Name</div>
+                                                <div class="col-md-3 col-md-offset-2">Class</div>
                                             </div>
-                                            <br/>
-                                            <button class="btn btn-lg btn-primary btn-block greenBtn" type="submit">Create New Trainee</button>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <input class="form-control" type="email" th:field="*{email}" required>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" type="text" th:field="*{firstName}" required>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" type="text" th:field="*{lastName}" required>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <select style="text-align-last: center" class="form-control" th:field="*{groupId}" required>
+                                                        <option value=""> -- </option>
+                                                        <option th:each="group : ${allGroups}"
+                                                                th:value="${group.groupId}"
+                                                                th:text="${group.groupName}"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <p th:if="${addError}" th:text="${addError}" class="letterGradeF mt-3"></p>
+                                            <p th:if="${addSuccess}" th:text="${addSuccess}" class="letterGradeA mt-3"></p>
+                                            <button class="btn btn-lg btn-primary btn-block greenBtn mt-3" type="submit">Create New Trainee</button>
                                         </form>
-                                        <br/>
-                                        <h1 class="h3 mb-3 font-weight-normal">Delete Trainee</h1>
-                                        <hr/>
-                                        <p th:if="${deleteSuccess}" th:text="${deleteSuccess}" class="letterGradeA"></p>
-                                        <form th:action="@{/trainer/deleteTrainee}" method="post">
-<!--                                            <tr>-->
+
+                                        <form th:action="@{/trainer/deleteTrainee}" method="post" class="mt-5">
+                                            <h1 class="h3 mb-3 font-weight-normal">Delete Trainee</h1>
+                                            <hr/>
                                                 <select class="form-control" style="text-align-last: center" name="traineeId" required>
                                                     <option value=""> -- </option>
                                                     <option th:each="trainee : ${allTrainees}"
                                                             th:value="${trainee.traineeId}"
                                                             th:text="${trainee.firstName} + ' ' + ${trainee.lastName}"></option>
                                                 </select>
-<!--                                            </tr>-->
-                                            <br/>
-                                            <button class="btn btn-lg btn-primary btn-block greenBtn" type="submit">Delete Selected Trainee</button>
+                                            <p th:if="${deleteSuccess}" th:text="${deleteSuccess}" class="letterGradeA mt-3"></p>
+                                            <button class="btn btn-lg btn-primary btn-block greenBtn mt-3" type="submit">Delete Selected Trainee</button>
                                         </form>
                                     </div>
-
-<!--                                <div class="col-lg-6 d-none d-lg-block" style="padding-top: 25px">-->
-<!--                                    <img src="images/adduser2.png" style="width: 100%">-->
-<!--                                </div>-->
                             </div>
                         </div>
                     </div>

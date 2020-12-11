@@ -11,23 +11,18 @@
     </head>
 <body>
 <nav th:replace="~{fragments/publicNavigation}">Navigation</nav>
-<main>
-    <div class="card shadow">
+<main class="main-centered">
+    <div class="card shadow mx-5 w-50">
         <div class="card-header">
             <h6 class="m-0 font-weight-bold text-primary">Trainee Assessments</h6>
             <p th:if="${trainees.isEmpty()}" th:text="${'You have no trainees assigned to you'}"></p>
         </div>
         <div class="card-body">
             <div class="accordion" id="accordionExample">
-                <div class="card" th:each="trainee : ${trainees}">
-                    <div class="card-header" th:id="${'heading' + trainee.getFirstName() +' '+trainee.getLastName()}">
-                        <h2 class="mb-0">
-                            <a
-                               class="btn btn-link btn-block text-left"
-                               th:href="${'/trainer/assessments/' + trainee.traineeId}" th:text="${trainee.FirstName +' '+trainee.LastName}">
-                            </a>
-                        </h2>
-                    </div>
+                <div class="list-group" >
+                    <a class="list-group-item list-group-item-action" th:each="trainee : ${trainees}"
+                       th:href="${'/trainer/assessments/' + trainee.traineeId}" th:text="${trainee.FirstName +' '+trainee.LastName}">
+                    </a>
                 </div>
             </div>
         </div>

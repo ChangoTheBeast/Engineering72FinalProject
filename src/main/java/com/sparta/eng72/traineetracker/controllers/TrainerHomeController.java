@@ -114,6 +114,14 @@ public class TrainerHomeController {
         return Pages.accessPage(Role.TRAINER, Pages.TRAINER_HOME_PAGE);
     }
 
+    @GetMapping("/trainer/manageTrainee")
+    public ModelAndView newUserForm(ModelMap modelMap) {
+        modelMap.addAttribute("newUserForm", new NewUserForm());
+        modelMap.addAttribute("allGroups", courseGroupService.getAllCourseGroups());
+        modelMap.addAttribute("allTrainees", traineeService.getAllTrainees());
+        return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_NEW_USER_PAGE), modelMap);
+    }
+
     private void getTrainerHomeModelMap(ModelMap modelMap, Integer courseDuration, List<Integer> courseDurationList, List<Trainee> traineeList, List<Integer> traineeCounter, List<List<WeekReport>> traineeCompletedList, List<Trainee> missedDeadlineList, List<Trainee> needToCompleteList, Trainer trainer, CourseGroup courseGroup, Course course, String onTimePercentage, String latePercentage, String excusedPercentage, String unexcusedPercentage) {
         modelMap.addAttribute("groupOnTime", onTimePercentage);
         modelMap.addAttribute("groupLate", latePercentage);
@@ -129,14 +137,6 @@ public class TrainerHomeController {
         modelMap.addAttribute("courseDurationList", courseDurationList);
         modelMap.addAttribute("traineeCompletedList", traineeCompletedList);
         modelMap.addAttribute("traineeCounter", traineeCounter);
-    }
-
-    @GetMapping("/trainer/manageTrainee")
-    public ModelAndView newUserForm(ModelMap modelMap) {
-        modelMap.addAttribute("newUserForm", new NewUserForm());
-        modelMap.addAttribute("allGroups", courseGroupService.getAllCourseGroups());
-        modelMap.addAttribute("allTrainees", traineeService.getAllTrainees());
-        return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_NEW_USER_PAGE), modelMap);
     }
 
     private List<Integer> getCourseDurationList(Integer courseDuration) {

@@ -18,18 +18,22 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.sql.Date;
+
 @Controller
 public class ManagementController {
 
     public final TraineeService traineeService;
     public final CourseGroupService courseGroupService;
     public final CourseService courseService;
+    public final AttendanceService attendanceService;
 
     @Autowired
-    public ManagementController(TraineeService traineeService, CourseGroupService courseGroupService, CourseService courseService) {
+    public ManagementController(TraineeService traineeService, CourseGroupService courseGroupService, CourseService courseService, AttendanceService attendanceService) {
         this.traineeService = traineeService;
         this.courseGroupService = courseGroupService;
         this.courseService = courseService;
+        this.attendanceService = attendanceService;
     }
 
     @GetMapping("/trainer/manageClass")
@@ -37,7 +41,6 @@ public class ManagementController {
         getManageClassModelMap(modelMap);
         return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_GROUPS_PAGE), modelMap);
     }
-
 
     @PostMapping("/trainer/createGroup")
     public ModelAndView createGroup(@ModelAttribute CourseGroup newClass, ModelMap modelMap) {
@@ -63,6 +66,11 @@ public class ManagementController {
     public ModelAndView postGroupChange(@ModelAttribute AssignGroupForm assignGroupForm, ModelMap modelMap) {
 
         Trainee trainee = traineeService.changeTraineeCourseGroupByID(assignGroupForm.getTraineeId(), assignGroupForm.getGroupId());
+
+        Date startDate = Date.valueOf(getGroup(assignGroupForm.getGroupId()).getStartDate().toLocalDate());
+        Date endDate = Date.valueOf(getGroup(assignGroupForm.getGroupId()).getEndDate().toLocalDate());
+        attendanceService.setInitialTraineeAttendance(trainee, startDate, endDate);
+
         getManageClassModelMap(modelMap);
 
         String success = "Assigned " + trainee.getFirstName() + " " + trainee.getLastName() + " to " + courseGroupService.getGroupByID(trainee.getGroupId()).get().getGroupName();
@@ -78,5 +86,13 @@ public class ManagementController {
         modelMap.addAttribute("newClass", new CourseGroup());
     }
 
+
+    private CourseGroup getGroup(Integer groupId) {
+        CourseGroup group = null;
+        if (courseGroupService.getGroupByID(groupId).isPresent()) {
+            group = courseGroupService.getGroupByID(groupId).get();
+        }
+        return group;
+    }
 
 }

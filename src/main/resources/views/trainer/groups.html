@@ -30,7 +30,7 @@
                                     <form class="form-signin" th:action="@{/trainer/modifyGroup}" th:object="${assignGroupForm}" method="POST">
                                         <h1 class="h3 mb-3 font-weight-normal text-center">Assign Trainee to a Class</h1>
                                         <hr/>
-                                        <p th:if="${modifySuccess}" th:text="${modifySuccess}" class="letterGradeA"></p>
+                                        <p th:if="${modifySuccess}" th:text="${modifySuccess}" class="letterGradeA" style="text-align-last: center"></p>
                                         <div class="row justify-content-center">
                                             <div class="col-md-3">Select Trainee</div>
                                             <div class="col-md-3 col-md-offset-2">Select Class</div>
@@ -57,8 +57,8 @@
                                     <form class="form-signin" th:action="@{/trainer/createGroup}" th:object="${newClass}" method="POST">
                                         <h1 class="h3 mb-3 font-weight-normal mt-5 text-center">Create Class</h1>
                                         <hr/>
-                                        <p th:if="${addError}" th:text="${addError}" class="letterGradeF"></p>
-                                        <p th:if="${addSuccess}" th:text="${addSuccess}" class="letterGradeA"></p>
+                                        <p th:if="${addError}" th:text="${addError}" class="letterGradeF" style="text-align-last: center"></p>
+                                        <p th:if="${addSuccess}" th:text="${addSuccess}" class="letterGradeA" style="text-align-last: center"></p>
 
                                         <div class="row justify-content-center">
                                             <div class="col-md-3 ">Class Name</div>

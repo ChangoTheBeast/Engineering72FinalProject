@@ -140,7 +140,6 @@
                             <td colspan="2">
                             </td>
                         </tr>
-
                         <tr class="hide-table-padding">
                             <td></td>
                             <td colspan="2">
@@ -162,6 +161,9 @@
                         </tr>
                         </tbody>
                     </table>
+    <div th:if="${#httpServletRequest.isUserInRole('TRAINER') == true}">
+                <a class="btn btn-primary mb-3" style="width: 100%" th:href="${'/trainer/traineeProfile/' + trainee.traineeId}">Back To Trainee Profile</a>
+            </div>
                 </div>
             </div>
         </div>

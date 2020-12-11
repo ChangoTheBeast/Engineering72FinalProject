@@ -1519,11 +1519,12 @@ pre code {
   width: 100%;
   margin-bottom: 1rem;
   color: #858796;
+  border: 1px solid #e5e4e4;
 }
 
 .table th,
-.table td {
-  padding: 0.75rem;
+.table td, {
+  padding: 2rem;
   vertical-align: top;
   border-top: 1px solid #e3e6f0;
 }
@@ -2379,33 +2380,28 @@ fieldset:disabled a.btn {
 .btn-primary {
   color: #fff;
   background-color: #4e73df;
-  border-color: #4e73df;
 }
 
 .btn-primary:hover {
   color: #fff;
   background-color: #2e59d9;
-  border-color: #2653d4;
 }
 
 .btn-primary:focus, .btn-primary.focus {
   color: #fff;
   background-color: #2e59d9;
-  border-color: #2653d4;
   box-shadow: 0 0 0 0.2rem rgba(105, 136, 228, 0.5);
 }
 
 .btn-primary.disabled, .btn-primary:disabled {
   color: #fff;
   background-color: #4e73df;
-  border-color: #4e73df;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
 .show > .btn-primary.dropdown-toggle {
   color: #fff;
   background-color: #2653d4;
-  border-color: #244ec9;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus,
@@ -9875,9 +9871,8 @@ a:focus {
 }
 
 .bg-gradient-primary {
-  background-color: #4e73df;
-  background-image: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
-  background-size: cover;
+  background-color: #6c93da;
+  background-image: linear-gradient(180deg, #6c93da 10%, #224abe 100%);
 }
 
 .bg-gradient-secondary {

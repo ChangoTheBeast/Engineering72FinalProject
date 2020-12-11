@@ -18,12 +18,9 @@
     <!-- Begin Page Content -->
     <div class="container-fluid">
         <!-- Page Heading -->
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0" th:text="${trainee.firstName} + ' ' + ${trainee.lastName} + ' Week ' + ${trainerFeedback.weekNum} + ' Feedback Report'" style="color: #E23561">Trainer Feedback Form</h1>
-
-        </div>
+        <h1 class="h3 mb-0 text-center" th:text="${trainee.firstName} + ' ' + ${trainee.lastName} + ' - Week ' + ${trainerFeedback.weekNum} + ' - Feedback Report'" style="color: #E23561">Trainer Feedback Form</h1>
     </div>
-
+    <br/>
     <div class="container-sm">
         <form th:action="@{/trainer/updateReport}" method="post">
             <div class="row">
@@ -68,82 +65,73 @@
                 </table>
                 </div>
             </div>
-            <br/>
-            <div class="row text-center">
-                <h4>Assign Grades</h4>
-            </div>
-            <div class="row">
-                <div class="col">
+            <div class="mt-3" style="width:100%; text-align: center; justify-content: center">
+                <h5 class="mt-3">Assign Grades</h5>
+                <hr/>
                 <div class="row">
-                    <h6>Technical Skills</h6>
-                </div>
-                <div class="row">
-                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <label class="btn btn-success active">
-                            <input type="radio" name="trainerTechGrade" id="techA" autocomplete="off" th:checked="${trainerFeedback.technicalGradeTrainer == 'A'}" th:value="A"> A
-                        </label>
-                        <label class="btn btn-success">
-                            <input type="radio" name="trainerTechGrade" id="techB" autocomplete="off" th:checked="${trainerFeedback.technicalGradeTrainer == 'B'}" th:value="B"> B
-                        </label>
-                        <label class="btn btn-warning amber">
-                            <input type="radio" name="trainerTechGrade" id="techC" autocomplete="off" th:checked="${trainerFeedback.technicalGradeTrainer == 'C'}" th:value="C"> C
-                        </label>
-                        <label class="btn btn-danger crimson">
-                            <input type="radio" name="trainerTechGrade" id="techD" autocomplete="off" th:checked="${trainerFeedback.technicalGradeTrainer == 'D'}" th:value="D"> D
-                        </label>
+                    <div class="col-4">
+                        <h6>Technical Skills</h6>
+                    </div>
+                    <div class="col-4">
+                        <h6>Consultant Skills</h6>
+                    </div>
+                    <div class="col-4">
+                        <h6>Overall Skills</h6>
                     </div>
                 </div>
-                </div>
-
-                <div class="col">
-                <div class="row">
-                    <h6>Consultant Skills</h6>
-                </div>
-                <div class="row">
-                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <label class="btn btn-success active">
-                            <input type="radio" name="trainerConsulGrade" id="consulA" autocomplete="off" th:checked="${trainerFeedback.consultantGradeTrainer == 'A'}" th:value="A"> A
-                        </label>
-                        <label class="btn btn-success">
-                            <input type="radio" name="trainerConsulGrade" id="consulB" autocomplete="off" th:checked="${trainerFeedback.consultantGradeTrainer == 'B'}" th:value="B"> B
-                        </label>
-                        <label class="btn btn-warning">
-                            <input type="radio" name="trainerConsulGrade" id="consulC" autocomplete="off" th:checked="${trainerFeedback.consultantGradeTrainer == 'C'}" th:value="C"> C
-                        </label>
-                        <label class="btn btn-danger">
-                            <input type="radio" name="trainerConsulGrade" id="consulD" autocomplete="off" th:checked="${trainerFeedback.consultantGradeTrainer == 'D'}" th:value="D"> D
-                        </label>
+                <div class="row text-center">
+                    <div class="col-4">
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-success active">
+                                <input type="radio" name="trainerTechGrade" id="techA" autocomplete="off" th:checked="${trainerFeedback.technicalGradeTrainer == 'A'}" th:value="A"> A
+                            </label>
+                            <label class="btn btn-success">
+                                <input type="radio" name="trainerTechGrade" id="techB" autocomplete="off" th:checked="${trainerFeedback.technicalGradeTrainer == 'B'}" th:value="B"> B
+                            </label>
+                            <label class="btn btn-warning">
+                                <input type="radio" name="trainerTechGrade" id="techC" autocomplete="off" th:checked="${trainerFeedback.technicalGradeTrainer == 'C'}" th:value="C"> C
+                            </label>
+                            <label class="btn btn-danger">
+                                <input type="radio" name="trainerTechGrade" id="techD" autocomplete="off" th:checked="${trainerFeedback.technicalGradeTrainer == 'D'}" th:value="D"> D
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-success active">
+                                <input type="radio" name="trainerConsulGrade" id="consulA" autocomplete="off" th:checked="${trainerFeedback.consultantGradeTrainer == 'A'}" th:value="A"> A
+                            </label>
+                            <label class="btn btn-success">
+                                <input type="radio" name="trainerConsulGrade" id="consulB" autocomplete="off" th:checked="${trainerFeedback.consultantGradeTrainer == 'B'}" th:value="B"> B
+                            </label>
+                            <label class="btn btn-warning">
+                                <input type="radio" name="trainerConsulGrade" id="consulC" autocomplete="off" th:checked="${trainerFeedback.consultantGradeTrainer == 'C'}" th:value="C"> C
+                            </label>
+                            <label class="btn btn-danger">
+                                <input type="radio" name="trainerConsulGrade" id="consulD" autocomplete="off" th:checked="${trainerFeedback.consultantGradeTrainer == 'D'}" th:value="D"> D
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-success active">
+                                <input type="radio" name="trainerOverallGrade" id="overallA" autocomplete="off" th:checked="${trainerFeedback.overallGradeTrainer == 'A'}" th:value="A"> A
+                            </label>
+                            <label class="btn btn-success">
+                                <input type="radio" name="trainerOverallGrade" id="overallB" autocomplete="off" th:checked="${trainerFeedback.overallGradeTrainer == 'B'}" th:value="B"> B
+                            </label>
+                            <label class="btn btn-warning">
+                                <input type="radio" name="trainerOverallGrade" id="overallC" autocomplete="off" th:checked="${trainerFeedback.overallGradeTrainer == 'C'}" th:value="C"> C
+                            </label>
+                            <label class="btn btn-danger">
+                                <input type="radio" name="trainerOverallGrade" id="overallD" autocomplete="off" th:checked="${trainerFeedback.overallGradeTrainer == 'D'}" th:value="D"> D
+                            </label>
+                        </div>
                     </div>
                 </div>
-                </div>
-
-                <div class="col">
-                <div class="row">
-                    <h6>Overall Grade</h6>
-                </div>
-                <div class="row">
-                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <label class="btn btn-success active">
-                            <input type="radio" name="trainerOverallGrade" id="overallA" autocomplete="off" th:checked="${trainerFeedback.overallGradeTrainer == 'A'}" th:value="A"> A
-                        </label>
-                        <label class="btn btn-success">
-                            <input type="radio" name="trainerOverallGrade" id="overallB" autocomplete="off" th:checked="${trainerFeedback.overallGradeTrainer == 'B'}" th:value="B"> B
-                        </label>
-                        <label class="btn btn-warning amber">
-                            <input type="radio" name="trainerOverallGrade" id="overallC" autocomplete="off" th:checked="${trainerFeedback.overallGradeTrainer == 'C'}" th:value="C"> C
-                        </label>
-                        <label class="btn btn-danger crimson">
-                            <input type="radio" name="trainerOverallGrade" id="overallD" autocomplete="off" th:checked="${trainerFeedback.overallGradeTrainer == 'D'}" th:value="D"> D
-                        </label>
-                    </div>
-                </div>
-                </div>
+                <button type="submit" style="width: 100%;" th:name="btnStatus" th:value="submit" class="mt-5 btn btn-primary">Submit</button>
+                <input class="invisible-input" type="number" name="reportId" th:value="${trainerFeedback.reportId}"/>
             </div>
-            <br/>
-            <div class="col">
-                <button type="submit" th:name="btnStatus" th:value="submit" class="btn btn-primary">Submit</button>
-            </div>
-            <input class="invisible-input" type="number" name="reportId" th:value="${trainerFeedback.reportId}"/>
         </form>
     </div>
 

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/fragments :: layout(~{::head}, ~{::nav}, ~{::main})}">
+<head th:replace="~{fragments/head :: headFragment(title='Trainee Tracker')}">
+    <head>
+        <meta charset="UTF-8">
+        <link rel ="stylesheet" href="/css/myStyle.css"/>
+        <link rel ="stylesheet" href="webjars/bootstrap/4.5.2/css/bootstrap.css"/>
+        <link rel="stylesheet" href="vendor/fontawesome-free/css/all.min.css" >
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+        <title>Trainee Attendance</title>
+    </head>
+<body>
+<nav th:replace="~{fragments/publicNavigation}">Navigation</nav>
+<div th:fragment="attendanceFragment">
+
+    <main>
+        <div class="card shadow mx-3">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold text-primary" th:text="${'Weekly Attendance for ' + trainee.getFirstName() + ' ' + trainee.getLastName()}"></h6>
+            </div>
+            <div class="card-body">
+                <div class="row justify-content-center">
+                    <div class=" placeholderText completeState1 "></div>
+                    <div class=" col-md-offset-1 ml-2 mr-4"> On Time</div>
+                    <div class=" placeholderText completeState2 "></div>
+                    <div class=" col-md-offset-1 ml-2 mr-4"> Late </div>
+                    <div class=" placeholderText completeState3 "></div>
+                    <div class="  col-md-offset-1 ml-2 mr-4"> Excused </div>
+                    <div class=" placeholderText completeState4 "></div>
+                    <div class="  col-md-offset-1 ml-2 mr-4"> Unexcused </div>
+                    <div class=" placeholderText completeState5 "></div>
+                    <div class="  col-md-offset-1 ml-2 mr-4"> No Entry </div>
+                </div>
+                <p th:if="${attendanceReports.isEmpty()}" th:text="${'No attendance reports for ' + trainee.getFirstName() + ' ' + trainee.getLastName()}"></p>
+                <div class="accordion mt-3" style="margin-right: 1%; margin-left: 1%">
+
+                    <table class="table" id="accordionExample" th:if="${!attendanceReports.isEmpty()}">
+                        <thead class="thead-light" style="text-align: center">
+                        <tr>
+                            <th colspan="1" style="width: 4%"></th>
+                            <th colspan="1" style="text-align-last: left; width: 10%">Week</th>
+                            <th colspan="5" style="width: 86%">Weekly Overview</th>
+                        </tr>
+                        </thead>
+
+                        <tbody th:each="entry, stats : ${attendanceReports}" th:with="list=${entry.value}">
+
+                        <tr style="text-align: center" class="accordion-toggle collapsed" id="accordion1" data-toggle="collapse" data-parent="#accordion1" th:href="${'#collapse' + entry.key}">
+                            <td class="expand-button" style="width: 4%"></td>
+                            <td style="text-align-last: left; width: 10%" th:text="${'Week ' + entry.key}">Week</td>
+                            <td th:each="report : ${list}" style="width: 17.2%" th:class="'completeState' + ${report.attendanceId}"></td>
+                        </tr>
+
+                        <tr class="hide-table-padding">
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <div th:id="${'collapse' + entry.key}" class="collapse in p-3">
+                                    <div class="col"><strong>Date</strong></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div th:id="${'collapse' + entry.key}" class="collapse in p-3">
+                                    <div class="col"><strong>Day</strong></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div th:id="${'collapse' + entry.key}" class="collapse in p-3">
+                                    <div class="col"><strong>Status</strong></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div th:id="${'collapse' + entry.key}" class="collapse in p-3">
+                                    <div class="col placeholderText"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div th:id="${'collapse' + entry.key}" class="collapse in p-3">
+                                    <div class="col placeholderText"></div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr class="hide-table-padding" th:each="report : ${list}">
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <div th:id="${'collapse' + entry.key}" class="collapse in p-3">
+                                    <div class="col" th:text="${report.attendanceDate}"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div th:id="${'collapse' + entry.key}" class="collapse in p-3">
+                                    <div class="col" th:switch="${report.day}">
+                                        <div th:case="1">MONDAY</div>
+                                        <div th:case="2">TUESDAY</div>
+                                        <div th:case="3">WEDNESDAY</div>
+                                        <div th:case="4">THURSDAY</div>
+                                        <div th:case="5">FRIDAY</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div th:id="${'collapse' + entry.key}" class="collapse in p-3">
+                                    <div class="col"th:switch="${report.attendanceId}">
+                                        <div th:case="1" class="holderTextGreen">ON TIME</div>
+                                        <div th:case="2" class="holderTextOrange">LATE</div>
+                                        <div th:case="3" class="holderTextBlue">ABSENT (EXCUSED)</div>
+                                        <div th:case="4" class="holderTextRed">ABSENT (UNEXCUSED)</div>
+                                        <div th:case="5">NO ENTRY</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div th:id="${'collapse' + entry.key}"class="collapse in p-3">
+                                    <div class="col placeholderText"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div th:id="${'collapse' + entry.key}" class="collapse in p-3">
+                                    <div class="col placeholderText"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                       <div th:if="${#httpServletRequest.isUserInRole('TRAINER') == true}">
+                <a class="btn btn-primary mb-3" style="width: 100%" th:href="${'/trainer/traineeProfile/' + trainee.traineeId}">Back To Trainee Profile</a>
+            </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</div>
+</body>
+</html>

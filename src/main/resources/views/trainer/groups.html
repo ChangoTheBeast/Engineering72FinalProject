@@ -18,11 +18,6 @@
     <!-- Begin Page Content -->
     <div class="container-fluid">
         <div class="container">
-            <div class="container">
-                <div class="text-center align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 " style="color: #E23561">Class Mangement</h1>
-                </div>
-            </div>
             <div class="row justify-content-center">
 
                 <div class="col-xl-10 col-lg-12 col-md-9">
@@ -32,68 +27,97 @@
                             <!-- Nested Row within Card Body -->
                             <div class="row">
                                 <div class="p-5">
-                                    <form th:action="@{/trainer/modifyGroup}" th:object="${assignGroupForm}" method="POST">
-                                        <h1 class="h3 mb-3 font-weight-normal">Assign Trainee to a Class</h1>
-                                        <div class="form-group" style="text-align: left">
-                                            <table>
-                                                <tr>
-                                                    <td>Select Trainee:</td>
-                                                    <td>
-                                                        <select th:field="*{traineeId}" required>
-                                                            <option value=""> -- </option>
-                                                            <option th:each="trainee : ${allTrainees}"
-                                                                    th:value="${trainee.traineeId}"
-                                                                    th:text="${trainee.firstName} + ' ' + ${trainee.lastName}"></option>
-                                                        </select>
-                                                    </td>
-                                                    <td class="placeholderText">place</td>
-                                                    <td>Select Class:</td>
-                                                    <td>
-                                                        <select th:field="*{groupId}" required>
-                                                            <option value=""> -- </option>
-                                                            <option th:each="group : ${allGroups}"
-                                                                    th:value="${group.groupId}"
-                                                                    th:text="${group.groupName}"></option>
-                                                        </select>
-                                                    </td>
-                                                </tr>
-                                            </table>
+                                    <form class="form-signin" th:action="@{/trainer/modifyGroup}" th:object="${assignGroupForm}" method="POST">
+                                        <h1 class="h3 mb-3 font-weight-normal text-center">Assign Trainee to a Class</h1>
+                                        <hr/>
+                                        <p th:if="${modifySuccess}" th:text="${modifySuccess}" class="letterGradeA" style="text-align-last: center"></p>
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-3">Select Trainee</div>
+                                            <div class="col-md-3 col-md-offset-2">Select Class</div>
                                         </div>
-                                        <br/>
-                                        <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-3">
+                                                <select class="form-control" th:field="*{traineeId}" required>
+                                                    <option value=""> -- </option>
+                                                    <option th:each="trainee : ${allTrainees}"
+                                                            th:value="${trainee.traineeId}"
+                                                            th:text="${trainee.firstName} + ' ' + ${trainee.lastName}"></option>
+                                                </select></div>
+                                            <div class="col-md-3 col-md-offset-2">
+                                                <select class="form-control" th:field="*{groupId}" required>
+                                                    <option value=""> -- </option>
+                                                    <option th:each="group : ${allGroups}"
+                                                            th:value="${group.groupId}"
+                                                            th:text="${group.groupName}"></option>
+                                                </select></div>
+                                        </div>
+                                        <button class="btn btn-lg btn-primary btn-block mt-3" type="submit">Assign Trainee</button>
                                     </form>
-                                    <br/>
-                                    <h1 class="h3 mb-3 font-weight-normal">Create Class</h1>
-                                    <form th:action="@{/trainer/createGroup}" th:object="${newClass}" method="post">
-                                        <table>
-                                            <tr>
-                                                <td>Class Name</td>
-                                                <td>Course</td>
-                                                <td>Start Date</td>
-                                                <td>End Date</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <input type="text" th:field="*{groupName}" required>
-                                                </td>
-                                                <td>
-                                                    <select th:field="*{courseId}" required>
-                                                        <option value=""> -- </option>
-                                                        <option th:each="course : ${allCourses}"
-                                                                th:value="${course.courseId}"
-                                                                th:text="${course.courseName}"></option>
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <input type="datetime-local" th:field="*{startDate}" required>
-                                                </td>
-                                                <td>
-                                                    <input type="datetime-local" th:field="*{endDate}" required>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <br/>
-                                        <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+
+                                    <form class="form-signin" th:action="@{/trainer/createGroup}" th:object="${newClass}" method="POST">
+                                        <h1 class="h3 mb-3 font-weight-normal mt-5 text-center">Create Class</h1>
+                                        <hr/>
+                                        <p th:if="${addError}" th:text="${addError}" class="letterGradeF" style="text-align-last: center"></p>
+                                        <p th:if="${addSuccess}" th:text="${addSuccess}" class="letterGradeA" style="text-align-last: center"></p>
+
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-3 ">Class Name</div>
+                                            <div class="col-md-3 col-md-offset-2">Course</div>
+                                            <div class="col-md-3 col-md-offset-2">Start Date</div>
+                                            <div class="col-md-3 col-md-offset-2">End Date</div>
+                                        </div>
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-3">
+                                                <input class="form-control" type="text" th:field="*{groupName}" required>
+                                            </div>
+                                            <div class="col-md-3 col-md-offset-2">
+                                                <select class="form-control" th:field="*{courseId}" required>
+                                                    <option value=""> -- </option>
+                                                    <option th:each="course : ${allCourses}"
+                                                            th:value="${course.courseId}"
+                                                            th:text="${course.courseName}"></option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <input class="form-control" type="datetime-local" th:field="*{startDate}" required>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <input class="form-control" type="datetime-local" th:field="*{endDate}" required>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-lg btn-primary btn-block mt-3" type="submit">Create Class</button>
+
+
+
+<!--                                        <table>-->
+<!--                                            <tr>-->
+<!--                                                <th>Class Name</th>-->
+<!--                                                <th>Course</th>-->
+<!--                                                <th>Start Date</th>-->
+<!--                                                <th>End Date</th>-->
+<!--                                            </tr>-->
+<!--                                            <tr>-->
+<!--                                                <td>-->
+<!--                                                    <input class="form-control" type="text" th:field="*{groupName}" required>-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <select class="form-control" th:field="*{courseId}" required>-->
+<!--                                                        <option value=""> &#45;&#45; </option>-->
+<!--                                                        <option th:each="course : ${allCourses}"-->
+<!--                                                                th:value="${course.courseId}"-->
+<!--                                                                th:text="${course.courseName}"></option>-->
+<!--                                                    </select>-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <input class="form-control" type="datetime-local" th:field="*{startDate}" required>-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <input class="form-control" type="datetime-local" th:field="*{endDate}" required>-->
+<!--                                                </td>-->
+<!--                                            </tr>-->
+<!--                                        </table>-->
+<!--                                        <br/>-->
+<!--                                        <button class="btn btn-lg btn-primary btn-block" type="submit">Create Class</button>-->
                                     </form>
                                 </div>
                             </div>

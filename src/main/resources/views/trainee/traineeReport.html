@@ -21,14 +21,10 @@
             </div>
             <div class="card-body">
                 <p th:if="${reports.isEmpty()}" th:text="${'No reports yet for ' + trainee.getFirstName() + ' ' + trainee.getLastName()}"></p>
-                <div class="accordion mt-3" style="margin-right: 1%; margin-left: 1%">
+                <div class="accordion" style="margin-right: 1%; margin-left: 1%">
 
                     <table class="table" id="accordionExample" th:if="${!reports.isEmpty()}">
                         <thead class="thead-light" style="text-align: center">
-                        <tr>
-                            <th colspan="2"></th>
-                            <th colspan="3">Trainer Assigned Grades</th>
-                        </tr>
                         <tr>
                             <th scope="col"></th>
                             <th scope="col" style="text-align-last: left">Week</th>

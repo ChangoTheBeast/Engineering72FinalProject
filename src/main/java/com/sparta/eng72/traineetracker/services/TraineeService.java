@@ -32,7 +32,7 @@ public class TraineeService {
     public Trainee changeTraineeCourseGroupByID(int traineeId, int newGroupId) {
         Trainee trainee = getTraineeByID(traineeId).get();
         trainee.setGroupId(newGroupId);
-        trainee = traineeRepository.save(trainee);
+        traineeRepository.save(trainee);
         return trainee;
     }
 

@@ -1,5 +1,6 @@
 package com.sparta.eng72.traineetracker.controllers;
 
+import com.sparta.eng72.traineetracker.entities.CourseGroup;
 import com.sparta.eng72.traineetracker.entities.Trainee;
 import com.sparta.eng72.traineetracker.entities.TraineeAttendance;
 import com.sparta.eng72.traineetracker.services.*;
@@ -70,61 +71,15 @@ public class UserController {
         Trainee trainee = setNewTrainee(newUserForm);
         traineeService.addNewTrainee(trainee);
 
-        int groupId = newUserForm.getGroupId();
+        Trainee newTrainee = getTrainee(newUserForm.getEmail());
 
-        Date startDate = Date.valueOf(courseGroupService.getGroupByID(groupId).get().getStartDate().toLocalDate());
-        Date endDate = Date.valueOf(courseGroupService.getGroupByID(groupId).get().getEndDate().toLocalDate());
-
-        Calendar calendar = getStartCalendar(startDate);
-        Calendar endCalendar = getEndCalendar(endDate);
-        List<TraineeAttendance> traineeAttendances = new ArrayList();
-        while (calendar.before(endCalendar)) {
-            Date date = new java.sql.Date(calendar.getTimeInMillis());
-            if (calendar.get(Calendar.DAY_OF_WEEK) == 1 || calendar.get(Calendar.DAY_OF_WEEK) == 7 ){
-                calendar.add(Calendar.DATE, 1);
-                continue;
-            }
-            TraineeAttendance traineeAttendance = setDefaultAttendance(newUserForm, startDate, calendar, date);
-            traineeAttendances.add(traineeAttendance);
-            calendar.add(Calendar.DATE, 1);
-        }
-        attendanceService.saveAllAttendances(traineeAttendances);
+        Date startDate = Date.valueOf(getGroup(newUserForm.getGroupId()).getStartDate().toLocalDate());
+        Date endDate = Date.valueOf(getGroup(newUserForm.getGroupId()).getEndDate().toLocalDate());
+        attendanceService.setInitialTraineeAttendance(newTrainee, startDate, endDate);
 
         String success = "Added " + trainee.getFirstName() + " " + trainee.getLastName() + " as a new user";
         modelMap.addAttribute("addSuccess", success);
         return new ModelAndView(Pages.accessPage(Role.TRAINER, Pages.TRAINER_NEW_USER_PAGE), modelMap);
-    }
-
-    private Calendar getEndCalendar(Date date) {
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(date);
-        calendar.add(Calendar.DATE,1);
-        return calendar;
-    }
-
-    private Calendar getStartCalendar(Date date) {
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(date);
-        return calendar;
-    }
-
-    private Trainee setNewTrainee(NewUserForm newUserForm) {
-        Trainee trainee = new Trainee();
-        trainee.setFirstName(newUserForm.getFirstName());
-        trainee.setLastName(newUserForm.getLastName());
-        trainee.setUsername(newUserForm.getEmail());
-        trainee.setGroupId(newUserForm.getGroupId());
-        return trainee;
-    }
-
-    private TraineeAttendance setDefaultAttendance(NewUserForm newUserForm, Date startDate, Calendar calendar, Date date) {
-        TraineeAttendance traineeAttendance = new TraineeAttendance();
-        traineeAttendance.setAttendanceId(5);
-        traineeAttendance.setAttendanceDate(date);
-        traineeAttendance.setTraineeId(traineeService.getTraineeByUsername(newUserForm.getEmail()).get().getTraineeId());
-        traineeAttendance.setDay(calendar.get(Calendar.DAY_OF_WEEK)-1);
-        traineeAttendance.setWeek(DateCalculator.getWeek(date, startDate));
-        return traineeAttendance;
     }
 
     @PostMapping("/trainer/deleteTrainee")
@@ -178,4 +133,70 @@ public class UserController {
         return new ModelAndView(Pages.accessPage(Role.ANY, Pages.RECOVER_PASSWORD_PAGE), modelMap);
     }
 
+    private Trainee getTrainee(String email) {
+        Trainee trainee = null;
+        if(traineeService.getTraineeByUsername(email).isPresent()){
+            trainee = traineeService.getTraineeByUsername(email).get();
+        }
+        return trainee;
+    }
+
+    private CourseGroup getGroup(Integer groupId) {
+        CourseGroup group = null;
+        if (courseGroupService.getGroupByID(groupId).isPresent()) {
+            group = courseGroupService.getGroupByID(groupId).get();
+        }
+        return group;
+    }
+
+//    private Calendar getEndCalendar(Date date) {
+//        Calendar calendar = new GregorianCalendar();
+//        calendar.setTime(date);
+//        calendar.add(Calendar.DATE,1);
+//        return calendar;
+//    }
+//
+//    private Calendar getStartCalendar(Date date) {
+//        Calendar calendar = new GregorianCalendar();
+//        calendar.setTime(date);
+//        return calendar;
+//    }
+
+    private Trainee setNewTrainee(NewUserForm newUserForm) {
+        Trainee trainee = new Trainee();
+        trainee.setFirstName(newUserForm.getFirstName());
+        trainee.setLastName(newUserForm.getLastName());
+        trainee.setUsername(newUserForm.getEmail());
+        trainee.setGroupId(newUserForm.getGroupId());
+        return trainee;
+    }
+
+//    private TraineeAttendance setDefaultAttendance(Trainee trainee, Date startDate, Date date) {
+//        TraineeAttendance traineeAttendance = new TraineeAttendance();
+//        traineeAttendance.setAttendanceId(5);
+//        traineeAttendance.setAttendanceDate(date);
+//        traineeAttendance.setTraineeId(trainee.getTraineeId());
+//        traineeAttendance.setDay(DateCalculator.getDay(date, startDate));
+//        traineeAttendance.setWeek(DateCalculator.getWeek(date, startDate));
+//        return traineeAttendance;
+//    }
+//
+//    private void setInitialTraineeAttendance(Trainee trainee, Date startDate, Date endDate){
+//
+//        Calendar calendar = getStartCalendar(startDate);
+//        Calendar endCalendar = getEndCalendar(endDate);
+//
+//        List<TraineeAttendance> traineeAttendances = new ArrayList();
+//        while (calendar.before(endCalendar)) {
+//            Date date = new java.sql.Date(calendar.getTimeInMillis());
+//            if (calendar.get(Calendar.DAY_OF_WEEK) == 1 || calendar.get(Calendar.DAY_OF_WEEK) == 7 ){
+//                calendar.add(Calendar.DATE, 1);
+//                continue;
+//            }
+//            TraineeAttendance traineeAttendance = setDefaultAttendance(trainee, startDate, date);
+//            traineeAttendances.add(traineeAttendance);
+//            calendar.add(Calendar.DATE, 1);
+//        }
+//        attendanceService.saveAllAttendances(traineeAttendances);
+//    }
 }

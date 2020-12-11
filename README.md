@@ -2,7 +2,7 @@
 
 Final project for the Engineerin 72 Java Development team, which includes attendance, feedback and assessments tracking for Sparta trainees.
 
-Documentation for this project
+Documentation for this project is included in the documentation folder
 
     Developer Documentation
     Trainer Guide
